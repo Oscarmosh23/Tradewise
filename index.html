@@ -292,12 +292,16 @@ async function loadAsset(key,el){
   document.getElementById('signal-body').innerHTML=`<div class="price-card"><div style="font-size:26px">${a.icon}</div><div><div style="font-size:18px;font-weight:800;color:#fff">${a.name}</div><div style="font-family:monospace;font-size:9px;color:#55556a">${a.td} · ${a.type}</div></div><div style="margin-left:auto"><div class="pc-num loading" style="font-family:monospace;font-size:22px">Loading…</div></div></div>`;
 
   try {
-    const [pr,qr,rr,mr,sar] = await Promise.all([
-      td('price',{symbol:a.td}),
-      td('quote',{symbol:a.td}),
-      td('rsi',{symbol:a.td,interval:'1day',time_period:'14',outputsize:'1'}),
-      td('macd',{symbol:a.td,interval:'1day',outputsize:'1'}),
-      td('sma',{symbol:a.td,interval:'1day',time_period:'50',outputsize:'1'}),
+    const pr = await td('price',{symbol:a.td});
+    await new Promise(r=>setTimeout(r,300));
+    const qr = await td('quote',{symbol:a.td});
+    await new Promise(r=>setTimeout(r,300));
+    const rr = await td('rsi',{symbol:a.td,interval:'1day',time_period:'14',outputsize:'1'});
+    await new Promise(r=>setTimeout(r,300));
+    const mr = await td('macd',{symbol:a.td,interval:'1day',outputsize:'1'});
+    await new Promise(r=>setTimeout(r,300));
+    const sar = await td('sma',{symbol:a.td,interval:'1day',time_period:'50',outputsize:'1'});
+    // sequential calls done
     ]);
     const d = {
       price: parseFloat(pr.price),
