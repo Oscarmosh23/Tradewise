@@ -2,458 +2,476 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TradeWise Pro — Level 4 Intelligence</title>
+<title>TradeWise Scalper — Live 5-Min Signals</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-size:14px;min-height:100vh;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes flash{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px #22c55e40}50%{box-shadow:0 0 20px #22c55e80}}
 
 /* NAV */
-.nav{background:#060608;border-bottom:2px solid #c9a84c;padding:0 16px;display:flex;align-items:center;height:50px;gap:10px;flex-wrap:wrap;}
+.nav{background:#060608;border-bottom:2px solid #c9a84c;padding:0 16px;display:flex;align-items:center;height:50px;gap:10px;}
 .logo{font-size:16px;font-weight:800;color:#c9a84c;}
 .nav-tag{font-family:monospace;font-size:8px;padding:2px 7px;border-radius:3px;border:1px solid;letter-spacing:.06em;}
 .nt-gold{background:#1a1608;color:#c9a84c;border-color:#3a2e10;}
 .nt-green{background:#0a2010;color:#22c55e;border-color:#1a5a20;}
-.nt-blue{background:#0a1020;color:#3b82f6;border-color:#1a3060;}
 .nt-red{background:#1a0808;color:#f87171;border-color:#5a1a1a;}
-.live-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;}
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:6px;font-family:monospace;font-size:9px;color:#22c55e;}
+.nt-blue{background:#0a1020;color:#3b82f6;border-color:#1a3060;}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;}
+.nav-clock{font-family:monospace;font-size:11px;color:#22c55e;}
+.refresh-btn{background:#1a1a22;border:1px solid #26263a;border-radius:4px;padding:4px 10px;font-family:monospace;font-size:9px;color:#c9a84c;cursor:pointer;transition:all .12s;}
+.refresh-btn:hover{border-color:#c9a84c;}
+.auto-badge{font-family:monospace;font-size:8px;padding:2px 7px;border-radius:3px;background:#0a2010;color:#22c55e;border:1px solid #1a5a20;}
 
 /* TABS */
 .tabs{background:#0f0f13;border-bottom:1px solid #1e1e2a;padding:0 16px;display:flex;gap:0;overflow-x:auto;}
-.tab{padding:0 14px;height:40px;display:flex;align-items:center;font-size:10px;font-weight:600;font-family:monospace;letter-spacing:.05em;color:#44445a;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;gap:5px;}
+.tab{padding:0 14px;height:40px;display:flex;align-items:center;font-size:10px;font-weight:600;font-family:monospace;letter-spacing:.05em;color:#44445a;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;gap:4px;}
 .tab:hover{color:#e0e0ec;}
 .tab.on{color:#c9a84c;border-bottom-color:#c9a84c;}
 
 /* PAGES */
-.page{display:none;padding:16px;max-width:940px;}
+.page{display:none;padding:14px 16px;max-width:960px;}
 .page.on{display:block;animation:fadeUp .3s ease;}
 
 /* ASSET BAR */
-.asset-bar{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
-.asset-lbl{font-family:monospace;font-size:8px;color:#2a2a3a;letter-spacing:.1em;margin-right:3px;}
-.asset-btn{background:#18181e;border:1px solid #26263a;border-radius:6px;padding:6px 12px;cursor:pointer;transition:all .12s;text-align:center;min-width:66px;}
+.asset-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center;}
+.asset-lbl{font-family:monospace;font-size:8px;color:#2a2a3a;letter-spacing:.1em;margin-right:2px;}
+.asset-btn{background:#18181e;border:1px solid #26263a;border-radius:5px;padding:5px 11px;cursor:pointer;transition:all .12s;text-align:center;min-width:64px;}
 .asset-btn:hover{border-color:#c9a84c;}
 .asset-btn.on{border-color:#c9a84c;background:#1a1608;}
 .asset-sym{font-family:monospace;font-size:11px;font-weight:700;color:#e0e0ec;}
 .asset-type{font-size:8px;margin-top:1px;font-family:monospace;}
 .stock{color:#3b82f6;}.crypto{color:#f59e0b;}.gold{color:#c9a84c;}.forex{color:#a855f7;}
 
+/* TIMEFRAME BAR */
+.tf-bar{display:flex;gap:5px;margin-bottom:12px;align-items:center;}
+.tf-lbl{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.1em;margin-right:3px;}
+.tf-btn{background:#18181e;border:1px solid #26263a;border-radius:4px;padding:4px 10px;font-family:monospace;font-size:9px;font-weight:600;color:#44445a;cursor:pointer;transition:all .12s;}
+.tf-btn:hover{border-color:#c9a84c;color:#c9a84c;}
+.tf-btn.on{border-color:#c9a84c;background:#1a1608;color:#c9a84c;}
+
 /* PRICE CARD */
-.price-card{background:linear-gradient(135deg,#111115,#1a1608);border:1px solid #3a2e10;border-radius:10px;padding:14px 18px;margin-bottom:12px;display:flex;align-items:center;gap:14px;animation:fadeUp .3s ease;}
-.pc-icon{font-size:24px;}
-.pc-name{font-size:17px;font-weight:800;color:#fff;margin-bottom:2px;}
+.price-card{background:linear-gradient(135deg,#111115,#1a1608);border:1px solid #3a2e10;border-radius:9px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.pc-icon{font-size:22px;}
+.pc-name{font-size:16px;font-weight:800;color:#fff;margin-bottom:2px;}
 .pc-sub{font-family:monospace;font-size:8px;color:#55556a;display:flex;align-items:center;gap:6px;}
-.live-tag{background:#0a2010;color:#22c55e;border:1px solid #1a5a20;border-radius:3px;padding:1px 5px;font-size:7px;}
+.live-tag{background:#0a2010;color:#22c55e;border:1px solid #1a5a20;border-radius:2px;padding:1px 5px;font-size:7px;}
 .pc-price{margin-left:auto;text-align:right;}
-.pc-num{font-family:monospace;font-size:26px;font-weight:800;}
+.pc-num{font-family:monospace;font-size:24px;font-weight:800;}
 .pc-num.up{color:#22c55e;}.pc-num.dn{color:#f87171;}.pc-num.loading{color:#44445a;animation:pulse 1s infinite;}
-.pc-change{font-family:monospace;font-size:10px;margin-top:2px;}
-.pc-updated{font-family:monospace;font-size:7px;color:#2a2a3a;margin-top:2px;}
+.pc-change{font-family:monospace;font-size:10px;margin-top:1px;}
+.pc-updated{font-family:monospace;font-size:7px;color:#2a2a3a;margin-top:1px;}
+.pc-spread{font-family:monospace;font-size:9px;margin-top:2px;}
+.spread-ok{color:#22c55e;}.spread-warn{color:#f59e0b;}.spread-bad{color:#f87171;}
 
-/* SIGNAL */
-.sig-card{border-radius:10px;padding:16px 18px;margin-bottom:12px;border:2px solid;animation:fadeUp .35s ease;}
-.sig-card.BUY{background:linear-gradient(135deg,#052e16,#091e0a);border-color:#166534;}
-.sig-card.SELL{background:linear-gradient(135deg,#1a0808,#240f0f);border-color:#7f1d1d;}
-.sig-card.HOLD{background:linear-gradient(135deg,#1a1200,#241a00);border-color:#78350f;}
-.sig-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
-.sig-emoji{font-size:32px;}
-.sig-word{font-size:26px;font-weight:800;line-height:1;}
-.BUY .sig-word{color:#22c55e;}.SELL .sig-word{color:#f87171;}.HOLD .sig-word{color:#f59e0b;}
-.sig-conf{font-family:monospace;font-size:9px;margin-top:3px;}
-.BUY .sig-conf{color:#4ade80;}.SELL .sig-conf{color:#fca5a5;}.HOLD .sig-conf{color:#fbbf24;}
-.sig-txt{font-size:12px;line-height:1.65;color:#b8b8cc;border-top:1px solid rgba(255,255,255,.07);padding-top:10px;margin-bottom:10px;}
-.levels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;}
-.level-box{background:rgba(0,0,0,.3);border-radius:6px;padding:8px 10px;}
-.lbl-e{font-family:monospace;font-size:7px;color:#22c55e;font-weight:700;letter-spacing:.1em;margin-bottom:3px;}
-.lbl-s{font-family:monospace;font-size:7px;color:#f87171;font-weight:700;letter-spacing:.1em;margin-bottom:3px;}
-.lbl-t{font-family:monospace;font-size:7px;color:#c9a84c;font-weight:700;letter-spacing:.1em;margin-bottom:3px;}
-.level-val{font-family:monospace;font-size:14px;font-weight:800;color:#e0e0ec;}
-.level-note{font-size:9px;color:#44445a;margin-top:2px;}
+/* BIG SIGNAL */
+.main-signal{border-radius:12px;padding:16px 18px;margin-bottom:10px;border:2px solid;position:relative;overflow:hidden;}
+.main-signal.BUY{background:linear-gradient(135deg,#052e16,#091e0a);border-color:#166534;}
+.main-signal.SELL{background:linear-gradient(135deg,#1a0808,#240f0f);border-color:#7f1d1d;}
+.main-signal.HOLD{background:linear-gradient(135deg,#1a1200,#241a00);border-color:#78350f;}
+.signal-flash{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;opacity:0;transition:opacity .3s;}
+.signal-flash.flash-buy{background:radial-gradient(circle at center,#22c55e10,transparent);}
+.signal-flash.flash-sell{background:radial-gradient(circle at center,#f8717110,transparent);}
+.ms-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.ms-emoji{font-size:34px;}
+.ms-word{font-size:28px;font-weight:800;line-height:1;}
+.BUY .ms-word{color:#22c55e;}.SELL .ms-word{color:#f87171;}.HOLD .ms-word{color:#f59e0b;}
+.ms-conf{font-family:monospace;font-size:9px;margin-top:3px;}
+.BUY .ms-conf{color:#4ade80;}.SELL .ms-conf{color:#fca5a5;}.HOLD .ms-conf{color:#fbbf24;}
+.ms-tf{font-family:monospace;font-size:8px;background:rgba(0,0,0,.3);padding:2px 8px;border-radius:3px;color:#94a3b8;margin-top:3px;display:inline-block;}
+.ms-txt{font-size:11px;line-height:1.6;color:#b8b8cc;border-top:1px solid rgba(255,255,255,.07);padding-top:9px;margin-bottom:9px;}
+.levels{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;}
+.level-box{background:rgba(0,0,0,.35);border-radius:5px;padding:7px 9px;}
+.lbl-e{font-family:monospace;font-size:7px;color:#22c55e;font-weight:700;letter-spacing:.1em;margin-bottom:2px;}
+.lbl-s{font-family:monospace;font-size:7px;color:#f87171;font-weight:700;letter-spacing:.1em;margin-bottom:2px;}
+.lbl-t{font-family:monospace;font-size:7px;color:#c9a84c;font-weight:700;letter-spacing:.1em;margin-bottom:2px;}
+.lbl-rr{font-family:monospace;font-size:7px;color:#3b82f6;font-weight:700;letter-spacing:.1em;margin-bottom:2px;}
+.level-val{font-family:monospace;font-size:13px;font-weight:800;color:#e0e0ec;}
+.level-note{font-size:8px;color:#44445a;margin-top:1px;}
 
-/* MTF */
-.mtf-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
-.mtf-card{background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:10px 12px;}
-.mtf-tf{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.1em;margin-bottom:5px;}
-.mtf-sig{font-size:13px;font-weight:800;}
-.mtf-sig.bull{color:#22c55e;}.mtf-sig.bear{color:#f87171;}.mtf-sig.neu{color:#f59e0b;}
-.mtf-detail{font-size:9px;color:#44445a;margin-top:3px;line-height:1.4;}
-.mtf-agree{background:#0a2010;border:1px solid #1a5a20;border-radius:5px;padding:7px 10px;font-family:monospace;font-size:10px;color:#22c55e;margin-bottom:12px;text-align:center;}
-.mtf-disagree{background:#1a0808;border:1px solid #5a1a1a;border-radius:5px;padding:7px 10px;font-family:monospace;font-size:10px;color:#f87171;margin-bottom:12px;text-align:center;}
-.mtf-neutral{background:#1a1200;border:1px solid #5a3000;border-radius:5px;padding:7px 10px;font-family:monospace;font-size:10px;color:#f59e0b;margin-bottom:12px;text-align:center;}
+/* SCALPING INDICATORS GRID */
+.scalp-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:10px;}
+.si{background:#111115;border:1px solid #1e1e2a;border-radius:6px;padding:8px 10px;}
+.si-name{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.08em;margin-bottom:3px;}
+.si-val{font-family:monospace;font-size:14px;font-weight:800;margin-bottom:1px;line-height:1;}
+.si-val.bull{color:#22c55e;}.si-val.bear{color:#f87171;}.si-val.neu{color:#f59e0b;}.si-val.loading{color:#2a2a3a;animation:pulse 1s infinite;}
+.si-sig{font-size:9px;font-weight:600;}
+.si-sig.bull{color:#22c55e;}.si-sig.bear{color:#f87171;}.si-sig.neu{color:#f59e0b;}
+.si-desc{font-size:8px;color:#44445a;margin-top:2px;line-height:1.3;}
 
-/* INDICATORS */
-.inds{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:12px;}
-.ind{background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:9px 11px;}
-.ind-name{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:3px;}
-.ind-val{font-family:monospace;font-size:16px;font-weight:800;margin-bottom:2px;}
-.ind-val.bull{color:#22c55e;}.ind-val.bear{color:#f87171;}.ind-val.neu{color:#f59e0b;}.ind-val.loading{color:#2a2a3a;animation:pulse 1s infinite;}
-.ind-sig{font-size:9px;font-weight:600;}
-.ind-sig.bull{color:#22c55e;}.ind-sig.bear{color:#f87171;}.ind-sig.neu{color:#f59e0b;}
-.ind-desc{font-size:8px;color:#44445a;margin-top:2px;line-height:1.4;}
+/* VWAP / BOLLINGER SECTION */
+.vwap-box{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.vwap-card{background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:10px 13px;}
+.vc-title{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.1em;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.vc-title .new-badge{background:#1a3a10;color:#22c55e;border:1px solid #2a5a18;border-radius:2px;padding:1px 5px;font-size:7px;}
+.vc-main{font-family:monospace;font-size:18px;font-weight:800;margin-bottom:3px;}
+.vc-signal{font-size:11px;font-weight:600;margin-bottom:4px;}
+.vc-desc{font-size:10px;color:#44445a;line-height:1.5;}
+.bb-bands{display:flex;flex-direction:column;gap:4px;margin-top:6px;}
+.bb-band{display:flex;align-items:center;justify-content:space-between;}
+.bb-lbl{font-family:monospace;font-size:8px;color:#44445a;}
+.bb-val{font-family:monospace;font-size:10px;font-weight:600;}
 
-/* SENTIMENT */
-.sent-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
-.sent-card{background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:11px 13px;}
-.sent-title{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.1em;margin-bottom:8px;}
-.sent-val{font-size:22px;font-weight:800;margin-bottom:3px;}
-.sent-label{font-size:11px;font-weight:600;margin-bottom:4px;}
-.sent-bar{height:6px;background:#1e1e2a;border-radius:3px;overflow:hidden;margin-bottom:5px;}
-.sent-fill{height:100%;border-radius:3px;transition:width .8s ease;}
-.sent-desc{font-size:10px;color:#44445a;line-height:1.4;}
+/* SESSION BOX */
+.session-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}
+.session-card{background:#111115;border:1px solid #1e1e2a;border-radius:6px;padding:8px 10px;text-align:center;}
+.sess-name{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.08em;margin-bottom:4px;}
+.sess-status{font-size:11px;font-weight:700;}
+.sess-status.open{color:#22c55e;}.sess-status.closed{color:#44445a;}.sess-status.overlap{color:#f59e0b;}
+.sess-time{font-size:9px;color:#44445a;margin-top:2px;font-family:monospace;}
+.sess-quality{font-size:9px;font-weight:600;margin-top:3px;}
 
-/* PATTERNS */
-.patterns{background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:11px 13px;margin-bottom:12px;}
-.pat-title{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.1em;margin-bottom:8px;}
-.pat-list{display:flex;flex-wrap:wrap;gap:6px;}
-.pat-item{border-radius:4px;padding:3px 8px;font-size:10px;font-weight:600;}
-.pat-bull{background:#052e16;color:#22c55e;border:1px solid #166534;}
-.pat-bear{background:#1a0808;color:#f87171;border:1px solid #7f1d1d;}
-.pat-none{color:#44445a;font-size:10px;}
+/* SCALP QUALITY METER */
+.quality-box{background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:11px 13px;margin-bottom:10px;}
+.qb-title{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.1em;margin-bottom:8px;}
+.quality-meter{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.qm-score{font-family:monospace;font-size:32px;font-weight:800;min-width:60px;}
+.qm-score.excellent{color:#22c55e;}.qm-score.good{color:#4ade80;}.qm-score.fair{color:#f59e0b;}.qm-score.poor{color:#f87171;}
+.qm-bar-wrap{flex:1;}
+.qm-label{font-size:12px;font-weight:700;margin-bottom:4px;}
+.qm-bar{height:8px;background:#1e1e2a;border-radius:4px;overflow:hidden;margin-bottom:4px;}
+.qm-fill{height:100%;border-radius:4px;transition:width .8s ease;}
+.qm-desc{font-size:10px;color:#44445a;line-height:1.5;}
+.quality-factors{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.qf{background:#1a1a22;border-radius:5px;padding:6px 8px;text-align:center;}
+.qf-val{font-family:monospace;font-size:11px;font-weight:700;margin-bottom:2px;}
+.qf-lbl{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.06em;}
 
-/* CALENDAR */
-.cal-item{padding:9px 13px;border-bottom:1px solid #1a1a22;display:flex;gap:10px;align-items:flex-start;}
-.cal-item:last-child{border-bottom:none;}
-.cal-time{font-family:monospace;font-size:9px;color:#44445a;min-width:55px;flex-shrink:0;margin-top:1px;}
-.cal-impact{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px;}
-.cal-impact.high{background:#f87171;}.cal-impact.med{background:#f59e0b;}.cal-impact.low{background:#22c55e;}
-.cal-event{font-size:11px;color:#e0e0ec;margin-bottom:2px;}
-.cal-note{font-size:10px;color:#44445a;}
-.cal-badge{font-family:monospace;font-size:8px;font-weight:700;padding:1px 6px;border-radius:3px;margin-left:auto;flex-shrink:0;}
-.cal-badge.high{background:#3a1010;color:#f87171;}
-.cal-badge.med{background:#2a1800;color:#f59e0b;}
-.cal-badge.low{background:#0a2010;color:#22c55e;}
+/* SIGNAL LOG */
+.log-item{padding:8px 13px;border-bottom:1px solid #1a1a22;display:flex;gap:10px;align-items:center;}
+.log-item:last-child{border-bottom:none;}
+.log-time{font-family:monospace;font-size:9px;color:#44445a;min-width:55px;}
+.log-sig{font-family:monospace;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;min-width:36px;text-align:center;}
+.log-sig.BUY{background:#052e16;color:#22c55e;}.log-sig.SELL{background:#3a1010;color:#f87171;}.log-sig.HOLD{background:#2a1800;color:#f59e0b;}
+.log-price{font-family:monospace;font-size:10px;color:#e0e0ec;flex:1;}
+.log-result{font-family:monospace;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;}
+.log-result.win{background:#052e16;color:#22c55e;}.log-result.lose{background:#3a1010;color:#f87171;}.log-result.open{background:#1a1608;color:#c9a84c;}
+.log-pnl{font-family:monospace;font-size:10px;font-weight:700;min-width:55px;text-align:right;}
+.log-pnl.pos{color:#22c55e;}.log-pnl.neg{color:#f87171;}.log-pnl.open{color:#c9a84c;}
 
-/* BACKTEST */
-.bt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
-.bt-card{background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:11px 13px;}
-.bt-lbl{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:5px;}
-.bt-val{font-family:monospace;font-size:20px;font-weight:800;}
-.bt-val.g{color:#22c55e;}.bt-val.r{color:#f87171;}.bt-val.gold{color:#c9a84c;}
-.bt-sub{font-size:9px;color:#44445a;margin-top:3px;}
-.trade-log{background:#111115;border:1px solid #1e1e2a;border-radius:7px;overflow:hidden;margin-bottom:12px;}
-.tl-row{display:flex;align-items:center;padding:8px 13px;border-bottom:1px solid #1a1a22;gap:10px;font-size:11px;}
-.tl-row:last-child{border-bottom:none;}
-.tl-date{font-family:monospace;font-size:9px;color:#44445a;min-width:70px;}
-.tl-sig{font-family:monospace;font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;min-width:36px;text-align:center;}
-.tl-sig.BUY{background:#052e16;color:#22c55e;}.tl-sig.SELL{background:#3a1010;color:#f87171;}
-.tl-entry{font-family:monospace;color:#e0e0ec;min-width:70px;}
-.tl-exit{font-family:monospace;color:#e0e0ec;min-width:70px;}
-.tl-pnl{font-family:monospace;font-weight:700;min-width:60px;text-align:right;}
-.tl-pnl.pos{color:#22c55e;}.tl-pnl.neg{color:#f87171;}
-.tl-result{font-family:monospace;font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;}
-.tl-result.win{background:#052e16;color:#22c55e;}.tl-result.lose{background:#3a1010;color:#f87171;}
-
-/* PORTFOLIO AI */
-.port-alert{border-radius:7px;padding:10px 13px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start;}
-.port-alert.warn{background:#1a1200;border:1px solid #5a3000;}
-.port-alert.good{background:#0a1e10;border:1px solid #1a5a20;}
-.port-alert.danger{background:#1a0808;border:1px solid #5a1a1a;}
-.pa-icon{font-size:16px;flex-shrink:0;}
-.pa-title{font-size:12px;font-weight:700;color:#e0e0ec;margin-bottom:3px;}
-.pa-desc{font-size:11px;color:#44445a;line-height:1.5;}
-
-/* RISK */
-.risk-box{background:#111115;border:1px solid #1e1e2a;border-radius:8px;padding:13px 15px;margin-bottom:12px;}
-.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-.r-group{display:flex;flex-direction:column;gap:4px;}
+/* RISK CALC */
+.risk-box{background:#111115;border:1px solid #1e1e2a;border-radius:8px;padding:13px;margin-bottom:10px;}
+.r-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.r-group{display:flex;flex-direction:column;gap:3px;}
 .r-label{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.08em;}
 .r-input{background:#1a1a22;border:1px solid #26263a;border-radius:4px;padding:7px 9px;font-family:monospace;font-size:12px;color:#e0e0ec;outline:none;width:100%;}
 .r-input:focus{border-color:#c9a84c;}
-.r-btn{background:#c9a84c;color:#060400;border:none;border-radius:5px;padding:8px;font-family:monospace;font-size:10px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px;}
-.r-result{background:#1a1a22;border-radius:6px;padding:10px;display:none;}
+.r-btn{background:#c9a84c;color:#060400;border:none;border-radius:5px;padding:8px;font-family:monospace;font-size:10px;font-weight:700;cursor:pointer;width:100%;margin-bottom:7px;}
+.r-result{background:#1a1a22;border-radius:5px;padding:9px;display:none;}
 .r-result.show{display:block;}
-.r-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;}
-.r-val{font-family:monospace;font-size:18px;font-weight:800;margin-bottom:2px;}
-.r-val.g{color:#22c55e;}.r-val.a{color:#f59e0b;}.r-val.r{color:#f87171;}
-.r-lbl{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.08em;}
-.r-note{font-size:10px;color:#44445a;margin-top:8px;line-height:1.5;padding-top:7px;border-top:1px solid #26263a;}
-
-/* MARKET TABLE */
-.mkt-table{background:#111115;border:1px solid #1e1e2a;border-radius:8px;overflow:hidden;margin-bottom:12px;}
-.mkt-row{display:flex;align-items:center;padding:9px 14px;border-bottom:1px solid #1a1a22;gap:10px;cursor:pointer;transition:background .12s;}
-.mkt-row:last-child{border-bottom:none;}
-.mkt-row:hover{background:#1a1a22;}
-.mkt-icon{font-size:14px;width:20px;text-align:center;}
-.mkt-info{flex:1;}
-.mkt-sym{font-family:monospace;font-size:11px;font-weight:700;color:#e0e0ec;}
-.mkt-type-lbl{font-size:8px;color:#44445a;font-family:monospace;}
-.mkt-price{font-family:monospace;font-size:12px;font-weight:600;min-width:80px;text-align:right;}
-.mkt-chg{font-family:monospace;font-size:10px;min-width:55px;text-align:right;}
-.mkt-sig{font-family:monospace;font-size:8px;font-weight:700;padding:2px 7px;border-radius:3px;min-width:38px;text-align:center;}
-.mkt-sig.BUY{background:#052e16;color:#22c55e;}
-.mkt-sig.SELL{background:#3a1010;color:#f87171;}
-.mkt-sig.HOLD{background:#2a1800;color:#f59e0b;}
-.mkt-fg{font-family:monospace;font-size:9px;min-width:60px;text-align:center;}
+.r-3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;text-align:center;margin-bottom:7px;}
+.rv{font-family:monospace;font-size:17px;font-weight:800;margin-bottom:2px;}
+.rv.g{color:#22c55e;}.rv.a{color:#f59e0b;}.rv.r{color:#f87171;}
+.rl{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.08em;}
+.r-note{font-size:10px;color:#44445a;line-height:1.5;}
 
 /* MT4 */
-.mt4-card{background:#111115;border:1px solid #1e1e2a;border-radius:8px;overflow:hidden;margin-bottom:12px;}
-.mt4-item{padding:11px 14px;border-bottom:1px solid #1a1a22;display:flex;gap:10px;align-items:flex-start;}
+.mt4-card{background:#111115;border:1px solid #1e1e2a;border-radius:8px;overflow:hidden;margin-bottom:10px;}
+.mt4-item{padding:10px 13px;border-bottom:1px solid #1a1a22;display:flex;gap:10px;align-items:flex-start;}
 .mt4-item:last-child{border-bottom:none;}
-.mt4-num{font-family:monospace;font-size:10px;font-weight:700;color:#c9a84c;min-width:20px;flex-shrink:0;}
-.mt4-title{font-size:12px;font-weight:700;color:#e0e0ec;margin-bottom:3px;}
+.mt4-num{font-family:monospace;font-size:10px;font-weight:700;color:#c9a84c;min-width:18px;flex-shrink:0;}
+.mt4-title{font-size:12px;font-weight:700;color:#e0e0ec;margin-bottom:2px;}
 .mt4-desc{font-size:11px;color:#44445a;line-height:1.5;}
-.mt4-code{background:#1a1a22;border:1px solid #26263a;border-radius:3px;padding:3px 8px;font-family:monospace;font-size:9px;color:#c9a84c;margin-top:4px;display:inline-block;}
+.mt4-code{background:#1a1a22;border:1px solid #26263a;border-radius:3px;padding:3px 7px;font-family:monospace;font-size:9px;color:#c9a84c;margin-top:3px;display:inline-block;}
+
+/* OVERVIEW TABLE */
+.ov-table{background:#111115;border:1px solid #1e1e2a;border-radius:8px;overflow:hidden;margin-bottom:10px;}
+.ov-row{display:flex;align-items:center;padding:8px 13px;border-bottom:1px solid #1a1a22;gap:10px;cursor:pointer;transition:background .1s;}
+.ov-row:last-child{border-bottom:none;}
+.ov-row:hover{background:#1a1a22;}
+.ov-icon{font-size:14px;width:20px;text-align:center;}
+.ov-sym{font-family:monospace;font-size:11px;font-weight:700;color:#e0e0ec;min-width:65px;}
+.ov-type{font-size:8px;color:#44445a;font-family:monospace;}
+.ov-price{font-family:monospace;font-size:11px;font-weight:600;min-width:80px;text-align:right;}
+.ov-chg{font-family:monospace;font-size:10px;min-width:55px;text-align:right;}
+.ov-rsi{font-family:monospace;font-size:10px;min-width:40px;text-align:center;}
+.ov-sig{font-family:monospace;font-size:8px;font-weight:700;padding:2px 7px;border-radius:3px;min-width:38px;text-align:center;}
+.ov-sig.BUY{background:#052e16;color:#22c55e;}
+.ov-sig.SELL{background:#3a1010;color:#f87171;}
+.ov-sig.HOLD{background:#2a1800;color:#f59e0b;}
+.ov-quality{font-family:monospace;font-size:9px;min-width:50px;text-align:center;}
 
 .slbl{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.12em;margin-bottom:7px;display:flex;align-items:center;gap:7px;}
 .slbl::after{content:'';flex:1;height:1px;background:#1e1e2a;}
-.slbl .nb{background:#0a2010;color:#22c55e;border:1px solid #1a5a20;border-radius:3px;padding:1px 5px;font-size:7px;}
-.slbl .nb2{background:#1a1608;color:#c9a84c;border:1px solid #3a2e10;border-radius:3px;padding:1px 5px;font-size:7px;}
-
-.disclaimer{background:#0f0f13;border:1px solid #1e1e2a;border-radius:6px;padding:9px 13px;font-family:monospace;font-size:8px;color:#2a2a38;line-height:1.6;margin-top:12px;}
-.card{background:#111115;border:1px solid #1e1e2a;border-radius:8px;overflow:hidden;margin-bottom:12px;}
+.slbl .nb{background:#0a2010;color:#22c55e;border:1px solid #1a5a20;border-radius:2px;padding:1px 5px;font-size:7px;}
+.slbl .nb2{background:#1a1608;color:#c9a84c;border:1px solid #3a2e10;border-radius:2px;padding:1px 5px;font-size:7px;}
+.card{background:#111115;border:1px solid #1e1e2a;border-radius:8px;overflow:hidden;margin-bottom:10px;}
+.disclaimer{background:#0f0f13;border:1px solid #1e1e2a;border-radius:6px;padding:8px 12px;font-family:monospace;font-size:8px;color:#2a2a38;line-height:1.5;margin-top:10px;}
 </style>
 </head>
 <body>
 
 <div class="nav">
-  <div class="logo">📊 TRADEWISE PRO</div>
-  <div class="nav-tag nt-gold">LEVEL 4</div>
-  <div class="nav-tag nt-green">LIVE DATA</div>
-  <div class="nav-tag nt-blue">MULTI-TIMEFRAME</div>
-  <div class="nav-tag nt-red">AI SIGNALS</div>
-  <div class="nav-right"><div class="live-dot"></div> TWELVE DATA · LIVE</div>
+  <div class="logo">⚡ TRADEWISE SCALPER</div>
+  <div class="nav-tag nt-gold">5-MIN SIGNALS</div>
+  <div class="nav-tag nt-green">VWAP</div>
+  <div class="nav-tag nt-blue">BOLLINGER</div>
+  <div class="nav-tag nt-red">EMA CROSS</div>
+  <div class="nav-right">
+    <div class="live-dot"></div>
+    <div class="nav-clock" id="clock">--:--:--</div>
+    <div class="auto-badge" id="autoBadge">AUTO-REFRESH OFF</div>
+    <button class="refresh-btn" onclick="toggleAutoRefresh()">⟳ AUTO</button>
+    <button class="refresh-btn" onclick="refreshNow()">↺ NOW</button>
+  </div>
 </div>
 
 <div class="tabs">
-  <div class="tab on" onclick="showTab('signals',this)">⚡ SIGNALS</div>
+  <div class="tab on" onclick="showTab('scalper',this)">⚡ SCALPER</div>
   <div class="tab" onclick="showTab('overview',this)">🌐 OVERVIEW</div>
-  <div class="tab" onclick="showTab('backtest',this)">📈 BACKTEST</div>
-  <div class="tab" onclick="showTab('portfolio',this)">💼 PORTFOLIO AI</div>
-  <div class="tab" onclick="showTab('calendar',this)">📅 CALENDAR</div>
-  <div class="tab" onclick="showTab('risk',this)">🛡 RISK MANAGER</div>
-  <div class="tab" onclick="showTab('mt4',this)">🔧 MT4 BRIDGE</div>
+  <div class="tab" onclick="showTab('log',this)">📋 SIGNAL LOG</div>
+  <div class="tab" onclick="showTab('risk',this)">🛡 RISK CALC</div>
+  <div class="tab" onclick="showTab('sessions',this)">🕐 SESSIONS</div>
+  <div class="tab" onclick="showTab('mt4',this)">🔧 MT4</div>
 </div>
 
-<!-- SIGNALS TAB -->
-<div class="page on" id="tab-signals">
+<!-- SCALPER TAB -->
+<div class="page on" id="tab-scalper">
   <div class="asset-bar">
-    <span class="asset-lbl">STOCKS →</span>
-    <div class="asset-btn on" onclick="loadAsset('tsla',this)"><div class="asset-sym">TSLA</div><div class="asset-type stock">STOCK</div></div>
-    <div class="asset-btn" onclick="loadAsset('nvda',this)"><div class="asset-sym">NVDA</div><div class="asset-type stock">STOCK</div></div>
-    <div class="asset-btn" onclick="loadAsset('aapl',this)"><div class="asset-sym">AAPL</div><div class="asset-type stock">STOCK</div></div>
-    <div class="asset-btn" onclick="loadAsset('msft',this)"><div class="asset-sym">MSFT</div><div class="asset-type stock">STOCK</div></div>
-    <div class="asset-btn" onclick="loadAsset('amzn',this)"><div class="asset-sym">AMZN</div><div class="asset-type stock">STOCK</div></div>
-    <div class="asset-btn" onclick="loadAsset('spy',this)"><div class="asset-sym">SPY</div><div class="asset-type stock">ETF</div></div>
-    <span class="asset-lbl" style="margin-left:6px">CRYPTO →</span>
-    <div class="asset-btn" onclick="loadAsset('btc',this)"><div class="asset-sym">BTC</div><div class="asset-type crypto">CRYPTO</div></div>
-    <div class="asset-btn" onclick="loadAsset('eth',this)"><div class="asset-sym">ETH</div><div class="asset-type crypto">CRYPTO</div></div>
-    <div class="asset-btn" onclick="loadAsset('sol',this)"><div class="asset-sym">SOL</div><div class="asset-type crypto">CRYPTO</div></div>
-    <div class="asset-btn" onclick="loadAsset('xrp',this)"><div class="asset-sym">XRP</div><div class="asset-type crypto">CRYPTO</div></div>
-    <span class="asset-lbl" style="margin-left:6px">FOREX →</span>
-    <div class="asset-btn" onclick="loadAsset('xauusd',this)"><div class="asset-sym">XAUUSD</div><div class="asset-type gold">GOLD</div></div>
+    <span class="asset-lbl">FOREX/GOLD →</span>
+    <div class="asset-btn on" onclick="loadAsset('xauusd',this)"><div class="asset-sym">XAUUSD</div><div class="asset-type gold">GOLD</div></div>
     <div class="asset-btn" onclick="loadAsset('eurusd',this)"><div class="asset-sym">EURUSD</div><div class="asset-type forex">FOREX</div></div>
     <div class="asset-btn" onclick="loadAsset('gbpusd',this)"><div class="asset-sym">GBPUSD</div><div class="asset-type forex">FOREX</div></div>
     <div class="asset-btn" onclick="loadAsset('usdjpy',this)"><div class="asset-sym">USDJPY</div><div class="asset-type forex">FOREX</div></div>
+    <span class="asset-lbl" style="margin-left:4px">CRYPTO →</span>
+    <div class="asset-btn" onclick="loadAsset('btc',this)"><div class="asset-sym">BTC</div><div class="asset-type crypto">CRYPTO</div></div>
+    <div class="asset-btn" onclick="loadAsset('eth',this)"><div class="asset-sym">ETH</div><div class="asset-type crypto">CRYPTO</div></div>
+    <div class="asset-btn" onclick="loadAsset('sol',this)"><div class="asset-sym">SOL</div><div class="asset-type crypto">CRYPTO</div></div>
+    <span class="asset-lbl" style="margin-left:4px">STOCKS →</span>
+    <div class="asset-btn" onclick="loadAsset('tsla',this)"><div class="asset-sym">TSLA</div><div class="asset-type stock">STOCK</div></div>
+    <div class="asset-btn" onclick="loadAsset('nvda',this)"><div class="asset-sym">NVDA</div><div class="asset-type stock">STOCK</div></div>
+    <div class="asset-btn" onclick="loadAsset('spy',this)"><div class="asset-sym">SPY</div><div class="asset-type stock">ETF</div></div>
   </div>
-  <div id="signal-body"></div>
+
+  <div class="tf-bar">
+    <span class="tf-lbl">TIMEFRAME →</span>
+    <div class="tf-btn on" id="tf-5min" onclick="setTF('5min',this)">5 MIN</div>
+    <div class="tf-btn" id="tf-15min" onclick="setTF('15min',this)">15 MIN</div>
+    <div class="tf-btn" id="tf-1h" onclick="setTF('1h',this)">1 HOUR</div>
+    <div class="tf-btn" id="tf-4h" onclick="setTF('4h',this)">4 HOUR</div>
+    <div class="tf-btn" id="tf-1day" onclick="setTF('1day',this)">DAILY</div>
+    <span style="font-family:monospace;font-size:8px;color:#44445a;margin-left:8px">Scalping = 5min/15min · Swing = 1h/4h/Daily</span>
+  </div>
+
+  <div id="scalper-body"></div>
 </div>
 
 <!-- OVERVIEW TAB -->
 <div class="page" id="tab-overview">
-  <div class="slbl">🌐 All Markets — Live Signals <span class="nb">LIVE</span></div>
-  <div class="mkt-table">
-    <div class="mkt-row" style="background:#1a1a22;cursor:default">
-      <div class="mkt-icon"></div>
-      <div class="mkt-info"><div class="mkt-sym" style="color:#44445a;font-size:8px">ASSET</div></div>
-      <div class="mkt-price" style="font-family:monospace;font-size:8px;color:#44445a">PRICE</div>
-      <div class="mkt-chg" style="font-family:monospace;font-size:8px;color:#44445a">24H</div>
-      <div class="mkt-fg" style="font-family:monospace;font-size:8px;color:#44445a">F&G</div>
-      <div class="mkt-sig" style="background:transparent;color:#44445a;font-size:8px">SIGNAL</div>
+  <div class="slbl">🌐 All Markets — Scalping Overview <span class="nb">LIVE</span></div>
+  <div class="ov-table">
+    <div class="ov-row" style="background:#1a1a22;cursor:default">
+      <div class="ov-icon"></div>
+      <div style="min-width:65px"><div style="font-family:monospace;font-size:7px;color:#44445a">ASSET</div></div>
+      <div class="ov-price" style="font-family:monospace;font-size:7px;color:#44445a">PRICE</div>
+      <div class="ov-chg" style="font-family:monospace;font-size:7px;color:#44445a">CHANGE</div>
+      <div class="ov-rsi" style="font-family:monospace;font-size:7px;color:#44445a">RSI</div>
+      <div class="ov-quality" style="font-family:monospace;font-size:7px;color:#44445a">QUALITY</div>
+      <div class="ov-sig" style="background:transparent;color:#44445a;font-size:7px">SIGNAL</div>
     </div>
-    <div id="overviewRows"><div style="padding:16px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">Loading live data…</div></div>
+    <div id="overviewRows"><div style="padding:14px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">Loading…</div></div>
   </div>
 </div>
 
-<!-- BACKTEST TAB -->
-<div class="page" id="tab-backtest">
-  <div class="asset-bar">
-    <span class="asset-lbl">SELECT →</span>
-    <div class="asset-btn on" onclick="showBacktest('tsla',this)"><div class="asset-sym">TSLA</div><div class="asset-type stock">STOCK</div></div>
-    <div class="asset-btn" onclick="showBacktest('nvda',this)"><div class="asset-sym">NVDA</div><div class="asset-type stock">STOCK</div></div>
-    <div class="asset-btn" onclick="showBacktest('btc',this)"><div class="asset-sym">BTC</div><div class="asset-type crypto">CRYPTO</div></div>
-    <div class="asset-btn" onclick="showBacktest('xauusd',this)"><div class="asset-sym">XAUUSD</div><div class="asset-type gold">GOLD</div></div>
-    <div class="asset-btn" onclick="showBacktest('eurusd',this)"><div class="asset-sym">EURUSD</div><div class="asset-type forex">FOREX</div></div>
+<!-- SIGNAL LOG TAB -->
+<div class="page" id="tab-log">
+  <div class="slbl">📋 Signal Log — Track Your Accuracy <span class="nb2">BUILD YOUR TRACK RECORD</span></div>
+  <div style="background:#111115;border:1px solid #1e1e2a;border-radius:8px;padding:12px;margin-bottom:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+    <div style="text-align:center"><div style="font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:4px">SIGNALS TODAY</div><div style="font-family:monospace;font-size:20px;font-weight:800;color:#c9a84c" id="log-count">0</div></div>
+    <div style="text-align:center"><div style="font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:4px">WIN RATE</div><div style="font-family:monospace;font-size:20px;font-weight:800;color:#22c55e" id="log-winrate">—</div></div>
+    <div style="text-align:center"><div style="font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:4px">SESSION P&L</div><div style="font-family:monospace;font-size:20px;font-weight:800;color:#22c55e" id="log-pnl">$0</div></div>
+    <div style="text-align:center"><div style="font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:4px">BEST SIGNAL</div><div style="font-family:monospace;font-size:20px;font-weight:800;color:#c9a84c" id="log-best">—</div></div>
   </div>
-  <div id="backtest-body"></div>
+  <div class="card" id="logList">
+    <div style="padding:20px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">No signals logged yet — analyze an asset to start tracking</div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:10px;">
+    <button onclick="exportLog()" style="background:#1a1a22;border:1px solid #26263a;border-radius:5px;padding:7px 14px;font-family:monospace;font-size:9px;color:#c9a84c;cursor:pointer">⤓ Export CSV</button>
+    <button onclick="clearLog()" style="background:#1a0808;border:1px solid #5a1a1a;border-radius:5px;padding:7px 14px;font-family:monospace;font-size:9px;color:#f87171;cursor:pointer">✕ Clear Log</button>
+  </div>
 </div>
 
-<!-- PORTFOLIO AI TAB -->
-<div class="page" id="tab-portfolio">
-  <div class="slbl">💼 AI Portfolio Analysis <span class="nb2">LEVEL 4</span></div>
-  <div style="background:#111115;border:1px solid #1e1e2a;border-radius:8px;padding:13px 15px;margin-bottom:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
-    <div style="text-align:center"><div style="font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:5px">PORTFOLIO VALUE</div><div style="font-family:monospace;font-size:20px;font-weight:800;color:#c9a84c">$28,450</div></div>
-    <div style="text-align:center"><div style="font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:5px">TOTAL P&L</div><div style="font-family:monospace;font-size:20px;font-weight:800;color:#22c55e">+$3,280</div></div>
-    <div style="text-align:center"><div style="font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:5px">WIN RATE</div><div style="font-family:monospace;font-size:20px;font-weight:800;color:#3b82f6">64%</div></div>
-    <div style="text-align:center"><div style="font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:5px">SHARPE RATIO</div><div style="font-family:monospace;font-size:20px;font-weight:800;color:#a855f7">1.42</div></div>
+<!-- RISK CALC TAB -->
+<div class="page" id="tab-risk">
+  <div class="slbl">🛡 Scalping Position Size Calculator</div>
+  <div class="risk-box">
+    <div class="r-grid">
+      <div class="r-group"><div class="r-label">ACCOUNT BALANCE ($)</div><input class="r-input" id="ri-bal" type="number" value="10000"></div>
+      <div class="r-group"><div class="r-label">RISK PER TRADE (%)</div><input class="r-input" id="ri-risk" type="number" value="0.5" max="2" step="0.1"></div>
+      <div class="r-group"><div class="r-label">ENTRY PRICE</div><input class="r-input" id="ri-entry" type="number" placeholder="e.g. 3285.00"></div>
+      <div class="r-group"><div class="r-label">STOP LOSS (pips/points)</div><input class="r-input" id="ri-stop-pips" type="number" placeholder="e.g. 10" value="10"></div>
+      <div class="r-group"><div class="r-label">TARGET (pips/points)</div><input class="r-input" id="ri-target-pips" type="number" placeholder="e.g. 20" value="20"></div>
+      <div class="r-group"><div class="r-label">ASSET</div>
+        <select class="r-input" id="ri-asset">
+          <option value="forex">Forex (EURUSD, GBPUSD)</option>
+          <option value="gold">Gold (XAUUSD)</option>
+          <option value="crypto">Crypto (BTC, ETH)</option>
+          <option value="stock">Stock/ETF</option>
+        </select>
+      </div>
+    </div>
+    <button class="r-btn" onclick="calcRisk()">⊕ Calculate Scalping Position Size</button>
+    <div class="r-result" id="rResult">
+      <div class="r-3" id="rGrid"></div>
+      <div class="r-note" id="rNote"></div>
+    </div>
   </div>
-  <div class="slbl">🤖 AI Risk Alerts</div>
-  <div class="port-alert danger"><div class="pa-icon">🚨</div><div><div class="pa-title">HIGH CORRELATION WARNING</div><div class="pa-desc">TSLA and NVDA positions are 84% correlated. If tech sector sells off both drop simultaneously. Consider reducing one position or hedging with SPY puts.</div></div></div>
-  <div class="port-alert warn"><div class="pa-icon">⚠️</div><div><div class="pa-title">CRYPTO OVERWEIGHT</div><div class="pa-desc">Crypto represents 38% of portfolio. Recommended max is 20-25% for risk-adjusted returns. BTC and ETH are also 91% correlated — effectively one position.</div></div></div>
-  <div class="port-alert warn"><div class="pa-icon">📉</div><div><div class="pa-title">TSLA STOP LOSS NOT SET</div><div class="pa-desc">TSLA position has no stop loss detected. At current size a 15% move against you costs $1,240 — 4.4% of portfolio. Set stop at $232 immediately.</div></div></div>
-  <div class="port-alert good"><div class="pa-icon">✅</div><div><div class="pa-title">XAUUSD HEDGE WORKING</div><div class="pa-desc">Gold position is negatively correlated with your equity holdings (-0.42). This is providing effective portfolio protection during market stress events.</div></div></div>
-  <div class="port-alert good"><div class="pa-icon">💰</div><div><div class="pa-title">OPTIMAL POSITION SIZING</div><div class="pa-desc">Current average position size of 1.8% risk per trade is within professional guidelines. Maintain this discipline — it is your biggest edge over retail traders.</div></div></div>
-  <div class="slbl" style="margin-top:4px">📊 AI Position Sizing Recommendations</div>
+  <div class="slbl">⚡ Scalping-Specific Risk Rules</div>
+  <div class="mt4-card">
+    <div class="mt4-item"><div class="mt4-num">01</div><div><div class="mt4-title">Risk 0.5% max per scalp — not 1-2%</div><div class="mt4-desc">Scalping involves more trades per session than swing trading. At 10 trades/day, 1% risk per trade = 10% daily risk. Use 0.5% maximum. Small consistent gains compound fast.</div></div></div>
+    <div class="mt4-item"><div class="mt4-num">02</div><div><div class="mt4-title">Tight stops — 5 to 15 pips maximum</div><div class="mt4-desc">Scalping requires tight stops. XAUUSD: 8-12 pips. EURUSD: 5-8 pips. BTC: $200-$500. If your stop is wider than this it is not a scalp — it is a swing trade.</div></div></div>
+    <div class="mt4-item"><div class="mt4-num">03</div><div><div class="mt4-title">Only scalp during high-volume sessions</div><div class="mt4-desc">London (8am-4pm GMT) and New York (1pm-9pm GMT) sessions only. Asian session has wide spreads and thin volume — scalping signals are unreliable. Check Sessions tab.</div></div></div>
+    <div class="mt4-item"><div class="mt4-num">04</div><div><div class="mt4-title">Stop after 3 consecutive losses</div><div class="mt4-desc">Three losses in a row means conditions have changed or you are in a choppy market. Stop trading for 30 minutes minimum. Let the market settle before re-entering.</div></div></div>
+    <div class="mt4-item"><div class="mt4-num">05</div><div><div class="mt4-title">Daily loss limit — 2% maximum</div><div class="mt4-desc">If you lose 2% in one session, stop for the day. No exceptions. Revenge trading after a bad session is the fastest way to blow an account.</div></div></div>
+  </div>
+</div>
+
+<!-- SESSIONS TAB -->
+<div class="page" id="tab-sessions">
+  <div class="slbl">🕐 Trading Sessions — When to Scalp</div>
+  <div class="session-bar" id="sessionCards"></div>
+  <div class="slbl" style="margin-top:4px">📊 Best Assets Per Session</div>
+  <div class="mt4-card">
+    <div class="mt4-item"><div class="mt4-num" style="color:#22c55e">LONDON</div><div><div class="mt4-title">8:00 AM — 4:00 PM GMT · Best for: GBPUSD, EURUSD, XAUUSD</div><div class="mt4-desc">Highest volume session for forex. XAUUSD is extremely active during London overlap with New York. Best scalping conditions of the day. EMA crossovers and VWAP bounces are most reliable here.</div></div></div>
+    <div class="mt4-item"><div class="mt4-num" style="color:#3b82f6">NEW YORK</div><div><div class="mt4-title">1:00 PM — 9:00 PM GMT · Best for: XAUUSD, SPY, TSLA, EURUSD</div><div class="mt4-desc">US stock market opens at 1:30 PM GMT. First 90 minutes are the most volatile — best for stock scalping. XAUUSD very active. Forex thins out after 5 PM GMT.</div></div></div>
+    <div class="mt4-item"><div class="mt4-num" style="color:#f59e0b">LONDON+NY OVERLAP</div><div><div class="mt4-title">1:00 PM — 4:00 PM GMT · BEST SCALPING WINDOW</div><div class="mt4-desc">The London/New York overlap is the single best window for scalping. All major pairs at maximum liquidity. Tight spreads. Strong directional moves. XAUUSD signals are most reliable here.</div></div></div>
+    <div class="mt4-item"><div class="mt4-num" style="color:#f87171">ASIAN</div><div><div class="mt4-title">11:00 PM — 8:00 AM GMT · AVOID SCALPING</div><div class="mt4-desc">Low volume, wide spreads, choppy price action. Scalping signals have much lower accuracy during Asian session. Only trade JPY pairs if you scalp during this window.</div></div></div>
+    <div class="mt4-item"><div class="mt4-num" style="color:#f59e0b">CRYPTO</div><div><div class="mt4-title">24/7 · Best during London+NY overlap</div><div class="mt4-desc">Crypto trades all day but volume peaks during London and New York sessions. BTC and ETH scalping signals are most reliable 8 AM — 9 PM GMT. Avoid 2 AM — 7 AM GMT.</div></div></div>
+  </div>
+  <div class="slbl" style="margin-top:4px">⚠️ High Impact News This Week</div>
   <div class="card">
     ${[
-      {sym:'TSLA',action:'REDUCE',current:'$4,200',recommended:'$3,100',reason:'Correlation with NVDA too high. Reduce to lower portfolio risk.'},
-      {sym:'BTC',action:'HOLD',current:'$6,800',recommended:'$6,800',reason:'Optimal size for current volatility. No change needed.'},
-      {sym:'XAUUSD',action:'INCREASE',current:'$3,200',recommended:'$4,500',reason:'Best R:R in portfolio right now. Increase hedge allocation.'},
-      {sym:'ETH',action:'REDUCE',current:'$4,100',recommended:'$2,800',reason:'Highly correlated with BTC. Redundant exposure — reduce.'},
-    ].map(p=>`<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #1a1a22;">
-      <div style="font-family:monospace;font-size:12px;font-weight:700;min-width:52px;color:#e0e0ec">${p.sym}</div>
-      <div style="font-family:monospace;font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;${p.action==='REDUCE'?'background:#3a1010;color:#f87171':p.action==='INCREASE'?'background:#052e16;color:#22c55e':'background:#1a1200;color:#f59e0b'}">${p.action}</div>
-      <div style="flex:1;font-size:10px;color:#44445a">${p.reason}</div>
-      <div style="font-family:monospace;font-size:10px;color:#44445a;text-align:right">${p.current} → <span style="color:#e0e0ec">${p.recommended}</span></div>
+      {day:'Today',time:'13:30 GMT',impact:'high',event:'US Non-Farm Payrolls',note:'CLOSE ALL POSITIONS 30 min before. 200+ pip moves possible.'},
+      {day:'Wed',time:'19:00 GMT',impact:'high',event:'Federal Reserve Rate Decision',note:'DO NOT TRADE. Extreme volatility. Stay out 2 hours.'},
+      {day:'Thu',time:'13:30 GMT',impact:'high',event:'US CPI Inflation Data',note:'Close XAUUSD and USD pairs before release.'},
+      {day:'Fri',time:'13:30 GMT',impact:'med',event:'US Retail Sales',note:'Moderate impact. Tighten stops on USD pairs.'},
+    ].map(e=>`<div style="display:flex;align-items:flex-start;gap:10px;padding:9px 13px;border-bottom:1px solid #1a1a22;">
+      <div style="font-family:monospace;font-size:8px;color:#44445a;min-width:55px;margin-top:1px">${e.day}<br>${e.time}</div>
+      <div style="width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:3px;background:${e.impact==='high'?'#f87171':'#f59e0b'}"></div>
+      <div style="flex:1"><div style="font-size:11px;color:#e0e0ec;margin-bottom:2px">${e.event}</div><div style="font-size:10px;color:#44445a">${e.note}</div></div>
+      <div style="font-family:monospace;font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;background:${e.impact==='high'?'#3a1010':'#2a1800'};color:${e.impact==='high'?'#f87171':'#f59e0b'}">${e.impact.toUpperCase()}</div>
     </div>`).join('')}
   </div>
 </div>
 
-<!-- CALENDAR TAB -->
-<div class="page" id="tab-calendar">
-  <div class="slbl">📅 Economic Calendar — Next 7 Days <span class="nb">AVOID TRADING DURING HIGH IMPACT</span></div>
-  <div class="card" id="calBody">
-    <div style="padding:14px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">Loading economic calendar…</div>
-  </div>
-  <div class="slbl" style="margin-top:4px">⚠️ What Each Impact Level Means</div>
-  <div class="card">
-    <div class="cal-item"><div class="cal-impact high" style="width:10px;height:10px;margin-top:2px"></div><div><div style="font-size:12px;font-weight:700;color:#f87171;margin-bottom:3px">HIGH IMPACT — Do not trade 30 min before and after</div><div style="font-size:11px;color:#44445a">NFP, Fed decisions, CPI, GDP — these cause 50-200 pip moves in seconds. All technical signals are invalidated. Stop losses can be blown through (slippage).</div></div></div>
-    <div class="cal-item"><div class="cal-impact med" style="width:10px;height:10px;margin-top:2px"></div><div><div style="font-size:12px;font-weight:700;color:#f59e0b;margin-bottom:3px">MEDIUM IMPACT — Trade with caution, tighten stops</div><div style="font-size:11px;color:#44445a">Retail sales, housing data, PMI — can cause 20-80 pip moves. If you have open positions, tighten stop loss before release.</div></div></div>
-    <div class="cal-item"><div class="cal-impact low" style="width:10px;height:10px;margin-top:2px"></div><div><div style="font-size:12px;font-weight:700;color:#22c55e;margin-bottom:3px">LOW IMPACT — Trade normally</div><div style="font-size:11px;color:#44445a">Minor data releases — minimal market impact. Signals remain valid.</div></div></div>
-  </div>
-</div>
-
-<!-- RISK TAB -->
-<div class="page" id="tab-risk">
-  <div class="slbl">🛡 AI Position Size Calculator <span class="nb2">LEVEL 4</span></div>
-  <div class="risk-box">
-    <div class="risk-grid">
-      <div class="r-group"><div class="r-label">ACCOUNT BALANCE ($)</div><input class="r-input" id="ri-bal" type="number" value="10000"></div>
-      <div class="r-group"><div class="r-label">RISK PER TRADE (%)</div><input class="r-input" id="ri-risk" type="number" value="1" max="10"></div>
-      <div class="r-group"><div class="r-label">ENTRY PRICE ($)</div><input class="r-input" id="ri-entry" type="number" placeholder="e.g. 248.50"></div>
-      <div class="r-group"><div class="r-label">STOP LOSS PRICE ($)</div><input class="r-input" id="ri-stop" type="number" placeholder="e.g. 235.00"></div>
-      <div class="r-group"><div class="r-label">TARGET PRICE ($)</div><input class="r-input" id="ri-target" type="number" placeholder="e.g. 280.00"></div>
-      <div class="r-group"><div class="r-label">ASSET VOLATILITY</div>
-        <select class="r-input" id="ri-vol">
-          <option value="1">Low (Stocks, Gold, Forex)</option>
-          <option value="1.5">Medium (Large Cap Crypto)</option>
-          <option value="2">High (Small Cap Crypto)</option>
-        </select>
-      </div>
-    </div>
-    <button class="r-btn" onclick="calcRisk()">⊕ Calculate Optimal Position Size</button>
-    <div class="r-result" id="rResult">
-      <div class="r-grid3" id="rGrid"></div>
-      <div class="r-note" id="rNote"></div>
-    </div>
-  </div>
-  <div class="slbl">📋 Professional Risk Rules</div>
-  <div class="mt4-card">
-    <div class="mt4-item"><div class="mt4-num">01</div><div><div class="mt4-title">Never risk more than 1-2% per trade</div><div class="mt4-desc">$10,000 account = max $100-$200 loss per trade. 10 consecutive losses = only 10-20% drawdown. Most retail traders blow accounts by risking 10-20% per trade.</div></div></div>
-    <div class="mt4-item"><div class="mt4-num">02</div><div><div class="mt4-title">Volatility-adjusted position sizing</div><div class="mt4-desc">Crypto is 3-5x more volatile than forex. A $1,000 position in BTC carries the same risk as a $3,000-$5,000 position in EURUSD. Always adjust for volatility.</div></div></div>
-    <div class="mt4-item"><div class="mt4-num">03</div><div><div class="mt4-title">Minimum 2:1 reward-to-risk</div><div class="mt4-desc">If you risk $100 your target must be at least $200. 60% win rate with 2:1 R:R = very profitable. 40% win rate with 3:1 R:R = still profitable.</div></div></div>
-    <div class="mt4-item"><div class="mt4-num">04</div><div><div class="mt4-title">Multi-timeframe agreement required</div><div class="mt4-desc">Only take trades where daily, 4H, and 1H signals agree. If timeframes conflict — wait. Patience is the edge most retail traders never develop.</div></div></div>
-    <div class="mt4-item"><div class="mt4-num">05</div><div><div class="mt4-title">Never trade high-impact news events</div><div class="mt4-desc">Check the Economic Calendar tab before every trade. Close or hedge positions 30 minutes before any HIGH impact event.</div></div></div>
-  </div>
-</div>
-
-<!-- MT4 BRIDGE TAB -->
+<!-- MT4 TAB -->
 <div class="page" id="tab-mt4">
-  <div class="slbl">🔧 MT4 Auto-Execution Bridge <span class="nb2">LEVEL 4</span></div>
-  <div style="background:#1a1608;border:1px solid #3a2e10;border-radius:8px;padding:13px 15px;margin-bottom:12px;font-size:12px;color:#c9a84c;line-height:1.7;">
-    <b style="font-size:14px">MT4 Bridge connects TradeWise signals directly to your broker — trades execute automatically the moment a signal fires.</b><br><br>
-    This is how professional signal services work. You set it up once, then TradeWise manages the entries and exits automatically based on live signals.
-  </div>
-  <div class="slbl">Step-by-Step MT4 Setup</div>
+  <div class="slbl">🔧 Execute Scalping Signals on MT4</div>
   <div class="mt4-card">
-    <div class="mt4-item"><div class="mt4-num">01</div><div><div class="mt4-title">Open MT4 → Tools → MetaEditor</div><div class="mt4-desc">MetaEditor is where you write Expert Advisors (EAs) — automated trading scripts. Press F4 in MT4 to open it directly.</div><div class="mt4-code">MT4 → F4 → MetaEditor</div></div></div>
-    <div class="mt4-item"><div class="mt4-num">02</div><div><div class="mt4-title">Create New Expert Advisor</div><div class="mt4-desc">File → New → Expert Advisor. Name it "TradeWise_Bridge". This EA will poll your TradeWise signal every 60 seconds and execute trades automatically.</div><div class="mt4-code">File → New → Expert Advisor → TradeWise_Bridge</div></div></div>
-    <div class="mt4-item"><div class="mt4-num">03</div><div><div class="mt4-title">Paste the EA code below into MetaEditor</div><div class="mt4-desc">Copy the MQL4 code and paste it into the editor. Change YOUR_SIGNAL_URL to your TradeWise URL. This code checks for signal changes and places trades automatically.</div>
-    <div style="background:#1a1a22;border:1px solid #26263a;border-radius:5px;padding:10px;margin-top:6px;font-family:monospace;font-size:10px;color:#c9a84c;line-height:1.6;overflow-x:auto;">
-// TradeWise Bridge EA v1.0<br>
-// Paste this into MT4 MetaEditor<br>
+    <div class="mt4-item"><div class="mt4-num">01</div><div><div class="mt4-title">Set chart to 5-minute timeframe</div><div class="mt4-desc">Open your asset on MT4. Right-click the chart → Timeframe → M5. This matches the TradeWise 5-minute signal. Always trade on the same timeframe as the signal.</div><div class="mt4-code">Chart → M5 timeframe</div></div></div>
+    <div class="mt4-item"><div class="mt4-num">02</div><div><div class="mt4-title">Add EMA 8 and EMA 21 to your chart</div><div class="mt4-desc">Insert → Indicators → Trend → Moving Average. Add EMA period 8 (blue) and EMA period 21 (red). When blue crosses above red = BUY signal. When blue crosses below red = SELL signal. This is your visual confirmation of the TradeWise signal.</div><div class="mt4-code">Insert → MA → EMA 8 + EMA 21</div></div></div>
+    <div class="mt4-item"><div class="mt4-num">03</div><div><div class="mt4-title">Wait for TradeWise signal + MT4 visual confirmation</div><div class="mt4-desc">Only enter when TradeWise shows BUY AND you see the EMA crossover on your MT4 chart. Two independent confirmations = higher probability trade. Never trade on one signal alone.</div><div class="mt4-code">TradeWise signal + EMA cross = ENTER</div></div></div>
+    <div class="mt4-item"><div class="mt4-num">04</div><div><div class="mt4-title">Place order with stop loss and take profit</div><div class="mt4-desc">F9 → New Order → enter volume from Risk Calc tab → set Stop Loss 8-12 pips below entry for XAUUSD → set Take Profit 16-24 pips above entry (minimum 2:1). Click Buy or Sell.</div><div class="mt4-code">F9 → set SL + TP → Buy/Sell</div></div></div>
+    <div class="mt4-item"><div class="mt4-num">05</div><div><div class="mt4-title">Move stop to breakeven after +10 pips</div><div class="mt4-desc">Once price moves 10 pips in your favor, move stop loss to your entry price. Now you cannot lose money on this trade. This is called a "free trade" and it is the most important scalping skill.</div><div class="mt4-code">+10 pips → move SL to entry</div></div></div>
+    <div class="mt4-item"><div class="mt4-num">06</div><div><div class="mt4-title">Auto-execution EA code</div><div class="mt4-desc">Paste this into MT4 MetaEditor (F4) to auto-execute TradeWise signals. Change the symbol and risk settings to match your account.</div>
+    <div style="background:#1a1a22;border:1px solid #26263a;border-radius:4px;padding:9px;margin-top:5px;font-family:monospace;font-size:9px;color:#c9a84c;line-height:1.7;overflow-x:auto">
+// TradeWise Scalper EA — MT4<br>
+extern string Symbol_EA = "XAUUSD";<br>
+extern double RiskPercent = 0.5;<br>
+extern int StopPips = 10;<br>
+extern int TargetPips = 20;<br>
+extern int MagicNumber = 20260101;<br>
 <br>
-extern string SignalURL = "https://tradewise-kya9.vercel.app/api/twelvedata";<br>
-extern string Symbol = "XAUUSD";<br>
-extern double RiskPercent = 1.0;<br>
-extern double StopLossPct = 0.032;<br>
-extern double TakeProfitPct = 0.065;<br>
+void OnTick() {<br>
+&nbsp;&nbsp;if(OrdersTotal() > 0) return; // one trade at a time<br>
+&nbsp;&nbsp;double ema8 = iMA(Symbol_EA,PERIOD_M5,8,0,MODE_EMA,PRICE_CLOSE,0);<br>
+&nbsp;&nbsp;double ema21 = iMA(Symbol_EA,PERIOD_M5,21,0,MODE_EMA,PRICE_CLOSE,0);<br>
+&nbsp;&nbsp;double ema8_prev = iMA(Symbol_EA,PERIOD_M5,8,0,MODE_EMA,PRICE_CLOSE,1);<br>
+&nbsp;&nbsp;double ema21_prev = iMA(Symbol_EA,PERIOD_M5,21,0,MODE_EMA,PRICE_CLOSE,1);<br>
+&nbsp;&nbsp;double rsi = iRSI(Symbol_EA,PERIOD_M5,14,PRICE_CLOSE,0);<br>
 <br>
-int OnInit() { EventSetTimer(60); return(INIT_SUCCEEDED); }<br>
-void OnTimer() { CheckAndTrade(); }<br>
-<br>
-void CheckAndTrade() {<br>
-&nbsp;&nbsp;// Poll signal from TradeWise<br>
-&nbsp;&nbsp;// If BUY signal and no open buy: open buy<br>
-&nbsp;&nbsp;// If SELL signal and no open sell: open sell<br>
-&nbsp;&nbsp;// If HOLD: manage existing trades<br>
-&nbsp;&nbsp;double price = MarketInfo(Symbol, MODE_ASK);<br>
-&nbsp;&nbsp;double sl = price * (1 - StopLossPct);<br>
-&nbsp;&nbsp;double tp = price * (1 + TakeProfitPct);<br>
-&nbsp;&nbsp;double lots = CalcLotSize(RiskPercent, price, sl);<br>
-&nbsp;&nbsp;OrderSend(Symbol, OP_BUY, lots, price, 3, sl, tp, "TradeWise", 0, 0, clrGreen);<br>
+&nbsp;&nbsp;// BUY: EMA cross up + RSI < 60<br>
+&nbsp;&nbsp;if(ema8_prev < ema21_prev && ema8 > ema21 && rsi < 60) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;double price = Ask;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;double sl = price - StopPips * Point * 10;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;double tp = price + TargetPips * Point * 10;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;double lots = CalcLots(RiskPercent, StopPips);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OrderSend(Symbol_EA,OP_BUY,lots,price,3,sl,tp,"TW",MagicNumber,0,clrGreen);<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;// SELL: EMA cross down + RSI > 40<br>
+&nbsp;&nbsp;if(ema8_prev > ema21_prev && ema8 < ema21 && rsi > 40) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;double price = Bid;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;double sl = price + StopPips * Point * 10;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;double tp = price - TargetPips * Point * 10;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;double lots = CalcLots(RiskPercent, StopPips);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OrderSend(Symbol_EA,OP_SELL,lots,price,3,sl,tp,"TW",MagicNumber,0,clrRed);<br>
+&nbsp;&nbsp;}<br>
 }<br>
 <br>
-double CalcLotSize(double riskPct, double entry, double stop) {<br>
+double CalcLots(double riskPct, int stopPips) {<br>
 &nbsp;&nbsp;double riskAmt = AccountBalance() * riskPct / 100;<br>
-&nbsp;&nbsp;double stopDist = MathAbs(entry - stop);<br>
-&nbsp;&nbsp;return NormalizeDouble(riskAmt / (stopDist * 100), 2);<br>
+&nbsp;&nbsp;double pipVal = MarketInfo(Symbol_EA, MODE_TICKVALUE) * 10;<br>
+&nbsp;&nbsp;return NormalizeDouble(riskAmt / (stopPips * pipVal), 2);<br>
 }
     </div></div></div>
-    <div class="mt4-item"><div class="mt4-num">04</div><div><div class="mt4-title">Compile and attach to chart</div><div class="mt4-desc">Press F5 to compile. If no errors, go back to MT4 → open the asset chart → drag the EA from Navigator panel onto the chart → enable "Allow automated trading".</div><div class="mt4-code">F5 compile → drag EA to chart → allow automated trading</div></div></div>
-    <div class="mt4-item"><div class="mt4-num">05</div><div><div class="mt4-title">Test on demo account FIRST</div><div class="mt4-desc">Always run automated trading on a demo account for at least 2-4 weeks before using real money. Verify every trade matches the TradeWise signal. Never automate on live account without proven demo results.</div><div class="mt4-code">Strategy Tester → demo account → minimum 2 weeks</div></div></div>
   </div>
-  <div class="slbl">⟠ Coinbase Auto-Trading</div>
-  <div class="mt4-card">
-    <div class="mt4-item"><div class="mt4-num">01</div><div><div class="mt4-title">Use Coinbase Advanced Trade API</div><div class="mt4-desc">Go to Coinbase Advanced → Settings → API → Create API Key. Give it "Trade" permissions. This key lets TradeWise place orders automatically on your behalf.</div></div></div>
-    <div class="mt4-item"><div class="mt4-num">02</div><div><div class="mt4-title">Add to Vercel environment variables</div><div class="mt4-desc">Add COINBASE_API_KEY and COINBASE_API_SECRET to your Vercel project. TradeWise will use these to execute crypto trades automatically when signals fire.</div><div class="mt4-code">Vercel → Environment Variables → COINBASE_API_KEY</div></div></div>
-  </div>
-  <div class="disclaimer">⚠ Automated trading carries significant risk. Always test on demo first. Never risk more than you can afford to lose. Past signal performance does not guarantee future results.</div>
+  <div class="disclaimer">⚠ Test all EAs on demo account for minimum 4 weeks before live trading. Not financial advice.</div>
 </div>
 
 <script>
 const ASSETS={
-  tsla:{name:"Tesla Inc",icon:"🚗",td:"TSLA",type:"Stock",stopPct:.055,targetPct:.105,fg:null},
-  nvda:{name:"Nvidia Corp",icon:"🎮",td:"NVDA",type:"Stock",stopPct:.063,targetPct:.120,fg:null},
-  aapl:{name:"Apple Inc",icon:"🍎",td:"AAPL",type:"Stock",stopPct:.064,targetPct:.124,fg:null},
-  msft:{name:"Microsoft",icon:"🪟",td:"MSFT",type:"Stock",stopPct:.045,targetPct:.090,fg:null},
-  amzn:{name:"Amazon",icon:"📦",td:"AMZN",type:"Stock",stopPct:.055,targetPct:.110,fg:null},
-  spy:{name:"S&P 500 ETF",icon:"📊",td:"SPY",type:"ETF",stopPct:.035,targetPct:.070,fg:null},
-  btc:{name:"Bitcoin",icon:"₿",td:"BTC/USD",type:"Crypto",stopPct:.088,targetPct:.145,fg:'crypto'},
-  eth:{name:"Ethereum",icon:"⟠",td:"ETH/USD",type:"Crypto",stopPct:.109,targetPct:.206,fg:'crypto'},
-  sol:{name:"Solana",icon:"◎",td:"SOL/USD",type:"Crypto",stopPct:.127,targetPct:.276,fg:'crypto'},
-  xrp:{name:"XRP",icon:"✕",td:"XRP/USD",type:"Crypto",stopPct:.130,targetPct:.260,fg:'crypto'},
-  xauusd:{name:"Gold / USD",icon:"🥇",td:"XAU/USD",type:"Forex",stopPct:.032,targetPct:.065,fg:null},
-  eurusd:{name:"Euro / USD",icon:"€",td:"EUR/USD",type:"Forex",stopPct:.008,targetPct:.016,fg:null},
-  gbpusd:{name:"GBP / USD",icon:"£",td:"GBP/USD",type:"Forex",stopPct:.010,targetPct:.020,fg:null},
-  usdjpy:{name:"USD / JPY",icon:"¥",td:"USD/JPY",type:"Forex",stopPct:.008,targetPct:.016,fg:null},
+  xauusd:{name:"Gold / USD",icon:"🥇",td:"XAU/USD",type:"Forex",pip:0.1,stopPips:10,targetPips:20},
+  eurusd:{name:"Euro / USD",icon:"€",td:"EUR/USD",type:"Forex",pip:0.0001,stopPips:8,targetPips:16},
+  gbpusd:{name:"GBP / USD",icon:"£",td:"GBP/USD",type:"Forex",pip:0.0001,stopPips:10,targetPips:20},
+  usdjpy:{name:"USD / JPY",icon:"¥",td:"USD/JPY",type:"Forex",pip:0.01,stopPips:8,targetPips:16},
+  btc:{name:"Bitcoin",icon:"₿",td:"BTC/USD",type:"Crypto",pip:1,stopPips:300,targetPips:600},
+  eth:{name:"Ethereum",icon:"⟠",td:"ETH/USD",type:"Crypto",pip:0.1,stopPips:30,targetPips:60},
+  sol:{name:"Solana",icon:"◎",td:"SOL/USD",type:"Crypto",pip:0.01,stopPips:3,targetPips:6},
+  tsla:{name:"Tesla Inc",icon:"🚗",td:"TSLA",type:"Stock",pip:0.01,stopPips:2,targetPips:4},
+  nvda:{name:"Nvidia Corp",icon:"🎮",td:"NVDA",type:"Stock",pip:0.01,stopPips:5,targetPips:10},
+  spy:{name:"S&P 500 ETF",icon:"📊",td:"SPY",type:"ETF",pip:0.01,stopPips:1,targetPips:2},
 };
 
-// Fear & Greed index (from alternative.me — free, no key needed)
-let fearGreedScore = null;
-let fearGreedLabel = '—';
+const TF_MAP={'5min':'5min','15min':'15min','1h':'1h','4h':'4h','1day':'1day'};
+let currentTF='5min';
+let currentAsset='xauusd';
+let autoRefresh=false;
+let autoInterval=null;
+let signalLog=[];
 
-async function fetchFearGreed(){
-  try{
-    const r = await fetch('https://api.alternative.me/fng/?limit=1');
-    const d = await r.json();
-    if(d.data&&d.data[0]){
-      fearGreedScore = parseInt(d.data[0].value);
-      fearGreedLabel = d.data[0].value_classification;
-    }
-  }catch(e){ fearGreedScore = null; }
+// Clock
+setInterval(()=>{
+  const now=new Date();
+  document.getElementById('clock').textContent=now.toUTCString().split(' ')[4]+' UTC';
+},1000);
+
+function toggleAutoRefresh(){
+  autoRefresh=!autoRefresh;
+  const badge=document.getElementById('autoBadge');
+  if(autoRefresh){
+    badge.textContent='AUTO-REFRESH ON';
+    badge.style.background='#052e16';
+    badge.style.color='#22c55e';
+    badge.style.borderColor='#166534';
+    autoInterval=setInterval(()=>{
+      const btn=document.querySelector('#tab-scalper .asset-btn.on');
+      loadAsset(currentAsset,btn);
+    },30000); // refresh every 30 seconds
+  } else {
+    badge.textContent='AUTO-REFRESH OFF';
+    badge.style.background='#1a1608';
+    badge.style.color='#c9a84c';
+    badge.style.borderColor='#3a2e10';
+    clearInterval(autoInterval);
+  }
 }
 
-async function td(endpoint, params={}){
-  const qs = new URLSearchParams({endpoint,...params}).toString();
-  const r = await fetch(`/api/twelvedata?${qs}`);
-  return r.json();
+function refreshNow(){
+  const btn=document.querySelector('#tab-scalper .asset-btn.on');
+  loadAsset(currentAsset,btn);
 }
 
-function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function setTF(tf,el){
+  document.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  currentTF=tf;
+  const btn=document.querySelector('#tab-scalper .asset-btn.on');
+  loadAsset(currentAsset,btn);
+}
 
 function showTab(name,el){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
@@ -461,378 +479,398 @@ function showTab(name,el){
   el.classList.add('on');
   document.getElementById('tab-'+name).classList.add('on');
   if(name==='overview') loadOverview();
-  if(name==='calendar') loadCalendar();
-  if(name==='backtest') showBacktest('tsla',document.querySelector('#tab-backtest .asset-btn'));
+  if(name==='sessions') renderSessions();
+  if(name==='log') renderLog();
 }
 
-function generateSignal(d){
-  let score=0,reasons=[];
+async function td(endpoint,params={}){
+  const qs=new URLSearchParams({endpoint,...params}).toString();
+  const r=await fetch(`/api/twelvedata?${qs}`);
+  return r.json();
+}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+function fmt(n,d=2){
+  if(n===null||n===undefined||isNaN(n)) return '—';
+  return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+}
+
+function generateScalpSignal(d, tf){
+  let score=0, reasons=[], urgency='normal';
+
+  // EMA crossover — primary scalping signal
+  if(d.ema8!==null&&d.ema21!==null){
+    const cross=d.ema8-d.ema21;
+    const crossPct=(cross/d.price)*100;
+    if(crossPct>0.05){score+=3;reasons.push('EMA 8 above EMA 21 — bullish crossover');}
+    else if(crossPct>0){score+=1;reasons.push('EMA 8 slightly above EMA 21');}
+    else if(crossPct<-0.05){score-=3;reasons.push('EMA 8 below EMA 21 — bearish crossover');}
+    else{score-=1;reasons.push('EMA 8 below EMA 21');}
+  }
+
+  // RSI — momentum
   if(d.rsi!==null){
-    if(d.rsi<30){score+=3;reasons.push(`RSI ${d.rsi.toFixed(1)} — strongly oversold`);}
-    else if(d.rsi<40){score+=2;reasons.push(`RSI ${d.rsi.toFixed(1)} — oversold`);}
-    else if(d.rsi<48){score+=1;reasons.push(`RSI ${d.rsi.toFixed(1)} — mild bullish`);}
-    else if(d.rsi>70){score-=3;reasons.push(`RSI ${d.rsi.toFixed(1)} — strongly overbought`);}
-    else if(d.rsi>60){score-=2;reasons.push(`RSI ${d.rsi.toFixed(1)} — overbought`);}
-    else if(d.rsi>53){score-=1;reasons.push(`RSI ${d.rsi.toFixed(1)} — elevated`);}
+    if(d.rsi<30){score+=3;urgency='HIGH';reasons.push(`RSI ${d.rsi.toFixed(1)} — strongly oversold, reversal likely`);}
+    else if(d.rsi<40){score+=2;reasons.push(`RSI ${d.rsi.toFixed(1)} — oversold zone`);}
+    else if(d.rsi<48){score+=1;reasons.push(`RSI ${d.rsi.toFixed(1)} — below midpoint`);}
+    else if(d.rsi>70){score-=3;urgency='HIGH';reasons.push(`RSI ${d.rsi.toFixed(1)} — strongly overbought, pullback likely`);}
+    else if(d.rsi>60){score-=2;reasons.push(`RSI ${d.rsi.toFixed(1)} — overbought zone`);}
+    else if(d.rsi>52){score-=1;reasons.push(`RSI ${d.rsi.toFixed(1)} — above midpoint`);}
     else{reasons.push(`RSI ${d.rsi.toFixed(1)} — neutral`);}
   }
+
+  // MACD histogram
   if(d.macdHist!==null){
-    if(d.macdHist>0&&d.macdLine>d.macdSignal){score+=2;reasons.push('MACD bullish crossover confirmed');}
+    if(d.macdHist>0&&d.macdLine>d.macdSignal){score+=2;reasons.push('MACD bullish — momentum confirmed');}
     else if(d.macdHist>0){score+=1;reasons.push('MACD histogram positive');}
-    else if(d.macdHist<0&&d.macdLine<d.macdSignal){score-=2;reasons.push('MACD bearish crossover confirmed');}
-    else{score-=1;reasons.push('MACD histogram negative');}
+    else if(d.macdHist<0&&d.macdLine<d.macdSignal){score-=2;reasons.push('MACD bearish — momentum confirmed');}
+    else{score-=1;reasons.push('MACD negative');}
   }
-  if(d.ma50!==null&&d.price){
-    const pct=((d.price-d.ma50)/d.ma50)*100;
-    if(pct>8){score+=2;reasons.push(`${pct.toFixed(1)}% above 50MA — strong uptrend`);}
-    else if(pct>3){score+=1;reasons.push(`${pct.toFixed(1)}% above 50MA — uptrend`);}
-    else if(pct<-8){score-=2;reasons.push(`${Math.abs(pct).toFixed(1)}% below 50MA — strong downtrend`);}
-    else if(pct<-3){score-=1;reasons.push(`${Math.abs(pct).toFixed(1)}% below 50MA — downtrend`);}
-    else{reasons.push(`Near 50MA (${pct>0?'+':''}${pct.toFixed(1)}%)`);}
+
+  // Bollinger Band position
+  if(d.bbUpper&&d.bbLower&&d.price){
+    const bbMid=(d.bbUpper+d.bbLower)/2;
+    const bbRange=d.bbUpper-d.bbLower;
+    const posInBand=(d.price-d.bbLower)/bbRange;
+    if(posInBand<0.1){score+=2;reasons.push('Price at lower Bollinger Band — bounce likely');}
+    else if(posInBand>0.9){score-=2;reasons.push('Price at upper Bollinger Band — reversal risk');}
+    else if(posInBand<0.35){score+=1;reasons.push('Price in lower Bollinger zone — bullish');}
+    else if(posInBand>0.65){score-=1;reasons.push('Price in upper Bollinger zone');}
   }
-  if(d.change>3){score+=2;reasons.push(`Strong momentum +${d.change.toFixed(1)}%`);}
-  else if(d.change>1){score+=1;reasons.push(`Positive momentum +${d.change.toFixed(1)}%`);}
-  else if(d.change<-3){score-=2;reasons.push(`Strong selling ${d.change.toFixed(1)}%`);}
-  else if(d.change<-1){score-=1;reasons.push(`Selling pressure ${d.change.toFixed(1)}%`);}
-  // Candlestick pattern bonus
-  if(d.pattern==='HAMMER'||d.pattern==='MORNING_STAR'){score+=2;reasons.push(`${d.pattern} bullish pattern detected`);}
-  if(d.pattern==='SHOOTING_STAR'||d.pattern==='EVENING_STAR'){score-=2;reasons.push(`${d.pattern} bearish pattern detected`);}
+
+  // Price momentum
+  if(d.change>2){score+=1;reasons.push(`Strong momentum +${d.change.toFixed(1)}%`);}
+  else if(d.change<-2){score-=1;reasons.push(`Selling pressure ${d.change.toFixed(1)}%`);}
+
   let signal,conf,hz;
-  if(score>=5){signal='BUY';conf=Math.min(88,68+score*2);hz='Short to medium-term';}
-  else if(score>=2){signal='BUY';conf=Math.min(75,58+score*3);hz:'Medium-term';}
-  else if(score<=-5){signal='SELL';conf=Math.min(88,68+Math.abs(score)*2);hz='Short-term';}
-  else if(score<=-2){signal='SELL';conf=Math.min(75,58+Math.abs(score)*3);hz='Short-term';}
-  else{signal='HOLD';conf=52;hz='Wait for confirmation';}
-  return{signal,conf,hz:hz||'Medium-term',score,reasons};
+  if(score>=6){signal='BUY';conf=Math.min(88,65+score*2);hz='Strong signal — enter now';}
+  else if(score>=3){signal='BUY';conf=Math.min(76,55+score*3);hz='Good signal — confirm on chart';}
+  else if(score<=-6){signal='SELL';conf=Math.min(88,65+Math.abs(score)*2);hz='Strong signal — enter now';}
+  else if(score<=-3){signal='SELL';conf=Math.min(76,55+Math.abs(score)*3);hz='Good signal — confirm on chart';}
+  else{signal='HOLD';conf=48;hz='No edge — wait for setup';}
+
+  return{signal,conf,hz,score,reasons,urgency};
 }
 
-// Multi-timeframe signal logic
-function getMTFSignal(rsi, macdHist, priceVsMA){
-  if(rsi<45&&macdHist>0&&priceVsMA>0) return {sig:'BUY',cls:'bull',detail:'All indicators aligned bullish'};
-  if(rsi>55&&macdHist<0&&priceVsMA<0) return {sig:'SELL',cls:'bear',detail:'All indicators aligned bearish'};
-  if(rsi<50&&macdHist>0) return {sig:'LEAN BUY',cls:'bull',detail:'Mild bullish — wait for confirmation'};
-  if(rsi>50&&macdHist<0) return {sig:'LEAN SELL',cls:'bear',detail:'Mild bearish — wait for confirmation'};
-  return {sig:'NEUTRAL',cls:'neu',detail:'No clear direction'};
-}
-
-function detectPattern(open, high, low, close){
-  const body = Math.abs(close-open);
-  const range = high-low;
-  const lowerWick = Math.min(open,close)-low;
-  const upperWick = high-Math.max(open,close);
-  if(lowerWick>body*2&&upperWick<body*0.5&&body>0) return 'HAMMER';
-  if(upperWick>body*2&&lowerWick<body*0.5&&body>0) return 'SHOOTING_STAR';
-  if(body/range>0.7&&close>open) return 'STRONG_BULLISH';
-  if(body/range>0.7&&close<open) return 'STRONG_BEARISH';
-  if(body<range*0.1) return 'DOJI';
-  return null;
+function scalpQualityScore(d, tf){
+  let score=0, factors=[];
+  // Timeframe quality
+  if(tf==='5min'||tf==='15min'){score+=20;factors.push({v:'SCALP',l:'TIMEFRAME',c:'#22c55e'});}
+  else{score+=10;factors.push({v:'SWING',l:'TIMEFRAME',c:'#f59e0b'});}
+  // RSI quality
+  if(d.rsi<35||d.rsi>65){score+=25;factors.push({v:'EXTREME',l:'RSI ZONE',c:'#22c55e'});}
+  else if(d.rsi<45||d.rsi>55){score+=15;factors.push({v:'CLEAR',l:'RSI ZONE',c:'#f59e0b'});}
+  else{score+=5;factors.push({v:'NEUTRAL',l:'RSI ZONE',c:'#f87171'});}
+  // EMA separation
+  if(d.ema8&&d.ema21){
+    const sep=Math.abs(d.ema8-d.ema21)/d.price*100;
+    if(sep>0.1){score+=25;factors.push({v:'CLEAR',l:'EMA SEP',c:'#22c55e'});}
+    else if(sep>0.03){score+=15;factors.push({v:'MILD',l:'EMA SEP',c:'#f59e0b'});}
+    else{score+=5;factors.push({v:'TIGHT',l:'EMA SEP',c:'#f87171'});}
+  } else {factors.push({v:'N/A',l:'EMA SEP',c:'#44445a'});}
+  // MACD confirmation
+  if(d.macdHist!==null&&Math.abs(d.macdHist)>0){score+=15;factors.push({v:'CONF',l:'MACD',c:'#22c55e'});}
+  else{score+=5;factors.push({v:'WEAK',l:'MACD',c:'#f59e0b'});}
+  // Trend quality
+  score+=15;
+  factors.push({v:d.change>0?'BULL':'BEAR',l:'TREND',c:d.change>0?'#22c55e':'#f87171'});
+  const label=score>=80?'EXCELLENT':score>=65?'GOOD':score>=50?'FAIR':'POOR';
+  const cls=score>=80?'excellent':score>=65?'good':score>=50?'fair':'poor';
+  return{score,label,cls,factors};
 }
 
 async function loadAsset(key,el){
-  document.querySelectorAll('#tab-signals .asset-btn').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('#tab-scalper .asset-btn').forEach(b=>b.classList.remove('on'));
   if(el)el.classList.add('on');
+  currentAsset=key;
   const a=ASSETS[key];
-  document.getElementById('signal-body').innerHTML=`<div class="price-card"><div style="font-size:24px">${a.icon}</div><div><div style="font-size:17px;font-weight:800;color:#fff">${a.name}</div><div style="font-family:monospace;font-size:8px;color:#55556a">${a.td}</div></div><div style="margin-left:auto"><div class="pc-num loading" style="font-family:monospace;font-size:20px">Loading live data…</div></div></div>`;
+
+  document.getElementById('scalper-body').innerHTML=`
+    <div class="price-card">
+      <div style="font-size:22px">${a.icon}</div>
+      <div><div class="pc-name">${a.name}</div><div class="pc-sub">${a.td} · ${a.type} · ${currentTF.toUpperCase()} <span class="live-tag">LIVE</span></div></div>
+      <div style="margin-left:auto"><div class="pc-num loading" style="font-family:monospace;font-size:20px">Loading…</div></div>
+    </div>`;
+
   try{
-    // Sequential calls to avoid rate limiting
-    const pr=await td('price',{symbol:a.td}); await sleep(250);
-    const qr=await td('quote',{symbol:a.td}); await sleep(250);
-    const rr=await td('rsi',{symbol:a.td,interval:'1day',time_period:'14',outputsize:'1'}); await sleep(250);
-    const mr=await td('macd',{symbol:a.td,interval:'1day',outputsize:'1'}); await sleep(250);
-    const sar=await td('sma',{symbol:a.td,interval:'1day',time_period:'50',outputsize:'1'}); await sleep(250);
-    // Get candle data for pattern detection
-    const cr=await td('time_series',{symbol:a.td,interval:'1day',outputsize:'2'});
+    // Sequential API calls
+    const priceRes=await td('price',{symbol:a.td}); await sleep(200);
+    const quoteRes=await td('quote',{symbol:a.td}); await sleep(200);
+    const rsiRes=await td('rsi',{symbol:a.td,interval:currentTF,time_period:'14',outputsize:'1'}); await sleep(200);
+    const macdRes=await td('macd',{symbol:a.td,interval:currentTF,outputsize:'1'}); await sleep(200);
+    const ema8Res=await td('ema',{symbol:a.td,interval:currentTF,time_period:'8',outputsize:'1'}); await sleep(200);
+    const ema21Res=await td('ema',{symbol:a.td,interval:currentTF,time_period:'21',outputsize:'1'}); await sleep(200);
+    const bbRes=await td('bbands',{symbol:a.td,interval:currentTF,time_period:'20',outputsize:'1'});
 
-    const price=parseFloat(pr.price)||0;
-    const change=parseFloat(qr.percent_change)||0;
-    const changeAbs=parseFloat(qr.change)||0;
-    const rsi=rr.values?parseFloat(rr.values[0].rsi):null;
-    const macdLine=mr.values?parseFloat(mr.values[0].macd):null;
-    const macdSignal=mr.values?parseFloat(mr.values[0].macd_signal):null;
-    const macdHist=mr.values?parseFloat(mr.values[0].macd_hist):null;
-    const ma50=sar.values?parseFloat(sar.values[0].sma):null;
+    const price=parseFloat(priceRes.price)||0;
+    const change=parseFloat(quoteRes.percent_change)||0;
+    const changeAbs=parseFloat(quoteRes.change)||0;
+    const rsi=rsiRes.values?parseFloat(rsiRes.values[0].rsi):null;
+    const macdLine=macdRes.values?parseFloat(macdRes.values[0].macd):null;
+    const macdSignal=macdRes.values?parseFloat(macdRes.values[0].macd_signal):null;
+    const macdHist=macdRes.values?parseFloat(macdRes.values[0].macd_hist):null;
+    const ema8=ema8Res.values?parseFloat(ema8Res.values[0].ema):null;
+    const ema21=ema21Res.values?parseFloat(ema21Res.values[0].ema):null;
+    const bbUpper=bbRes.values?parseFloat(bbRes.values[0].upper_band):null;
+    const bbMiddle=bbRes.values?parseFloat(bbRes.values[0].middle_band):null;
+    const bbLower=bbRes.values?parseFloat(bbRes.values[0].lower_band):null;
 
-    // Pattern detection from candle data
-    let pattern=null;
-    if(cr.values&&cr.values[0]){
-      const c=cr.values[0];
-      pattern=detectPattern(parseFloat(c.open),parseFloat(c.high),parseFloat(c.low),parseFloat(c.close));
-    }
-
-    const d={price,change,changeAbs,rsi,macdLine,macdSignal,macdHist,ma50,pattern};
-    const sig=generateSignal(d);
+    const d={price,change,changeAbs,rsi,macdLine,macdSignal,macdHist,ema8,ema21,bbUpper,bbMiddle,bbLower};
+    const sig=generateScalpSignal(d,currentTF);
+    const quality=scalpQualityScore(d,currentTF);
     const now=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
     const sicons={BUY:'📈',HOLD:'⏸',SELL:'📉'};
-    const stop=price*(1-a.stopPct),target=price*(1+a.targetPct),rr2=(a.targetPct/a.stopPct).toFixed(1);
-    const fmt=(n,dc=2)=>n.toLocaleString('en-US',{minimumFractionDigits:dc,maximumFractionDigits:dc});
 
-    // MTF signals (simulate 1H and 4H from daily data with slight variation)
-    const mtf1h=getMTFSignal(rsi+(Math.random()*8-4),macdHist*(0.8+Math.random()*0.4),(price-ma50)/ma50*100*(0.7+Math.random()*0.6));
-    const mtf4h=getMTFSignal(rsi+(Math.random()*5-2.5),macdHist*(0.9+Math.random()*0.2),(price-ma50)/ma50*100*(0.85+Math.random()*0.3));
-    const mtfD=getMTFSignal(rsi,macdHist,(price-ma50)/ma50*100);
+    // Stop/target based on pips
+    const stopPrice=sig.signal==='SELL'?price+(a.stopPips*a.pip):price-(a.stopPips*a.pip);
+    const targetPrice=sig.signal==='SELL'?price-(a.targetPips*a.pip):price+(a.targetPips*a.pip);
+    const rr=(a.targetPips/a.stopPips).toFixed(1);
 
-    const allBull=[mtf1h,mtf4h,mtfD].every(m=>m.cls==='bull');
-    const allBear=[mtf1h,mtf4h,mtfD].every(m=>m.cls==='bear');
-    const mtfAgreement=allBull?`<div class="mtf-agree">✅ ALL TIMEFRAMES AGREE — STRONG ${sig.signal} SIGNAL · High confidence entry</div>`:
-      allBear?`<div class="mtf-disagree">🔴 ALL TIMEFRAMES AGREE — STRONG SELL SIGNAL · High confidence</div>`:
-      `<div class="mtf-neutral">⚠ TIMEFRAMES MIXED — Wait for alignment before entering. Patience = edge.</div>`;
+    // Spread estimate
+    const spreadPips=a.type==='Forex'?1.2:a.type==='Crypto'?0.05:0.02;
+    const spreadOk=spreadPips<2;
 
-    // Fear & Greed for crypto
-    let fgHtml='';
-    if(a.fg==='crypto'&&fearGreedScore!==null){
-      const fgCol=fearGreedScore<25?'#f87171':fearGreedScore<45?'#f59e0b':fearGreedScore<55?'#94a3b8':fearGreedScore<75?'#22c55e':'#3b82f6';
-      const fgSignal=fearGreedScore<25?'EXTREME FEAR — historically strong BUY':fearGreedScore<45?'FEAR — cautious buy opportunity':fearGreedScore>75?'EXTREME GREED — consider taking profits':fearGreedScore>55?'GREED — market overheated, be cautious':'NEUTRAL';
-      fgHtml=`<div class="slbl">😨 Crypto Fear & Greed Index <span class="nb">LIVE</span></div>
-      <div style="background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:11px 13px;margin-bottom:12px;display:flex;align-items:center;gap:14px;">
-        <div style="font-family:monospace;font-size:36px;font-weight:800;color:${fgCol}">${fearGreedScore}</div>
-        <div>
-          <div style="font-size:14px;font-weight:700;color:${fgCol};margin-bottom:3px">${fearGreedLabel.toUpperCase()}</div>
-          <div style="font-size:11px;color:#44445a;line-height:1.5">${fgSignal}</div>
-          <div style="height:6px;background:#1e1e2a;border-radius:3px;overflow:hidden;margin-top:7px;width:200px">
-            <div style="width:${fearGreedScore}%;height:100%;background:${fgCol};border-radius:3px"></div>
-          </div>
-        </div>
-      </div>`;
-    }
+    // EMA crossover status
+    const emaCross=ema8&&ema21?(ema8>ema21?'EMA 8 ABOVE 21 — BULLISH':'EMA 8 BELOW 21 — BEARISH'):'—';
+    const emaCrossClass=ema8&&ema21?(ema8>ema21?'bull':'bear'):'neu';
 
-    // Candlestick pattern display
-    const patternHtml=pattern?`<div class="slbl">🕯 Candlestick Pattern <span class="nb">DETECTED</span></div>
-    <div class="patterns"><div class="pat-list">
-      <div class="pat-item ${['HAMMER','MORNING_STAR','STRONG_BULLISH'].includes(pattern)?'pat-bull':'pat-bear'}">${pattern.replace(/_/g,' ')}</div>
-      <div style="font-size:10px;color:#44445a;display:flex;align-items:center">${
-        pattern==='HAMMER'?'Bullish reversal — buyers rejected lower prices strongly':
-        pattern==='SHOOTING_STAR'?'Bearish reversal — sellers rejected higher prices strongly':
-        pattern==='STRONG_BULLISH'?'Strong bullish candle — momentum confirmed':
-        pattern==='STRONG_BEARISH'?'Strong bearish candle — selling momentum':
-        pattern==='DOJI'?'Indecision — market at equilibrium, wait for next candle':
-        'Pattern detected'
-      }</div>
-    </div></div>`:'';
+    // Log this signal
+    const logEntry={time:now,asset:key.toUpperCase(),sig:sig.signal,price:price,tf:currentTF,quality:quality.label,result:'open',pnl:null};
+    signalLog.unshift(logEntry);
+    if(signalLog.length>50) signalLog.pop();
 
-    document.getElementById('signal-body').innerHTML=`
+    document.getElementById('scalper-body').innerHTML=`
       <div class="price-card">
-        <div style="font-size:24px">${a.icon}</div>
-        <div><div class="pc-name">${a.name}</div><div class="pc-sub">${a.td} · ${a.type} <span class="live-tag">LIVE</span></div></div>
+        <div style="font-size:22px">${a.icon}</div>
+        <div>
+          <div class="pc-name">${a.name}</div>
+          <div class="pc-sub">${a.td} · ${a.type} · <b style="color:#c9a84c">${currentTF.toUpperCase()}</b> <span class="live-tag">LIVE</span></div>
+        </div>
         <div class="pc-price">
           <div class="pc-num ${change>0?'up':'dn'}">$${fmt(price)}</div>
-          <div class="pc-change" style="color:${change>0?'#22c55e':'#f87171'}">${change>0?'+':''}${fmt(change)}% today</div>
+          <div class="pc-change" style="color:${change>0?'#22c55e':'#f87171'}">${change>0?'+':''}${fmt(change)}% · ${change>0?'+':''}${fmt(changeAbs)}</div>
           <div class="pc-updated">Live · ${now}</div>
+          <div class="pc-spread ${spreadOk?'spread-ok':'spread-warn'}">Spread: ~${spreadPips} pips ${spreadOk?'✓ OK':'⚠ Wide'}</div>
         </div>
       </div>
 
-      <div class="sig-card ${sig.signal}">
-        <div class="sig-top">
-          <div class="sig-emoji">${sicons[sig.signal]}</div>
-          <div><div class="sig-word">${sig.signal}</div><div class="sig-conf">${sig.conf}% confidence · ${sig.hz}</div></div>
+      <div class="main-signal ${sig.signal}">
+        <div class="ms-top">
+          <div class="ms-emoji">${sicons[sig.signal]}</div>
+          <div>
+            <div class="ms-word">${sig.signal}</div>
+            <div class="ms-conf">${sig.conf}% confidence · ${sig.hz}</div>
+            <div class="ms-tf">${currentTF.toUpperCase()} SIGNAL · Score: ${sig.score>0?'+':''}${sig.score}</div>
+          </div>
+          ${sig.urgency==='HIGH'?`<div style="margin-left:auto;font-family:monospace;font-size:10px;font-weight:800;color:#f87171;animation:flash 1s infinite;background:#3a1010;border:1px solid #7f1d1d;border-radius:4px;padding:4px 10px">⚡ HIGH PRIORITY</div>`:''}
         </div>
-        <div class="sig-txt"><b>Live signal · ${now}.</b> ${sig.reasons.join('. ')}. ${sig.signal==='BUY'?'Entry at current market. Set stop loss before entering — no exceptions.':sig.signal==='SELL'?'Downward pressure confirmed. Reduce or exit positions. Tighten stops.':'No clear edge. Wait for timeframe alignment before entering.'}</div>
+        <div class="ms-txt">
+          <b>Signal at ${now} · ${currentTF.toUpperCase()} timeframe.</b> ${sig.reasons.join('. ')}.
+          ${sig.signal==='HOLD'?'No clear edge detected. Wait for EMA crossover confirmation on MT4 before entering.':
+          sig.signal==='BUY'?`Confirm on MT4: EMA 8 should be above EMA 21 on ${currentTF} chart. If confirmed — enter at market price with stop loss below.`:
+          `Confirm on MT4: EMA 8 should be below EMA 21 on ${currentTF} chart. If confirmed — sell at market price with stop loss above.`}
+        </div>
         <div class="levels">
-          <div class="level-box"><div class="lbl-e">ENTRY</div><div class="level-val">$${fmt(price)}</div><div class="level-note">Current price</div></div>
-          <div class="level-box"><div class="lbl-s">STOP LOSS</div><div class="level-val">$${fmt(stop)}</div><div class="level-note">-${(a.stopPct*100).toFixed(1)}% · mandatory</div></div>
-          <div class="level-box"><div class="lbl-t">TARGET</div><div class="level-val">$${fmt(target)}</div><div class="level-note">R:R = 1:${rr2}</div></div>
+          <div class="level-box"><div class="lbl-e">ENTRY</div><div class="level-val">$${fmt(price)}</div><div class="level-note">Market price now</div></div>
+          <div class="level-box"><div class="lbl-s">STOP LOSS</div><div class="level-val">$${fmt(stopPrice)}</div><div class="level-note">${a.stopPips} pips · hard stop</div></div>
+          <div class="level-box"><div class="lbl-t">TARGET</div><div class="level-val">$${fmt(targetPrice)}</div><div class="level-note">${a.targetPips} pips · take profit</div></div>
+          <div class="level-box"><div class="lbl-rr">RISK:REWARD</div><div class="level-val">1:${rr}</div><div class="level-note">${parseFloat(rr)>=2?'✅ Good':'⚠ Tight'}</div></div>
         </div>
       </div>
 
-      <div class="slbl">⏱ Multi-Timeframe Analysis <span class="nb2">LEVEL 4</span></div>
-      <div class="mtf-row">
-        <div class="mtf-card"><div class="mtf-tf">1 HOUR</div><div class="mtf-sig ${mtf1h.cls}">${mtf1h.sig}</div><div class="mtf-detail">${mtf1h.detail}</div></div>
-        <div class="mtf-card"><div class="mtf-tf">4 HOUR</div><div class="mtf-sig ${mtf4h.cls}">${mtf4h.sig}</div><div class="mtf-detail">${mtf4h.detail}</div></div>
-        <div class="mtf-card"><div class="mtf-tf">DAILY</div><div class="mtf-sig ${mtfD.cls}">${mtfD.sig}</div><div class="mtf-detail">${mtfD.detail}</div></div>
-      </div>
-      ${mtfAgreement}
-
-      <div class="slbl">📊 Live Technical Indicators</div>
-      <div class="inds">
-        <div class="ind"><div class="ind-name">RSI (14)</div><div class="ind-val ${rsi<40?'bull':rsi>60?'bear':'neu'}">${rsi!==null?fmt(rsi,1):'—'}</div><div class="ind-sig ${rsi<40?'bull':rsi>60?'bear':'neu'}">${rsi<30?'Strongly Oversold':rsi<40?'Oversold':rsi>70?'Strongly Overbought':rsi>60?'Overbought':'Neutral'}</div><div class="ind-desc">&lt;30 oversold · &gt;70 overbought</div></div>
-        <div class="ind"><div class="ind-name">MACD Histogram</div><div class="ind-val ${macdHist>0?'bull':'bear'}">${macdHist!==null?(macdHist>0?'+':'')+fmt(macdHist,4):'—'}</div><div class="ind-sig ${macdHist>0?'bull':'bear'}">${macdHist>0&&macdLine>macdSignal?'Bullish Cross ✓':macdHist>0?'Positive':macdHist<0&&macdLine<macdSignal?'Bearish Cross':'Negative'}</div><div class="ind-desc">Positive = bullish momentum</div></div>
-        <div class="ind"><div class="ind-name">50-Day MA</div><div class="ind-val ${price>ma50?'bull':'bear'}">$${ma50!==null?fmt(ma50):'—'}</div><div class="ind-sig ${price>ma50?'bull':'bear'}">${price>ma50?'Above MA ✓':'Below MA'}</div><div class="ind-desc">Price vs 50-day moving avg</div></div>
-        <div class="ind"><div class="ind-name">Today's Move</div><div class="ind-val ${change>0?'bull':change<0?'bear':'neu'}">${change>0?'+':''}${fmt(change)}%</div><div class="ind-sig ${change>1?'bull':change<-1?'bear':'neu'}">${change>3?'Strong Up':change>0?'Mild Up':change<-3?'Strong Down':change<0?'Mild Down':'Flat'}</div><div class="ind-desc">Intraday momentum</div></div>
+      <div class="slbl">⚡ Scalping Indicators — ${currentTF.toUpperCase()} <span class="nb">LIVE</span></div>
+      <div class="scalp-grid">
+        <div class="si"><div class="si-name">RSI (14)</div><div class="si-val ${rsi<40?'bull':rsi>60?'bear':'neu'}">${rsi!==null?fmt(rsi,1):'—'}</div><div class="si-sig ${rsi<40?'bull':rsi>60?'bear':'neu'}">${rsi<30?'Strongly Oversold':rsi<40?'Oversold':rsi>70?'Strongly OB':rsi>60?'Overbought':'Neutral'}</div><div class="si-desc">&lt;30=strong buy · &gt;70=strong sell</div></div>
+        <div class="si"><div class="si-name">EMA 8 vs 21</div><div class="si-val ${emaCrossClass}">${ema8!==null?fmt(ema8):'—'}</div><div class="si-sig ${emaCrossClass}">${emaCross}</div><div class="si-desc">Primary scalping entry signal</div></div>
+        <div class="si"><div class="si-name">MACD Hist</div><div class="si-val ${macdHist>0?'bull':'bear'}">${macdHist!==null?(macdHist>0?'+':'')+fmt(macdHist,4):'—'}</div><div class="si-sig ${macdHist>0?'bull':'bear'}">${macdHist>0&&macdLine>macdSignal?'Bullish ✓':macdHist>0?'Positive':macdHist<0&&macdLine<macdSignal?'Bearish':'Negative'}</div><div class="si-desc">Momentum confirmation</div></div>
+        <div class="si"><div class="si-name">EMA 21</div><div class="si-val ${price>ema21?'bull':'bear'}">${ema21!==null?fmt(ema21):'—'}</div><div class="si-sig ${price>ema21?'bull':'bear'}">${price>ema21?'Price Above ✓':'Price Below'}</div><div class="si-desc">Dynamic support/resistance</div></div>
+        <div class="si"><div class="si-name">BB Position</div><div class="si-val ${bbLower&&price<(bbUpper+bbLower)/2?'bull':'bear'}">${bbMiddle!==null?fmt(bbMiddle):'—'}</div><div class="si-sig ${bbLower&&price<(bbUpper+bbLower)/2?'bull':'bear'}">${bbLower?(price<=(bbLower*1.001)?'At Lower Band':price>=(bbUpper*0.999)?'At Upper Band':price<(bbUpper+bbLower)/2?'Lower Half':'Upper Half'):'—'}</div><div class="si-desc">Overbought/oversold bands</div></div>
+        <div class="si"><div class="si-name">Momentum</div><div class="si-val ${change>0?'bull':'bear'}">${change>0?'+':''}${fmt(change)}%</div><div class="si-sig ${change>1?'bull':change<-1?'bear':'neu'}">${change>2?'Strong Up':change>0?'Mild Up':change<-2?'Strong Down':change<0?'Mild Down':'Flat'}</div><div class="si-desc">Price momentum today</div></div>
       </div>
 
-      ${fgHtml}
-      ${patternHtml}
+      <div class="vwap-box">
+        <div class="vwap-card">
+          <div class="vc-title">📊 BOLLINGER BANDS <span class="new-badge">SCALPING</span></div>
+          <div class="bb-bands">
+            <div class="bb-band"><div class="bb-lbl">UPPER BAND</div><div class="bb-val" style="color:#f87171">$${bbUpper!==null?fmt(bbUpper):'—'}</div></div>
+            <div class="bb-band"><div class="bb-lbl">MIDDLE (20MA)</div><div class="bb-val" style="color:#f59e0b">$${bbMiddle!==null?fmt(bbMiddle):'—'}</div></div>
+            <div class="bb-band"><div class="bb-lbl">LOWER BAND</div><div class="bb-val" style="color:#22c55e">$${bbLower!==null?fmt(bbLower):'—'}</div></div>
+            <div class="bb-band"><div class="bb-lbl">BAND WIDTH</div><div class="bb-val" style="color:#e0e0ec">${bbUpper&&bbLower?fmt(bbUpper-bbLower):'—'}</div></div>
+          </div>
+          <div style="font-size:10px;color:#44445a;margin-top:7px;line-height:1.5">
+            ${bbLower&&price<=(bbLower*1.002)?'⚡ Price AT LOWER BAND — high probability bounce. Strong scalp BUY setup.':
+              bbUpper&&price>=(bbUpper*0.998)?'⚡ Price AT UPPER BAND — reversal likely. Consider SELL scalp.':
+              bbUpper&&bbLower&&(bbUpper-bbLower)<(price*0.003)?'⚠ BOLLINGER SQUEEZE — breakout imminent. Wait for direction, then scalp the move.':
+              'Price inside bands. Wait for price to reach upper or lower band for highest probability scalp entry.'}
+          </div>
+        </div>
+        <div class="vwap-card">
+          <div class="vc-title">📈 EMA CROSSOVER STATUS <span class="new-badge">PRIMARY SIGNAL</span></div>
+          <div class="vc-main" style="color:${ema8&&ema21?(ema8>ema21?'#22c55e':'#f87171'):'#44445a'}">${ema8&&ema21?(ema8>ema21?'BULLISH':'BEARISH'):'LOADING'}</div>
+          <div class="vc-signal" style="color:${ema8&&ema21?(ema8>ema21?'#22c55e':'#f87171'):'#44445a'}">${emaCross}</div>
+          <div class="vc-desc" style="margin-bottom:8px">
+            ${ema8&&ema21?
+              (ema8>ema21?`EMA 8 (${fmt(ema8)}) is above EMA 21 (${fmt(ema21)}). Bullish momentum confirmed on ${currentTF} chart. Gap between EMAs: ${fmt(ema8-ema21)} — ${(ema8-ema21)/ema21*100>0.1?'strong separation':'approaching crossover'}.`:
+              `EMA 8 (${fmt(ema8)}) is below EMA 21 (${fmt(ema21)}). Bearish momentum on ${currentTF} chart. Gap: ${fmt(ema21-ema8)}.`):
+              'Loading EMA data...'}
+          </div>
+          <div style="font-size:10px;color:#44445a;line-height:1.5">
+            <b style="color:#e0e0ec">How to use:</b> TradeWise shows BUY → go to MT4 → check EMA 8 is above EMA 21 on your chart → if yes, enter. Never trade without visual confirmation.
+          </div>
+        </div>
+      </div>
 
-      <div class="disclaimer">⚠ Technical signals only. Not financial advice. Always use a stop loss. Never risk more than 1-2% per trade. Check Economic Calendar before trading.</div>
+      <div class="slbl">🎯 Scalp Quality Score</div>
+      <div class="quality-box">
+        <div class="qb-title">HOW GOOD IS THIS SCALP SETUP?</div>
+        <div class="quality-meter">
+          <div class="qm-score ${quality.cls}">${quality.score}</div>
+          <div class="qm-bar-wrap">
+            <div class="qm-label" style="color:${quality.cls==='excellent'?'#22c55e':quality.cls==='good'?'#4ade80':quality.cls==='fair'?'#f59e0b':'#f87171'}">${quality.label} SETUP</div>
+            <div class="qm-bar"><div class="qm-fill" style="width:${quality.score}%;background:${quality.cls==='excellent'?'#22c55e':quality.cls==='good'?'#4ade80':quality.cls==='fair'?'#f59e0b':'#f87171'}"></div></div>
+            <div class="qm-desc">${
+              quality.cls==='excellent'?'Multiple indicators aligned. High probability setup. Enter with full position size.':
+              quality.cls==='good'?'Good setup with most indicators aligned. Enter with normal position size. Confirm on MT4.':
+              quality.cls==='fair'?'Mixed signals. Reduce position size by 50%. Only enter if MT4 confirms clearly.':
+              'Poor setup. Do not trade. Wait for better conditions.'
+            }</div>
+          </div>
+        </div>
+        <div class="quality-factors">${quality.factors.map(f=>`<div class="qf"><div class="qf-val" style="color:${f.c}">${f.v}</div><div class="qf-lbl">${f.l}</div></div>`).join('')}</div>
+      </div>
+
+      <div class="disclaimer">⚠ Technical signals only. Not financial advice. Always confirm on MT4 before entering. Use stop loss on every trade. Check Sessions tab for optimal trading windows.</div>
     `;
+
   }catch(e){
-    document.getElementById('signal-body').innerHTML=`<div style="background:#1a0808;border:1px solid #7f1d1d;border-radius:8px;padding:14px;color:#f87171;font-family:monospace;font-size:11px;">Error: ${e.message}<br><br>Check your Twelve Data API key in Vercel environment variables.</div>`;
+    document.getElementById('scalper-body').innerHTML=`<div style="background:#1a0808;border:1px solid #7f1d1d;border-radius:8px;padding:14px;color:#f87171;font-family:monospace;font-size:11px;">Error loading ${a.name}: ${e.message}<br><br>Check Vercel environment variables — TWELVE_DATA_API_KEY must be set.</div>`;
   }
 }
 
 async function loadOverview(){
   const keys=Object.keys(ASSETS);
+  document.getElementById('overviewRows').innerHTML=`<div style="padding:14px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">Loading ${keys.length} assets…</div>`;
   const rows=[];
   for(const key of keys){
     const a=ASSETS[key];
     try{
-      const pr=await td('price',{symbol:a.td}); await sleep(200);
-      const qr=await td('quote',{symbol:a.td}); await sleep(200);
+      const pr=await td('price',{symbol:a.td}); await sleep(150);
+      const qr=await td('quote',{symbol:a.td}); await sleep(150);
+      const rr=await td('rsi',{symbol:a.td,interval:'5min',time_period:'14',outputsize:'1'}); await sleep(150);
       const price=parseFloat(pr.price)||0;
       const chg=parseFloat(qr.percent_change)||0;
-      const sig=chg>1.5?'BUY':chg<-1.5?'SELL':'HOLD';
-      const fgStr=a.fg==='crypto'&&fearGreedScore?`${fearGreedScore} ${fearGreedLabel.split(' ')[0]}`:'—';
-      rows.push(`<div class="mkt-row" onclick="goSignal('${key}')">
-        <div class="mkt-icon">${a.icon}</div>
-        <div class="mkt-info"><div class="mkt-sym">${a.td}</div><div class="mkt-type-lbl">${a.type}</div></div>
-        <div class="mkt-price" style="color:#e0e0ec">$${price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
-        <div class="mkt-chg" style="color:${chg>0?'#22c55e':'#f87171'}">${chg>0?'+':''}${chg.toFixed(2)}%</div>
-        <div class="mkt-fg" style="color:${a.fg==='crypto'&&fearGreedScore?fearGreedScore<45?'#f87171':fearGreedScore>55?'#22c55e':'#f59e0b':'#44445a'}">${fgStr}</div>
-        <div class="mkt-sig ${sig}">${sig}</div>
+      const rsi=rr.values?parseFloat(rr.values[0].rsi):50;
+      const sig=rsi<40&&chg>0?'BUY':rsi>60&&chg<0?'SELL':chg>1.5?'BUY':chg<-1.5?'SELL':'HOLD';
+      const quality=rsi<35||rsi>65?'EXCELLENT':rsi<45||rsi>55?'GOOD':rsi<50||rsi>50?'FAIR':'POOR';
+      const qCol=quality==='EXCELLENT'?'#22c55e':quality==='GOOD'?'#4ade80':quality==='FAIR'?'#f59e0b':'#f87171';
+      rows.push(`<div class="ov-row" onclick="goSignal('${key}')">
+        <div class="ov-icon">${a.icon}</div>
+        <div style="min-width:65px"><div class="ov-sym">${a.td}</div><div class="ov-type">${a.type}</div></div>
+        <div class="ov-price" style="color:#e0e0ec">$${price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+        <div class="ov-chg" style="color:${chg>0?'#22c55e':'#f87171'}">${chg>0?'+':''}${chg.toFixed(2)}%</div>
+        <div class="ov-rsi" style="color:${rsi<40?'#22c55e':rsi>60?'#f87171':'#f59e0b'}">${rsi.toFixed(1)}</div>
+        <div class="ov-quality" style="color:${qCol}">${quality}</div>
+        <div class="ov-sig ${sig}">${sig}</div>
       </div>`);
     }catch(e){
-      rows.push(`<div class="mkt-row"><div class="mkt-icon">${a.icon}</div><div class="mkt-info"><div class="mkt-sym">${a.td}</div></div><div class="mkt-price" style="color:#44445a">Error</div><div class="mkt-chg">—</div><div class="mkt-fg">—</div><div class="mkt-sig HOLD">—</div></div>`);
+      rows.push(`<div class="ov-row"><div class="ov-icon">${a.icon}</div><div style="min-width:65px"><div class="ov-sym">${a.td}</div></div><div class="ov-price" style="color:#44445a">—</div><div class="ov-chg">—</div><div class="ov-rsi">—</div><div class="ov-quality">—</div><div class="ov-sig HOLD">—</div></div>`);
     }
   }
   document.getElementById('overviewRows').innerHTML=rows.join('');
 }
 
 function goSignal(key){
-  showTab('signals',document.querySelector('.tab'));
+  showTab('scalper',document.querySelector('.tab'));
   document.querySelectorAll('.tab')[0].classList.add('on');
-  const btn=[...document.querySelectorAll('#tab-signals .asset-btn')].find(b=>b.querySelector('.asset-sym')?.textContent===key.toUpperCase()||b.getAttribute('onclick')?.includes(`'${key}'`));
+  const btn=[...document.querySelectorAll('#tab-scalper .asset-btn')].find(b=>b.getAttribute('onclick')?.includes(`'${key}'`));
   loadAsset(key,btn||document.querySelector('.asset-btn'));
 }
 
-// BACKTEST DATA — historical signal performance
-const BACKTEST={
-  tsla:{winRate:61,totalTrades:48,avgWin:8.4,avgLoss:-4.2,sharpe:1.18,maxDD:-12.3,trades:[
-    {date:'May 2025',sig:'BUY',entry:'$242.10',exit:'$268.40',pnl:'+10.9%',result:'win'},
-    {date:'Apr 2025',sig:'SELL',entry:'$278.30',exit:'$261.50',pnl:'+6.0%',result:'win'},
-    {date:'Mar 2025',sig:'BUY',entry:'$251.00',exit:'$244.20',pnl:'-2.7%',result:'lose'},
-    {date:'Feb 2025',sig:'BUY',entry:'$236.40',exit:'$258.10',pnl:'+9.2%',result:'win'},
-    {date:'Jan 2025',sig:'SELL',entry:'$262.80',exit:'$271.40',pnl:'-3.3%',result:'lose'},
-    {date:'Dec 2024',sig:'BUY',entry:'$244.50',exit:'$265.30',pnl:'+8.5%',result:'win'},
-  ]},
-  nvda:{winRate:68,totalTrades:52,avgWin:12.1,avgLoss:-5.8,sharpe:1.64,maxDD:-9.8,trades:[
-    {date:'May 2025',sig:'BUY',entry:'$842.00',exit:'$891.20',pnl:'+5.8%',result:'win'},
-    {date:'Apr 2025',sig:'BUY',entry:'$798.50',exit:'$855.30',pnl:'+7.1%',result:'win'},
-    {date:'Mar 2025',sig:'SELL',entry:'$870.20',exit:'$831.40',pnl:'+4.5%',result:'win'},
-    {date:'Feb 2025',sig:'BUY',entry:'$780.00',exit:'$762.30',pnl:'-2.3%',result:'lose'},
-    {date:'Jan 2025',sig:'BUY',entry:'$742.80',exit:'$798.50',pnl:'+7.5%',result:'win'},
-  ]},
-  btc:{winRate:55,totalTrades:38,avgWin:18.4,avgLoss:-9.2,sharpe:0.94,maxDD:-24.1,trades:[
-    {date:'May 2025',sig:'BUY',entry:'$89,400',exit:'$97,200',pnl:'+8.7%',result:'win'},
-    {date:'Apr 2025',sig:'SELL',entry:'$94,800',exit:'$88,300',pnl:'+6.9%',result:'win'},
-    {date:'Mar 2025',sig:'BUY',entry:'$82,100',exit:'$76,400',pnl:'-6.9%',result:'lose'},
-    {date:'Feb 2025',sig:'BUY',entry:'$78,500',exit:'$94,200',pnl:'+20.0%',result:'win'},
-    {date:'Jan 2025',sig:'SELL',entry:'$98,400',exit:'$84,600',pnl:'+14.0%',result:'win'},
-  ]},
-  xauusd:{winRate:71,totalTrades:44,avgWin:6.8,avgLoss:-3.1,sharpe:1.82,maxDD:-7.4,trades:[
-    {date:'May 2025',sig:'BUY',entry:'$3,180',exit:'$3,294',pnl:'+3.6%',result:'win'},
-    {date:'Apr 2025',sig:'BUY',entry:'$3,048',exit:'$3,185',pnl:'+4.5%',result:'win'},
-    {date:'Mar 2025',sig:'BUY',entry:'$2,940',exit:'$3,062',pnl:'+4.1%',result:'win'},
-    {date:'Feb 2025',sig:'SELL',entry:'$2,890',exit:'$2,924',pnl:'-1.2%',result:'lose'},
-    {date:'Jan 2025',sig:'BUY',entry:'$2,650',exit:'$2,798',pnl:'+5.6%',result:'win'},
-  ]},
-  eurusd:{winRate:64,totalTrades:61,avgWin:1.8,avgLoss:-0.9,sharpe:1.44,maxDD:-4.2,trades:[
-    {date:'May 2025',sig:'BUY',entry:'1.0820',exit:'1.0948',pnl:'+128 pips',result:'win'},
-    {date:'Apr 2025',sig:'SELL',entry:'1.1042',exit:'1.0918',pnl:'+124 pips',result:'win'},
-    {date:'Mar 2025',sig:'BUY',entry:'1.0748',exit:'1.0812',pnl:'+64 pips',result:'win'},
-    {date:'Feb 2025',sig:'SELL',entry:'1.0924',exit:'1.0968',pnl:'-44 pips',result:'lose'},
-    {date:'Jan 2025',sig:'BUY',entry:'1.0682',exit:'1.0748',pnl:'+66 pips',result:'win'},
-  ]},
-};
-
-function showBacktest(key,el){
-  document.querySelectorAll('#tab-backtest .asset-btn').forEach(b=>b.classList.remove('on'));
-  if(el)el.classList.add('on');
-  const b=BACKTEST[key]||BACKTEST.tsla;
-  const a=ASSETS[key];
-  const ddCol=b.maxDD>-10?'#22c55e':b.maxDD>-20?'#f59e0b':'#f87171';
-  document.getElementById('backtest-body').innerHTML=`
-    <div class="slbl">📈 Historical Signal Performance — ${a?.name||key.toUpperCase()} <span class="nb2">LAST 6 MONTHS</span></div>
-    <div class="bt-grid">
-      <div class="bt-card"><div class="bt-lbl">WIN RATE</div><div class="bt-val g">${b.winRate}%</div><div class="bt-sub">of ${b.totalTrades} signals</div></div>
-      <div class="bt-card"><div class="bt-lbl">AVG WIN</div><div class="bt-val g">+${b.avgWin}%</div><div class="bt-sub">per winning trade</div></div>
-      <div class="bt-card"><div class="bt-lbl">AVG LOSS</div><div class="bt-val r">${b.avgLoss}%</div><div class="bt-sub">per losing trade</div></div>
-      <div class="bt-card"><div class="bt-lbl">SHARPE RATIO</div><div class="bt-val gold">${b.sharpe}</div><div class="bt-sub">&gt;1.0 = good · &gt;2.0 = excellent</div></div>
-    </div>
-    <div style="background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:11px 13px;margin-bottom:12px;display:flex;gap:20px;align-items:center;">
-      <div><div style="font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:4px">MAX DRAWDOWN</div><div style="font-family:monospace;font-size:20px;font-weight:800;color:${ddCol}">${b.maxDD}%</div></div>
-      <div style="flex:1;font-size:11px;color:#44445a;line-height:1.5">
-        ${b.sharpe>1.5?`✅ Strong risk-adjusted returns. Sharpe of ${b.sharpe} is above professional threshold of 1.0. This strategy is worth trading with proper position sizing.`:
-        b.sharpe>1.0?`⚠ Acceptable performance. Sharpe of ${b.sharpe} meets minimum threshold. Use strict position sizing and stop losses.`:
-        `❌ Below average risk-adjusted returns. Sharpe of ${b.sharpe} is below 1.0. Consider paper trading before using real capital.`}
-        Win rate of ${b.winRate}% with ${Math.abs(b.avgWin/b.avgLoss).toFixed(1)}:1 reward/risk = ${b.winRate>50&&Math.abs(b.avgWin/b.avgLoss)>1.5?'profitable edge':'marginal edge'}.
-      </div>
-    </div>
-    <div class="slbl">📋 Recent Signal Log</div>
-    <div class="trade-log">
-      <div class="tl-row" style="background:#1a1a22;cursor:default">
-        <div class="tl-date" style="font-size:8px;color:#44445a">DATE</div>
-        <div class="tl-sig" style="background:transparent;color:#44445a;font-size:8px">SIG</div>
-        <div class="tl-entry" style="font-family:monospace;font-size:8px;color:#44445a">ENTRY</div>
-        <div class="tl-exit" style="font-family:monospace;font-size:8px;color:#44445a">EXIT</div>
-        <div class="tl-pnl" style="font-size:8px;color:#44445a">P&L</div>
-        <div class="tl-result" style="background:transparent;color:#44445a;font-size:8px">RESULT</div>
-      </div>
-      ${b.trades.map(t=>`<div class="tl-row">
-        <div class="tl-date">${t.date}</div>
-        <div class="tl-sig ${t.sig}">${t.sig}</div>
-        <div class="tl-entry">${t.entry}</div>
-        <div class="tl-exit">${t.exit}</div>
-        <div class="tl-pnl ${t.result==='win'?'pos':'neg'}">${t.pnl}</div>
-        <div class="tl-result ${t.result}">${t.result.toUpperCase()}</div>
-      </div>`).join('')}
-    </div>
-    <div class="disclaimer">⚠ Backtest results are historical and do not guarantee future performance. Past signal accuracy varies by market conditions. Always use stop losses.</div>
-  `;
+function renderSessions(){
+  const now=new Date();
+  const utcH=now.getUTCHours();
+  const utcM=now.getUTCMinutes();
+  const utcTotal=utcH*60+utcM;
+  const sessions=[
+    {name:'SYDNEY',open:22*60,close:7*60,wrap:true,color:'#a855f7',best:'AUD/USD, NZD/USD'},
+    {name:'TOKYO',open:0,close:9*60,wrap:false,color:'#f59e0b',best:'USD/JPY, AUD/JPY'},
+    {name:'LONDON',open:8*60,close:16*60,wrap:false,color:'#22c55e',best:'GBP/USD, EUR/USD, XAU/USD'},
+    {name:'NEW YORK',open:13*60,close:21*60,wrap:false,color:'#3b82f6',best:'XAU/USD, EUR/USD, Stocks'},
+  ];
+  document.getElementById('sessionCards').innerHTML=sessions.map(s=>{
+    let isOpen;
+    if(s.wrap) isOpen=utcTotal>=s.open||utcTotal<s.close;
+    else isOpen=utcTotal>=s.open&&utcTotal<s.close;
+    const isLondonNY=utcTotal>=13*60&&utcTotal<16*60;
+    const status=s.name==='LONDON'&&isLondonNY?'overlap':isOpen?'open':'closed';
+    const openStr=`${Math.floor(s.open/60).toString().padStart(2,'0')}:00`;
+    const closeStr=`${Math.floor((s.wrap?s.close+24*60:s.close)/60%24).toString().padStart(2,'0')}:00`;
+    return `<div class="session-card">
+      <div class="sess-name">${s.name}</div>
+      <div class="sess-status ${status}" style="color:${status==='closed'?'#44445a':s.color}">${status==='overlap'?'⭐ OVERLAP':status==='open'?'● OPEN':'○ CLOSED'}</div>
+      <div class="sess-time">${openStr}–${closeStr} UTC</div>
+      <div class="sess-quality" style="color:${status==='overlap'?'#f59e0b':status==='open'?s.color:'#44445a'}">${status==='overlap'?'BEST WINDOW':status==='open'?'ACTIVE':'AVOID'}</div>
+    </div>`;
+  }).join('');
 }
 
-// Economic Calendar — realistic upcoming events
-function loadCalendar(){
-  const now=new Date();
-  const events=[
-    {day:'Today',time:'08:30 EST',impact:'high',event:'US Non-Farm Payrolls (NFP)',note:'Most volatile event of the month. Close all USD pairs 30 min before.'},
-    {day:'Today',time:'10:00 EST',impact:'med',event:'ISM Manufacturing PMI',note:'Affects USD. Tighten stops on EURUSD and GBPUSD.'},
-    {day:'Tomorrow',time:'09:30 EST',impact:'low',event:'US Trade Balance',note:'Minor impact. Trade normally.'},
-    {day:'Wed',time:'14:00 EST',impact:'high',event:'Federal Reserve Interest Rate Decision',note:'EXTREME VOLATILITY. Do not have open positions. 200+ pip moves possible on all USD pairs.'},
-    {day:'Wed',time:'14:30 EST',impact:'high',event:'Fed Press Conference',note:'Continues after rate decision. Stay out of market for 2 hours total.'},
-    {day:'Thu',time:'08:30 EST',impact:'high',event:'US CPI (Inflation Data)',note:'Second most volatile event. Affects gold, stocks, and all forex. Close positions before.'},
-    {day:'Thu',time:'08:30 EST',impact:'med',event:'Initial Jobless Claims',note:'Weekly jobs data. Moderate USD impact.'},
-    {day:'Fri',time:'08:30 EST',impact:'med',event:'US Retail Sales',note:'Consumer spending indicator. Moderate market impact.'},
-    {day:'Fri',time:'10:00 EST',impact:'low',event:'University of Michigan Consumer Sentiment',note:'Minor impact on USD.'},
-  ];
-  document.getElementById('calBody').innerHTML=events.map(e=>`
-    <div class="cal-item">
-      <div class="cal-time">${e.day}<br>${e.time}</div>
-      <div class="cal-impact ${e.impact}"></div>
-      <div style="flex:1">
-        <div class="cal-event">${e.event}</div>
-        <div class="cal-note">${e.note}</div>
-      </div>
-      <div class="cal-badge ${e.impact}">${e.impact.toUpperCase()}</div>
+function renderLog(){
+  document.getElementById('log-count').textContent=signalLog.length;
+  const closed=signalLog.filter(s=>s.result!=='open');
+  const wins=closed.filter(s=>s.result==='win').length;
+  document.getElementById('log-winrate').textContent=closed.length?Math.round(wins/closed.length*100)+'%':'—';
+  if(!signalLog.length){
+    document.getElementById('logList').innerHTML=`<div style="padding:20px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">No signals yet — analyze an asset to start tracking</div>`;
+    return;
+  }
+  document.getElementById('logList').innerHTML=signalLog.map(s=>`
+    <div class="log-item">
+      <div class="log-time">${s.time}</div>
+      <div class="log-sig ${s.sig}">${s.sig}</div>
+      <div class="log-price">${s.asset} · $${s.price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})} · ${s.tf}</div>
+      <div style="font-family:monospace;font-size:8px;color:#44445a;min-width:60px">${s.quality}</div>
+      <div class="log-result ${s.result}">${s.result.toUpperCase()}</div>
+      <div class="log-pnl ${s.result==='open'?'open':s.pnl>0?'pos':'neg'}">${s.pnl!==null?(s.pnl>0?'+':'')+s.pnl.toFixed(1)+'%':'OPEN'}</div>
     </div>`).join('');
 }
 
+function exportLog(){
+  const csv='Time,Asset,Signal,Price,Timeframe,Quality,Result,P&L\n'+
+    signalLog.map(s=>`${s.time},${s.asset},${s.sig},$${s.price},${s.tf},${s.quality},${s.result},${s.pnl||'open'}`).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='tradewise_signals.csv';a.click();
+}
+
+function clearLog(){ signalLog=[]; renderLog(); }
+
 function calcRisk(){
   const bal=parseFloat(document.getElementById('ri-bal').value)||10000;
-  const riskPct=parseFloat(document.getElementById('ri-risk').value)||1;
-  const entry=parseFloat(document.getElementById('ri-entry').value);
-  const stop=parseFloat(document.getElementById('ri-stop').value);
-  const target=parseFloat(document.getElementById('ri-target').value);
-  const vol=parseFloat(document.getElementById('ri-vol').value)||1;
-  if(!entry||!stop||!target){alert('Fill in Entry, Stop Loss, and Target');return;}
-  const riskAmt=(bal*(riskPct/100))/vol; // volatility-adjusted
-  const stopDist=Math.abs(entry-stop);
-  const targetDist=Math.abs(target-entry);
-  const posSize=riskAmt/stopDist;
-  const rr=targetDist/stopDist;
-  const profit=posSize*targetDist;
+  const riskPct=parseFloat(document.getElementById('ri-risk').value)||0.5;
+  const entry=parseFloat(document.getElementById('ri-entry').value)||0;
+  const stopPips=parseFloat(document.getElementById('ri-stop-pips').value)||10;
+  const targetPips=parseFloat(document.getElementById('ri-target-pips').value)||20;
+  const assetType=document.getElementById('ri-asset').value;
+  const pipValues={forex:10,gold:10,crypto:1,stock:1};
+  const pipVal=pipValues[assetType]||10;
+  const riskAmt=bal*(riskPct/100);
+  const lots=riskAmt/(stopPips*pipVal);
+  const rr=targetPips/stopPips;
+  const profit=lots*targetPips*pipVal;
   const rrC=rr>=2?'g':rr>=1.5?'a':'r';
   document.getElementById('rGrid').innerHTML=`
-    <div style="text-align:center"><div class="r-val g">$${riskAmt.toFixed(0)}</div><div class="r-lbl">MAX RISK</div></div>
-    <div style="text-align:center"><div class="r-val ${rrC}">${rr.toFixed(2)}:1</div><div class="r-lbl">RISK:REWARD</div></div>
-    <div style="text-align:center"><div class="r-val g">$${profit.toFixed(0)}</div><div class="r-lbl">POTENTIAL PROFIT</div></div>
+    <div style="text-align:center"><div class="rv g">$${riskAmt.toFixed(0)}</div><div class="rl">MAX RISK</div></div>
+    <div style="text-align:center"><div class="rv ${rrC}">${rr.toFixed(1)}:1</div><div class="rl">RISK:REWARD</div></div>
+    <div style="text-align:center"><div class="rv g">$${profit.toFixed(0)}</div><div class="rl">POTENTIAL PROFIT</div></div>
   `;
-  document.getElementById('rNote').innerHTML=`<b style="color:#e0e0ec">Position Size: ${posSize.toFixed(4)} units</b> (volatility-adjusted)<br>${rr>=2?'✅ Good R:R — meets professional standards.':rr>=1.5?'⚠ Acceptable but below ideal 2:1 minimum.':'❌ Poor R:R — skip this trade or widen target.'}<br><br>MT4 volume: <b style="color:#c9a84c">${posSize.toFixed(2)} lots</b> · SL: <b style="color:#f87171">$${stop}</b> · TP: <b style="color:#22c55e">$${target}</b>`;
+  document.getElementById('rNote').innerHTML=`<b style="color:#e0e0ec">Lot Size: ${lots.toFixed(2)} lots</b><br>${rr>=2?'✅ Good R:R for scalping.':rr>=1.5?'⚠ Acceptable but aim for 2:1 minimum.':'❌ Poor R:R — widen target or tighten stop.'}<br><br>MT4 volume: <b style="color:#c9a84c">${lots.toFixed(2)}</b> · SL: <b style="color:#f87171">${stopPips} pips</b> · TP: <b style="color:#22c55e">${targetPips} pips</b>`;
   document.getElementById('rResult').className='r-result show';
 }
 
 // Init
-fetchFearGreed().then(()=>{
-  loadAsset('tsla',document.querySelector('#tab-signals .asset-btn'));
-});
+renderSessions();
+setInterval(renderSessions,60000);
+loadAsset('xauusd',document.querySelector('#tab-scalper .asset-btn'));
 </script>
 </body>
 </html>
