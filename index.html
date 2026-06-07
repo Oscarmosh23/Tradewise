@@ -2,15 +2,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TradeWise Scalper Pro — High Accuracy</title>
+<title>TradeWise Scalper Pro</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-size:14px;min-height:100vh;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-@keyframes glow-green{0%,100%{box-shadow:0 0 10px #22c55e40}50%{box-shadow:0 0 28px #22c55e90}}
-@keyframes glow-red{0%,100%{box-shadow:0 0 10px #f8717140}50%{box-shadow:0 0 28px #f8717190}}
-@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glow-green{0%,100%{box-shadow:0 0 12px #22c55e50}50%{box-shadow:0 0 30px #22c55e90}}
+@keyframes glow-red{0%,100%{box-shadow:0 0 12px #f8717150}50%{box-shadow:0 0 30px #f8717190}}
+@keyframes glow-amber{0%,100%{box-shadow:0 0 8px #f59e0b30}50%{box-shadow:0 0 20px #f59e0b60}}
 
 .nav{background:#060608;border-bottom:2px solid #c9a84c;padding:0 16px;display:flex;align-items:center;height:50px;gap:10px;}
 .logo{font-size:15px;font-weight:800;color:#c9a84c;}
@@ -18,7 +18,6 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
 .nt-gold{background:#1a1608;color:#c9a84c;border-color:#3a2e10;}
 .nt-green{background:#0a2010;color:#22c55e;border-color:#1a5a20;}
 .nt-blue{background:#0a1020;color:#3b82f6;border-color:#1a3060;}
-.nt-purple{background:#1a0a2a;color:#a855f7;border-color:#5a1a8a;}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:7px;}
 .nav-clock{font-family:monospace;font-size:10px;color:#22c55e;}
 .nav-btn{background:#1a1a22;border:1px solid #26263a;border-radius:4px;padding:4px 10px;font-family:monospace;font-size:9px;color:#c9a84c;cursor:pointer;transition:all .12s;}
@@ -43,7 +42,6 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
 .asset-type{font-size:8px;margin-top:1px;font-family:monospace;}
 .gold{color:#c9a84c;}.forex{color:#a855f7;}.crypto{color:#f59e0b;}.stock{color:#3b82f6;}
 
-/* PRICE */
 .price-card{background:linear-gradient(135deg,#111115,#1a1608);border:1px solid #3a2e10;border-radius:9px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
 .pc-icon{font-size:22px;}
 .pc-name{font-size:16px;font-weight:800;color:#fff;margin-bottom:2px;}
@@ -56,64 +54,69 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
 .pc-time{font-family:monospace;font-size:7px;color:#2a2a3a;margin-top:1px;}
 
 /* CONFLUENCE METER */
-.confluence-box{background:#111115;border:1px solid #1e1e2a;border-radius:9px;padding:12px 14px;margin-bottom:10px;}
-.conf-title{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.1em;margin-bottom:8px;}
-.conf-score-row{display:flex;align-items:center;gap:14px;margin-bottom:10px;}
-.conf-num{font-family:monospace;font-size:36px;font-weight:800;min-width:60px;}
-.conf-num.c6{color:#22c55e;}.conf-num.c5{color:#4ade80;}.conf-num.c4{color:#a3e635;}.conf-num.c3{color:#f59e0b;}.conf-num.c2{color:#fb923c;}.conf-num.c1,.conf-num.c0{color:#f87171;}
-.conf-bar-wrap{flex:1;}
-.conf-label{font-size:13px;font-weight:700;margin-bottom:4px;}
-.conf-bar{height:8px;background:#1e1e2a;border-radius:4px;overflow:hidden;margin-bottom:5px;}
-.conf-fill{height:100%;border-radius:4px;transition:width .8s ease;}
-.conf-desc{font-size:10px;color:#44445a;line-height:1.5;}
-.conf-dots{display:flex;gap:5px;flex-wrap:wrap;}
-.conf-dot{border-radius:4px;padding:3px 8px;font-family:monospace;font-size:8px;font-weight:700;}
-.cd-pass{background:#052e16;color:#22c55e;border:1px solid #166534;}
-.cd-fail{background:#1a0808;color:#f87171;border:1px solid #7f1d1d;}
-.cd-warn{background:#1a1200;color:#f59e0b;border:1px solid #78350f;}
+.cf-box{background:#111115;border:1px solid #1e1e2a;border-radius:9px;padding:12px 14px;margin-bottom:10px;}
+.cf-title{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.1em;margin-bottom:8px;}
+.cf-row{display:flex;align-items:center;gap:14px;margin-bottom:10px;}
+.cf-num{font-family:monospace;font-size:36px;font-weight:800;min-width:58px;line-height:1;}
+.cf-bar-wrap{flex:1;}
+.cf-label{font-size:13px;font-weight:700;margin-bottom:4px;}
+.cf-bar{height:8px;background:#1e1e2a;border-radius:4px;overflow:hidden;margin-bottom:5px;}
+.cf-fill{height:100%;border-radius:4px;transition:width .8s ease;}
+.cf-desc{font-size:10px;color:#44445a;line-height:1.5;}
+.cf-layers{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.cl-pass{background:#052e16;color:#22c55e;border:1px solid #166534;border-radius:4px;padding:3px 8px;font-family:monospace;font-size:8px;font-weight:700;}
+.cl-bonus{background:#1a1608;color:#c9a84c;border:1px solid #3a2e10;border-radius:4px;padding:3px 8px;font-family:monospace;font-size:8px;font-weight:700;}
+.cl-fail{background:#1a0808;color:#f87171;border:1px solid #7f1d1d;border-radius:4px;padding:3px 8px;font-family:monospace;font-size:8px;font-weight:700;}
 
 /* MAIN SIGNAL */
-.main-signal{border-radius:10px;padding:14px 16px;margin-bottom:10px;border:2px solid;}
-.main-signal.STRONG_BUY{background:linear-gradient(135deg,#052e16,#091e0a);border-color:#166534;animation:glow-green 2s infinite;}
-.main-signal.STRONG_SELL{background:linear-gradient(135deg,#1a0808,#240f0f);border-color:#7f1d1d;animation:glow-red 2s infinite;}
-.main-signal.WAIT{background:#111115;border-color:#334155;}
-.main-signal.LOW_CONF{background:#1a1200;border-color:#78350f;}
+.main-sig{border-radius:10px;padding:14px 16px;margin-bottom:10px;border:2px solid;}
+.main-sig.STRONG_BUY{background:linear-gradient(135deg,#052e16,#091e0a);border-color:#166534;animation:glow-green 2s infinite;}
+.main-sig.STRONG_SELL{background:linear-gradient(135deg,#1a0808,#240f0f);border-color:#7f1d1d;animation:glow-red 2s infinite;}
+.main-sig.NORMAL_BUY{background:linear-gradient(135deg,#031a0e,#050f07);border-color:#14532d;}
+.main-sig.NORMAL_SELL{background:linear-gradient(135deg,#110505,#180808);border-color:#450a0a;}
+.main-sig.WAIT{background:#111115;border-color:#334155;}
 .ms-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
 .ms-emoji{font-size:30px;}
 .ms-word{font-size:24px;font-weight:800;line-height:1;}
-.STRONG_BUY .ms-word{color:#22c55e;}
-.STRONG_SELL .ms-word{color:#f87171;}
+.STRONG_BUY .ms-word,.NORMAL_BUY .ms-word{color:#22c55e;}
+.STRONG_SELL .ms-word,.NORMAL_SELL .ms-word{color:#f87171;}
 .WAIT .ms-word{color:#64748b;}
-.LOW_CONF .ms-word{color:#f59e0b;}
 .ms-sub{font-family:monospace;font-size:9px;margin-top:3px;}
-.STRONG_BUY .ms-sub{color:#4ade80;}
-.STRONG_SELL .ms-sub{color:#fca5a5;}
+.STRONG_BUY .ms-sub,.NORMAL_BUY .ms-sub{color:#4ade80;}
+.STRONG_SELL .ms-sub,.NORMAL_SELL .ms-sub{color:#fca5a5;}
 .WAIT .ms-sub{color:#94a3b8;}
-.LOW_CONF .ms-sub{color:#fbbf24;}
-.ms-badge{margin-left:auto;font-family:monospace;font-size:10px;font-weight:800;padding:6px 14px;border-radius:6px;}
-.badge-buy{background:#052e16;color:#22c55e;border:1px solid #166534;}
-.badge-sell{background:#3a1010;color:#f87171;border:1px solid #7f1d1d;}
+.ms-badge{margin-left:auto;font-family:monospace;font-size:10px;font-weight:800;padding:6px 14px;border-radius:6px;white-space:nowrap;}
+.badge-strong{background:#052e16;color:#22c55e;border:1px solid #166534;}
+.badge-strong-sell{background:#3a1010;color:#f87171;border:1px solid #7f1d1d;}
+.badge-normal{background:#14532d;color:#4ade80;border:1px solid #166534;}
+.badge-normal-sell{background:#450a0a;color:#fca5a5;border:1px solid #7f1d1d;}
 .badge-wait{background:#1e2030;color:#64748b;border:1px solid #334155;}
-.badge-low{background:#2a1800;color:#f59e0b;border:1px solid #78350f;}
-.ms-explain{font-size:11px;line-height:1.65;color:#b8b8cc;border-top:1px solid rgba(255,255,255,.07);padding-top:9px;margin-bottom:9px;}
+.ms-txt{font-size:11px;line-height:1.65;color:#b8b8cc;border-top:1px solid rgba(255,255,255,.07);padding-top:9px;margin-bottom:9px;}
 .levels{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;}
-.level-box{background:rgba(0,0,0,.35);border-radius:5px;padding:7px 9px;}
-.lbl-e{font-family:monospace;font-size:7px;color:#22c55e;font-weight:700;letter-spacing:.1em;margin-bottom:2px;}
-.lbl-s{font-family:monospace;font-size:7px;color:#f87171;font-weight:700;letter-spacing:.1em;margin-bottom:2px;}
-.lbl-t{font-family:monospace;font-size:7px;color:#c9a84c;font-weight:700;letter-spacing:.1em;margin-bottom:2px;}
-.lbl-rr{font-family:monospace;font-size:7px;color:#3b82f6;font-weight:700;letter-spacing:.1em;margin-bottom:2px;}
-.level-val{font-family:monospace;font-size:13px;font-weight:800;color:#e0e0ec;}
-.level-note{font-size:8px;color:#44445a;margin-top:1px;}
+.lvl{background:rgba(0,0,0,.35);border-radius:5px;padding:7px 9px;}
+.lvl-lbl{font-family:monospace;font-size:7px;font-weight:700;letter-spacing:.1em;margin-bottom:2px;}
+.lvl-e .lvl-lbl{color:#22c55e;}.lvl-s .lvl-lbl{color:#f87171;}.lvl-t .lvl-lbl{color:#c9a84c;}.lvl-rr .lvl-lbl{color:#3b82f6;}
+.lvl-val{font-family:monospace;font-size:13px;font-weight:800;color:#e0e0ec;}
+.lvl-note{font-size:8px;color:#44445a;margin-top:1px;}
 
-/* FILTER GRID */
-.filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;}
-.filter-card{background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:9px 11px;}
-.fc-title{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:5px;}
-.fc-val{font-size:13px;font-weight:800;margin-bottom:2px;}
-.fc-val.pass{color:#22c55e;}.fc-val.fail{color:#f87171;}.fc-val.warn{color:#f59e0b;}
-.fc-status{font-size:10px;font-weight:600;}
-.fc-status.pass{color:#22c55e;}.fc-status.fail{color:#f87171;}.fc-status.warn{color:#f59e0b;}
-.fc-note{font-size:9px;color:#44445a;margin-top:3px;line-height:1.4;}
+/* LAYER CARDS */
+.layer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;}
+.layer-card{background:#111115;border-radius:7px;padding:9px 11px;border:1px solid;}
+.layer-card.pass{border-color:#166534;background:#052e1615;}
+.layer-card.bonus{border-color:#3a2e10;background:#1a160815;}
+.layer-card.fail{border-color:#1e1e2a;}
+.lc-label{font-family:monospace;font-size:7px;letter-spacing:.1em;margin-bottom:5px;}
+.layer-card.pass .lc-label{color:#22c55e;}
+.layer-card.bonus .lc-label{color:#c9a84c;}
+.layer-card.fail .lc-label{color:#44445a;}
+.lc-status{font-size:13px;font-weight:800;margin-bottom:2px;}
+.layer-card.pass .lc-status{color:#22c55e;}
+.layer-card.bonus .lc-status{color:#c9a84c;}
+.layer-card.fail .lc-status{color:#44445a;}
+.lc-note{font-size:9px;line-height:1.4;}
+.layer-card.pass .lc-note{color:#44645a;}
+.layer-card.bonus .lc-note{color:#44440a;}
+.layer-card.fail .lc-note{color:#44445a;}
 
 /* TF ROW */
 .tf-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;margin-bottom:10px;}
@@ -121,9 +124,9 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
 .tf-card.tf-buy{border-color:#166534;background:#052e1618;}
 .tf-card.tf-sell{border-color:#7f1d1d;background:#1a080818;}
 .tf-card.tf-hold{border-color:#334155;}
-.tc-label{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:4px;}
+.tc-lbl{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:4px;}
 .tc-sig{font-size:14px;font-weight:800;margin-bottom:2px;}
-.tf-buy .tc-sig{color:#22c55e;}.tf-sell .tc-sig{color:#f87171;}.tf-hold .tc-sig{color:#f59e0b;}
+.tf-buy .tc-sig{color:#22c55e;}.tf-sell .tc-sig{color:#f87171;}.tf-hold .tc-sig{color:#64748b;}
 .tc-conf{font-family:monospace;font-size:8px;color:#44445a;}
 
 /* INDICATORS */
@@ -136,15 +139,6 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
 .ind-sig.bull{color:#22c55e;}.ind-sig.bear{color:#f87171;}.ind-sig.neu{color:#f59e0b;}
 .ind-note{font-size:8px;color:#44445a;margin-top:2px;line-height:1.3;}
 
-/* BB */
-.bb-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
-.bb-card{background:#111115;border:1px solid #1e1e2a;border-radius:7px;padding:10px 12px;}
-.bbc-title{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;margin-bottom:6px;}
-.bb-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
-.bb-lbl{font-size:10px;color:#44445a;}
-.bb-val{font-family:monospace;font-size:10px;font-weight:700;}
-.bb-msg{font-size:10px;color:#44445a;margin-top:6px;line-height:1.5;}
-
 /* OVERVIEW */
 .ov-table{background:#111115;border:1px solid #1e1e2a;border-radius:8px;overflow:hidden;margin-bottom:10px;}
 .ov-row{display:flex;align-items:center;padding:8px 12px;border-bottom:1px solid #1a1a22;gap:9px;cursor:pointer;transition:background .1s;}
@@ -154,37 +148,38 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
 .ov-sym{font-family:monospace;font-size:11px;font-weight:700;color:#e0e0ec;min-width:60px;}
 .ov-price{font-family:monospace;font-size:11px;min-width:80px;text-align:right;}
 .ov-chg{font-family:monospace;font-size:10px;min-width:52px;text-align:right;}
-.ov-5m,.ov-15m,.ov-1h{font-family:monospace;font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;min-width:36px;text-align:center;}
-.ov-conf{font-family:monospace;font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;min-width:75px;text-align:center;}
+.ov-tf{font-family:monospace;font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;min-width:36px;text-align:center;}
+.ov-score{font-family:monospace;font-size:9px;font-weight:700;min-width:30px;text-align:center;}
+.ov-verdict{font-family:monospace;font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;min-width:100px;text-align:center;}
 .sig-buy{background:#052e16;color:#22c55e;}
 .sig-sell{background:#3a1010;color:#f87171;}
 .sig-hold{background:#1e2030;color:#64748b;}
-.conf-strong-buy{background:#052e16;color:#22c55e;}
-.conf-strong-sell{background:#3a1010;color:#f87171;}
-.conf-conflict{background:#3a1010;color:#f87171;}
-.conf-wait{background:#2a1800;color:#f59e0b;}
+.v-strong-buy{background:#052e16;color:#22c55e;}
+.v-strong-sell{background:#3a1010;color:#f87171;}
+.v-normal-buy{background:#14532d;color:#4ade80;}
+.v-normal-sell{background:#450a0a;color:#fca5a5;}
+.v-wait{background:#1e2030;color:#64748b;}
 
-/* SESSION */
+/* SESSIONS */
 .sess-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}
 .sess-card{background:#111115;border:1px solid #1e1e2a;border-radius:6px;padding:8px 10px;text-align:center;}
 .sess-name{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.08em;margin-bottom:3px;}
-.sess-dot{font-size:10px;font-weight:700;margin-bottom:2px;}
+.sess-dot{font-size:11px;font-weight:700;margin-bottom:2px;}
 .sess-time{font-family:monospace;font-size:8px;color:#44445a;margin-bottom:3px;}
 .sess-tip{font-size:9px;font-weight:600;}
 
 /* LOG */
 .log-stats{background:#111115;border:1px solid #1e1e2a;border-radius:8px;padding:12px;margin-bottom:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-.ls-item{text-align:center;}
 .ls-val{font-family:monospace;font-size:20px;font-weight:800;margin-bottom:3px;}
 .ls-lbl{font-family:monospace;font-size:7px;color:#44445a;letter-spacing:.1em;}
-.log-item{padding:8px 12px;border-bottom:1px solid #1a1a22;display:flex;gap:8px;align-items:center;}
-.log-item:last-child{border-bottom:none;}
+.log-row{padding:8px 12px;border-bottom:1px solid #1a1a22;display:flex;gap:8px;align-items:center;}
+.log-row:last-child{border-bottom:none;}
 .log-time{font-family:monospace;font-size:9px;color:#44445a;min-width:52px;}
 .log-asset{font-family:monospace;font-size:10px;font-weight:700;color:#e0e0ec;min-width:52px;}
-.log-verdict{font-family:monospace;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;min-width:90px;text-align:center;}
-.log-conf{font-family:monospace;font-size:9px;color:#44445a;min-width:30px;text-align:center;}
+.log-verdict{font-family:monospace;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;min-width:95px;text-align:center;}
+.log-score{font-family:monospace;font-size:9px;min-width:28px;text-align:center;}
 .log-price{font-family:monospace;font-size:10px;color:#e0e0ec;flex:1;}
-.log-sess{font-family:monospace;font-size:8px;color:#44445a;min-width:60px;}
+.log-sess{font-family:monospace;font-size:8px;color:#44445a;min-width:55px;}
 
 /* RISK */
 .risk-box{background:#111115;border:1px solid #1e1e2a;border-radius:8px;padding:13px;margin-bottom:10px;}
@@ -214,7 +209,7 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
 .slbl{font-family:monospace;font-size:8px;color:#44445a;letter-spacing:.12em;margin-bottom:7px;display:flex;align-items:center;gap:7px;}
 .slbl::after{content:'';flex:1;height:1px;background:#1e1e2a;}
 .nb{background:#0a2010;color:#22c55e;border:1px solid #1a5a20;border-radius:2px;padding:1px 5px;font-size:7px;}
-.nb2{background:#1a0a2a;color:#a855f7;border:1px solid #5a1a8a;border-radius:2px;padding:1px 5px;font-size:7px;}
+.nb2{background:#1a1608;color:#c9a84c;border:1px solid #3a2e10;border-radius:2px;padding:1px 5px;font-size:7px;}
 .card{background:#111115;border:1px solid #1e1e2a;border-radius:8px;overflow:hidden;margin-bottom:10px;}
 .disclaimer{background:#0f0f13;border:1px solid #1e1e2a;border-radius:6px;padding:8px 12px;font-family:monospace;font-size:8px;color:#2a2a38;line-height:1.5;margin-top:10px;}
 </style>
@@ -223,10 +218,9 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
 
 <div class="nav">
   <div class="logo">⚡ TRADEWISE SCALPER PRO</div>
-  <div class="nav-tag nt-gold">6-LAYER FILTER</div>
+  <div class="nav-tag nt-gold">5-LAYER FILTER</div>
   <div class="nav-tag nt-green">MTF AGREEMENT</div>
-  <div class="nav-tag nt-blue">VOLUME CONFIRM</div>
-  <div class="nav-tag nt-purple">75-80% TARGET</div>
+  <div class="nav-tag nt-blue">75% TARGET</div>
   <div class="nav-right">
     <div class="live-dot"></div>
     <div class="nav-clock" id="clock">--:--:-- UTC</div>
@@ -244,7 +238,6 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
   <div class="tab" onclick="showTab('mt4',this)">🔧 MT4</div>
 </div>
 
-<!-- SCALPER -->
 <div class="page on" id="tab-scalper">
   <div class="asset-bar">
     <span class="asset-lbl">GOLD/FOREX →</span>
@@ -264,42 +257,37 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
   <div id="scalper-body"><div style="padding:30px;text-align:center;font-family:monospace;font-size:11px;color:#44445a">Loading…</div></div>
 </div>
 
-<!-- OVERVIEW -->
 <div class="page" id="tab-overview">
-  <div class="slbl">🌐 All Assets — 6-Layer Filter Status <span class="nb">LIVE</span></div>
+  <div class="slbl">🌐 All Assets — Signal Overview <span class="nb">LIVE</span></div>
   <div class="ov-table">
     <div class="ov-row" style="background:#1a1a22;cursor:default">
       <div class="ov-icon"></div>
       <div class="ov-sym" style="font-size:7px;color:#44445a">ASSET</div>
       <div class="ov-price" style="font-size:7px;color:#44445a;font-family:monospace">PRICE</div>
       <div class="ov-chg" style="font-size:7px;color:#44445a;font-family:monospace">CHG</div>
-      <div class="ov-5m" style="background:transparent;color:#44445a;font-size:7px">5M</div>
-      <div class="ov-15m" style="background:transparent;color:#44445a;font-size:7px">15M</div>
-      <div class="ov-1h" style="background:transparent;color:#44445a;font-size:7px">1H</div>
-      <div class="ov-conf" style="background:transparent;color:#44445a;font-size:7px">VERDICT</div>
+      <div class="ov-tf" style="background:transparent;color:#44445a;font-size:7px">5M</div>
+      <div class="ov-tf" style="background:transparent;color:#44445a;font-size:7px">15M</div>
+      <div class="ov-score" style="color:#44445a;font-size:7px;font-family:monospace">SCORE</div>
+      <div class="ov-verdict" style="background:transparent;color:#44445a;font-size:7px">VERDICT</div>
     </div>
     <div id="ovRows"><div style="padding:14px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">Loading…</div></div>
   </div>
 </div>
 
-<!-- LOG -->
 <div class="page" id="tab-log">
   <div class="log-stats">
-    <div class="ls-item"><div class="ls-val" style="color:#c9a84c" id="lc">0</div><div class="ls-lbl">TOTAL SIGNALS</div></div>
-    <div class="ls-item"><div class="ls-val" style="color:#22c55e" id="la">0</div><div class="ls-lbl">TRADEABLE</div></div>
-    <div class="ls-item"><div class="ls-val" style="color:#f87171" id="lx">0</div><div class="ls-lbl">FILTERED OUT</div></div>
-    <div class="ls-item"><div class="ls-val" style="color:#3b82f6" id="lr">—</div><div class="ls-lbl">FILTER RATE</div></div>
+    <div style="text-align:center"><div class="ls-val" style="color:#c9a84c" id="lc">0</div><div class="ls-lbl">TOTAL SIGNALS</div></div>
+    <div style="text-align:center"><div class="ls-val" style="color:#22c55e" id="la">0</div><div class="ls-lbl">TRADEABLE</div></div>
+    <div style="text-align:center"><div class="ls-val" style="color:#f59e0b" id="lw">0</div><div class="ls-lbl">WAIT/FILTERED</div></div>
+    <div style="text-align:center"><div class="ls-val" style="color:#3b82f6" id="lr">—</div><div class="ls-lbl">TRADE RATE</div></div>
   </div>
-  <div class="card" id="logList">
-    <div style="padding:20px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">No signals yet — select an asset to start</div>
-  </div>
-  <div style="display:flex;gap:8px;">
+  <div class="card" id="logList"><div style="padding:20px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">No signals yet</div></div>
+  <div style="display:flex;gap:8px;margin-top:8px">
     <button onclick="exportLog()" style="background:#1a1a22;border:1px solid #26263a;border-radius:5px;padding:7px 14px;font-family:monospace;font-size:9px;color:#c9a84c;cursor:pointer">⤓ Export CSV</button>
     <button onclick="clearLog()" style="background:#1a0808;border:1px solid #5a1a1a;border-radius:5px;padding:7px 14px;font-family:monospace;font-size:9px;color:#f87171;cursor:pointer">✕ Clear</button>
   </div>
 </div>
 
-<!-- RISK -->
 <div class="page" id="tab-risk">
   <div class="slbl">🛡 Scalping Position Size Calculator</div>
   <div class="risk-box">
@@ -307,112 +295,98 @@ body{background:#09090c;color:#e0e0ec;font-family:'Segoe UI',sans-serif;font-siz
       <div class="r-group"><div class="r-label">ACCOUNT BALANCE ($)</div><input class="r-input" id="ri-bal" type="number" value="10000"></div>
       <div class="r-group"><div class="r-label">RISK % — 0.5% max for scalping</div><input class="r-input" id="ri-rp" type="number" value="0.5" step="0.1" max="2"></div>
       <div class="r-group"><div class="r-label">ENTRY PRICE</div><input class="r-input" id="ri-ep" type="number" placeholder="e.g. 3285.00"></div>
-      <div class="r-group"><div class="r-label">STOP PIPS</div><input class="r-input" id="ri-sp" type="number" value="10"></div>
+      <div class="r-group"><div class="r-label">STOP LOSS PIPS</div><input class="r-input" id="ri-sp" type="number" value="10"></div>
       <div class="r-group"><div class="r-label">TARGET PIPS</div><input class="r-input" id="ri-tp" type="number" value="20"></div>
-      <div class="r-group"><div class="r-label">ASSET</div>
+      <div class="r-group"><div class="r-label">ASSET TYPE</div>
         <select class="r-input" id="ri-av">
           <option value="10">Gold / Forex ($10/pip)</option>
           <option value="1">Crypto / Stock ($1/pip)</option>
         </select>
       </div>
     </div>
-    <button class="r-btn" onclick="calcRisk()">⊕ Calculate</button>
-    <div class="r-result" id="rRes">
-      <div class="r-3" id="rGrid"></div>
-      <div class="r-note" id="rNote"></div>
-    </div>
+    <button class="r-btn" onclick="calcRisk()">⊕ Calculate Position Size</button>
+    <div class="r-result" id="rRes"><div class="r-3" id="rGrid"></div><div class="r-note" id="rNote"></div></div>
   </div>
-  <div class="slbl">⚡ Accuracy Rules — How to Reach 75-80%</div>
+  <div class="slbl">📋 Signal Strength Guide</div>
   <div class="mt4-list">
-    <div class="mt4-item"><div class="mt4-n">01</div><div><div class="mt4-title">Only trade when Confluence Score is 5/6 or 6/6</div><div class="mt4-desc">The platform filters automatically. Below 5/6 it shows WAIT. You never need to guess — if it says STRONG BUY or STRONG SELL with 5+ layers passing, that is your setup. Anything less — sit on your hands.</div></div></div>
-    <div class="mt4-item"><div class="mt4-n">02</div><div><div class="mt4-title">Only trade during London or New York session</div><div class="mt4-desc">The session filter is now built into the signal. During Asian session the platform automatically reduces signal confidence by 15 points and marks it LOW CONFIDENCE. This eliminates most bad trades from thin market hours.</div></div></div>
-    <div class="mt4-item"><div class="mt4-n">03</div><div><div class="mt4-title">Volume must confirm — no volume = no trade</div><div class="mt4-desc">Layer 3 checks whether volume is above the 20-period average. If price is moving without volume it is likely a fake move that will reverse. The platform flags this automatically as a filter fail.</div></div></div>
-    <div class="mt4-item"><div class="mt4-n">04</div><div><div class="mt4-title">1-hour trend must agree with scalp direction</div><div class="mt4-desc">Layer 5 checks the 1-hour EMA direction. If you are scalping BUY on 5min but the 1-hour trend is DOWN — that is a counter-trend scalp with much lower probability. The platform marks this as a filter fail.</div></div></div>
-    <div class="mt4-item"><div class="mt4-n">05</div><div><div class="mt4-title">Confirm on MT4 before every entry</div><div class="mt4-desc">TradeWise gives the signal. MT4 gives visual confirmation. EMA 8 must be above EMA 21 on your 5min AND 15min chart. If both match — enter. If they do not match — wait for next signal.</div></div></div>
+    <div class="mt4-item"><div class="mt4-n" style="color:#22c55e">5/5</div><div><div class="mt4-title">STRONG BUY / STRONG SELL — All 5 layers passing</div><div class="mt4-desc">Highest confidence setup. Enter with full calculated position size. Expected win rate 72-80% historically on XAUUSD during London/NY session. This is the signal you wait for.</div></div></div>
+    <div class="mt4-item"><div class="mt4-n" style="color:#4ade80">4/5</div><div><div class="mt4-title">NORMAL BUY / NORMAL SELL — 4 layers passing</div><div class="mt4-desc">Good signal. Enter with 75% of calculated position size. Expected win rate 64-72%. Always confirm on MT4 — EMA 8 must be above EMA 21 on both 5min and 15min charts.</div></div></div>
+    <div class="mt4-item"><div class="mt4-n" style="color:#f59e0b">3/5</div><div><div class="mt4-title">WEAK — 3 layers passing — DO NOT TRADE</div><div class="mt4-desc">Below threshold. Too many filters failing. Wait for another signal. The market gives multiple setups per session — never force a 3/5 trade when 4/5 and 5/5 setups will come.</div></div></div>
+    <div class="mt4-item"><div class="mt4-n" style="color:#f87171">0-2/5</div><div><div class="mt4-title">WAIT — No tradeable signal</div><div class="mt4-desc">Conditions are not aligned. Stay out completely. Use this time to check the Economic Calendar and Sessions tab. Preparation during WAIT periods makes the active periods more profitable.</div></div></div>
   </div>
 </div>
 
-<!-- SESSIONS -->
 <div class="page" id="tab-sessions">
   <div class="slbl">🕐 Live Trading Sessions</div>
   <div class="sess-bar" id="sessCards"></div>
   <div class="slbl" style="margin-top:4px">📊 Session Impact on Signal Accuracy</div>
   <div class="mt4-list">
-    <div class="mt4-item"><div class="mt4-n" style="color:#f59e0b">OVERLAP</div><div><div class="mt4-title">London + NY · 13:00–16:00 UTC · HIGHEST ACCURACY</div><div class="mt4-desc">Maximum liquidity, tightest spreads, strongest directional moves. Signal accuracy peaks here. All 6 filters are most reliable during this 3-hour window. Prioritize all scalping here. XAUUSD is the best asset during overlap.</div></div></div>
-    <div class="mt4-item"><div class="mt4-n" style="color:#22c55e">LONDON</div><div><div class="mt4-title">08:00–16:00 UTC · HIGH ACCURACY</div><div class="mt4-desc">Strong volume and directional movement. EMA crossovers reliable on XAUUSD, GBPUSD, EURUSD. Platform gives full signal strength during London hours.</div></div></div>
-    <div class="mt4-item"><div class="mt4-n" style="color:#3b82f6">NEW YORK</div><div><div class="mt4-title">13:00–21:00 UTC · HIGH ACCURACY for stocks</div><div class="mt4-desc">US market opens 13:30 UTC. Best for TSLA, NVDA, SPY scalping. XAUUSD very active. Platform gives full signal strength during New York hours.</div></div></div>
-    <div class="mt4-item"><div class="mt4-n" style="color:#f87171">ASIAN</div><div><div class="mt4-title">23:00–08:00 UTC · AVOID — Platform auto-downgrades signals</div><div class="mt4-desc">Low volume, wide spreads, choppy action. The platform automatically marks all signals as LOW CONFIDENCE during Asian session and reduces the score by 15 points. This is the biggest source of false signals — now automatically filtered.</div></div></div>
+    <div class="mt4-item"><div class="mt4-n" style="color:#f59e0b">OVERLAP</div><div><div class="mt4-title">London + NY · 13:00–16:00 UTC · BEST WINDOW</div><div class="mt4-desc">Maximum liquidity. Signals here are most reliable. XAUUSD, EURUSD, GBPUSD all at peak volume. 5/5 signals during this window have the highest historical win rate. Prioritize all trading here.</div></div></div>
+    <div class="mt4-item"><div class="mt4-n" style="color:#22c55e">LONDON</div><div><div class="mt4-title">08:00–16:00 UTC · HIGH QUALITY</div><div class="mt4-desc">Strong directional movements. EMA crossovers most reliable. Best for XAUUSD, GBPUSD, EURUSD. Platform gives full signal strength during London hours.</div></div></div>
+    <div class="mt4-item"><div class="mt4-n" style="color:#3b82f6">NEW YORK</div><div><div class="mt4-title">13:00–21:00 UTC · HIGH QUALITY for stocks</div><div class="mt4-desc">US market opens 13:30 UTC. Best for TSLA, NVDA, SPY. XAUUSD very active. Platform gives full signal strength during NY hours.</div></div></div>
+    <div class="mt4-item"><div class="mt4-n" style="color:#f87171">ASIAN</div><div><div class="mt4-title">23:00–08:00 UTC · AVOID — signal accuracy drops</div><div class="mt4-desc">Low volume, wide spreads, choppy price action. The platform automatically reduces confluence score during Asian session. Most signals show WAIT during this window — which is correct.</div></div></div>
   </div>
 </div>
 
-<!-- MT4 -->
 <div class="page" id="tab-mt4">
-  <div class="slbl">🔧 MT4 Execution — 6-Layer Strategy</div>
+  <div class="slbl">🔧 How to Execute Signals on MT4</div>
   <div class="mt4-list">
-    <div class="mt4-item"><div class="mt4-n">01</div><div><div class="mt4-title">Open M5 + M15 charts side by side</div><div class="mt4-desc">Two windows — same asset, different timeframes. Add EMA 8 (blue) and EMA 21 (red) to both. Both charts must show EMA 8 above EMA 21 for a BUY. This is your visual confirmation of the TradeWise signal.</div><div class="mt4-code">M5 + M15 · EMA 8 + EMA 21 both charts</div></div></div>
-    <div class="mt4-item"><div class="mt4-n">02</div><div><div class="mt4-title">Also open M60 (1-hour) chart</div><div class="mt4-desc">The 1-hour chart shows the bigger trend. If you are scalping BUY, the 1-hour EMA 8 should also be above EMA 21. Trading with the 1-hour trend is Layer 5 of the platform and adds significant accuracy.</div><div class="mt4-code">M60 chart — EMA 8 vs EMA 21 for trend direction</div></div></div>
-    <div class="mt4-item"><div class="mt4-n">03</div><div><div class="mt4-title">Wait for TradeWise STRONG BUY or STRONG SELL with 5/6 or 6/6</div><div class="mt4-desc">Only act when the Confluence Score shows 5 or 6 out of 6 layers passing AND the verdict is STRONG BUY or STRONG SELL. Anything less — do nothing. This is the discipline that separates profitable scalpers from losing ones.</div><div class="mt4-code">5/6 or 6/6 confluence + STRONG signal only</div></div></div>
-    <div class="mt4-item"><div class="mt4-n">04</div><div><div class="mt4-title">F9 → set volume, SL, TP → execute</div><div class="mt4-desc">Volume from Risk Calc tab. Stop loss = pips shown in signal card. Take profit = 2x stop pips minimum. Once in trade — set alarm at breakeven (+10 pips). Move stop to entry when alarm fires.</div><div class="mt4-code">F9 → Volume → SL → TP → Buy/Sell</div></div></div>
+    <div class="mt4-item"><div class="mt4-n">01</div><div><div class="mt4-title">Open M5 and M15 charts side by side</div><div class="mt4-desc">Two chart windows — same asset, M5 and M15. Add EMA 8 (blue) and EMA 21 (red) to both charts. Your visual confirmation: EMA 8 must be above EMA 21 on BOTH charts for a BUY signal.</div><div class="mt4-code">M5 + M15 · EMA 8 + EMA 21</div></div></div>
+    <div class="mt4-item"><div class="mt4-n">02</div><div><div class="mt4-title">Wait for TradeWise STRONG or NORMAL signal with 4/5 or 5/5</div><div class="mt4-desc">Only act on STRONG BUY, STRONG SELL, NORMAL BUY, or NORMAL SELL. If it shows WAIT — do nothing. Check every 5-10 minutes for new signals during London/NY session.</div><div class="mt4-code">4/5 or 5/5 only — ignore everything below</div></div></div>
+    <div class="mt4-item"><div class="mt4-n">03</div><div><div class="mt4-title">Confirm on MT4 before entering</div><div class="mt4-desc">TradeWise says STRONG BUY → open MT4 → check EMA 8 is above EMA 21 on BOTH M5 and M15 → if yes, enter. If EMAs do not confirm — skip this signal and wait for the next one.</div><div class="mt4-code">Both charts must confirm before entry</div></div></div>
+    <div class="mt4-item"><div class="mt4-n">04</div><div><div class="mt4-title">F9 → set lot size, stop loss, take profit → execute</div><div class="mt4-desc">Use lot size from Risk Calc tab. Stop loss = pips from signal card. Take profit = 2x stop pips. After entry set alarm at +10 pips. When alarm fires — move stop to entry price (free trade).</div><div class="mt4-code">F9 → lots → SL → TP → Buy/Sell</div></div></div>
+    <div class="mt4-item"><div class="mt4-n">05</div><div><div class="mt4-title">Stop after 3 consecutive losses — no exceptions</div><div class="mt4-desc">Three losses means conditions changed or you are in a choppy market. Close MT4, step away for 30 minutes minimum. Come back fresh. Never revenge trade. The next session will have better setups.</div><div class="mt4-code">3 losses = stop for 30 minutes</div></div></div>
   </div>
-  <div class="slbl">🤖 MT4 EA — 6-Layer Agreement Logic</div>
+  <div class="slbl">🤖 MT4 EA — Auto-Execute TradeWise Signals</div>
   <div style="background:#111115;border:1px solid #1e1e2a;border-radius:8px;padding:12px;margin-bottom:10px;font-family:monospace;font-size:9px;color:#c9a84c;line-height:1.8;overflow-x:auto">
-// TradeWise Scalper Pro EA — 6-Layer MTF Agreement<br>
+// TradeWise Scalper Pro EA — 5-Layer MTF Agreement<br>
+// Paste into MT4 MetaEditor (F4) → Compile (F5) → Attach to chart<br>
 extern string Sym = "XAUUSD";<br>
 extern double RiskPct = 0.5;<br>
 extern int StopPips = 10;<br>
 extern int TargetPips = 20;<br>
-extern int MinScore = 5; // minimum layers to trade<br>
+extern int MinLayers = 4; // 4=NORMAL, 5=STRONG only<br>
 <br>
-void OnTick() {<br>
-&nbsp;&nbsp;if(OrdersTotal() > 0) return;<br>
-&nbsp;&nbsp;if(!IsTradeAllowed()) return;<br>
-&nbsp;&nbsp;int score = CalcScore();<br>
-&nbsp;&nbsp;if(score >= MinScore) ExecuteBuy();<br>
-&nbsp;&nbsp;if(score <= -MinScore) ExecuteSell();<br>
+void OnTick(){<br>
+&nbsp;&nbsp;if(OrdersTotal()>0) return;<br>
+&nbsp;&nbsp;int score=calcScore();<br>
+&nbsp;&nbsp;if(score>=MinLayers) executeBuy();<br>
+&nbsp;&nbsp;if(score<=-MinLayers) executeSell();<br>
 }<br>
-<br>
-int CalcScore() {<br>
-&nbsp;&nbsp;int s = 0;<br>
-&nbsp;&nbsp;// Layer 1: EMA cross 5min<br>
+int calcScore(){<br>
+&nbsp;&nbsp;int s=0;<br>
 &nbsp;&nbsp;double e8_5=iMA(Sym,PERIOD_M5,8,0,MODE_EMA,PRICE_CLOSE,0);<br>
 &nbsp;&nbsp;double e21_5=iMA(Sym,PERIOD_M5,21,0,MODE_EMA,PRICE_CLOSE,0);<br>
-&nbsp;&nbsp;if(e8_5>e21_5) s++; else s--;<br>
-&nbsp;&nbsp;// Layer 2: EMA cross 15min<br>
 &nbsp;&nbsp;double e8_15=iMA(Sym,PERIOD_M15,8,0,MODE_EMA,PRICE_CLOSE,0);<br>
 &nbsp;&nbsp;double e21_15=iMA(Sym,PERIOD_M15,21,0,MODE_EMA,PRICE_CLOSE,0);<br>
-&nbsp;&nbsp;if(e8_15>e21_15) s++; else s--;<br>
-&nbsp;&nbsp;// Layer 3: RSI 5min<br>
-&nbsp;&nbsp;double rsi5=iRSI(Sym,PERIOD_M5,14,PRICE_CLOSE,0);<br>
-&nbsp;&nbsp;if(rsi5 < 45) s++; else if(rsi5 > 55) s--;<br>
-&nbsp;&nbsp;// Layer 4: RSI 15min<br>
-&nbsp;&nbsp;double rsi15=iRSI(Sym,PERIOD_M15,14,PRICE_CLOSE,0);<br>
-&nbsp;&nbsp;if(rsi15 < 45) s++; else if(rsi15 > 55) s--;<br>
-&nbsp;&nbsp;// Layer 5: 1-hour trend<br>
 &nbsp;&nbsp;double e8_1h=iMA(Sym,PERIOD_H1,8,0,MODE_EMA,PRICE_CLOSE,0);<br>
 &nbsp;&nbsp;double e21_1h=iMA(Sym,PERIOD_H1,21,0,MODE_EMA,PRICE_CLOSE,0);<br>
-&nbsp;&nbsp;if(e8_1h>e21_1h) s++; else s--;<br>
-&nbsp;&nbsp;// Layer 6: MACD 5min<br>
-&nbsp;&nbsp;double macdMain=iMACD(Sym,PERIOD_M5,12,26,9,PRICE_CLOSE,MODE_MAIN,0);<br>
-&nbsp;&nbsp;double macdSig=iMACD(Sym,PERIOD_M5,12,26,9,PRICE_CLOSE,MODE_SIGNAL,0);<br>
-&nbsp;&nbsp;if(macdMain>macdSig) s++; else s--;<br>
+&nbsp;&nbsp;double rsi5=iRSI(Sym,PERIOD_M5,14,PRICE_CLOSE,0);<br>
+&nbsp;&nbsp;double rsi15=iRSI(Sym,PERIOD_M15,14,PRICE_CLOSE,0);<br>
+&nbsp;&nbsp;double macdM=iMACD(Sym,PERIOD_M5,12,26,9,PRICE_CLOSE,MODE_MAIN,0);<br>
+&nbsp;&nbsp;double macdS=iMACD(Sym,PERIOD_M5,12,26,9,PRICE_CLOSE,MODE_SIGNAL,0);<br>
+&nbsp;&nbsp;if(e8_5>e21_5) s++; else s--; // Layer 1: EMA 5min<br>
+&nbsp;&nbsp;if(e8_15>e21_15) s++; else s--; // Layer 2: EMA 15min<br>
+&nbsp;&nbsp;if(rsi5<45) s++; else if(rsi5>55) s--; // Layer 3: RSI 5min<br>
+&nbsp;&nbsp;if(rsi15<45) s++; else if(rsi15>55) s--; // Layer 4: RSI 15min<br>
+&nbsp;&nbsp;if(e8_1h>e21_1h) s++; else s--; // Layer 5: 1H trend<br>
 &nbsp;&nbsp;return s;<br>
 }<br>
-<br>
-void ExecuteBuy() {<br>
-&nbsp;&nbsp;double price=Ask,sl=price-StopPips*Point*10,tp=price+TargetPips*Point*10;<br>
-&nbsp;&nbsp;OrderSend(Sym,OP_BUY,CalcLots(StopPips),price,3,sl,tp,"TW6L",0,0,clrGreen);<br>
+void executeBuy(){<br>
+&nbsp;&nbsp;double p=Ask,sl=p-StopPips*Point*10,tp=p+TargetPips*Point*10;<br>
+&nbsp;&nbsp;OrderSend(Sym,OP_BUY,calcLots(),p,3,sl,tp,"TW5L",0,0,clrGreen);<br>
 }<br>
-void ExecuteSell() {<br>
-&nbsp;&nbsp;double price=Bid,sl=price+StopPips*Point*10,tp=price-TargetPips*Point*10;<br>
-&nbsp;&nbsp;OrderSend(Sym,OP_SELL,CalcLots(StopPips),price,3,sl,tp,"TW6L",0,0,clrRed);<br>
+void executeSell(){<br>
+&nbsp;&nbsp;double p=Bid,sl=p+StopPips*Point*10,tp=p-TargetPips*Point*10;<br>
+&nbsp;&nbsp;OrderSend(Sym,OP_SELL,calcLots(),p,3,sl,tp,"TW5L",0,0,clrRed);<br>
 }<br>
-double CalcLots(int sp) {<br>
+double calcLots(){<br>
 &nbsp;&nbsp;double r=AccountBalance()*RiskPct/100;<br>
 &nbsp;&nbsp;double pv=MarketInfo(Sym,MODE_TICKVALUE)*10;<br>
-&nbsp;&nbsp;return NormalizeDouble(r/(sp*pv),2);<br>
+&nbsp;&nbsp;return NormalizeDouble(r/(StopPips*pv),2);<br>
 }
   </div>
-  <div class="disclaimer">⚠ Test EA on demo minimum 4 weeks. Not financial advice.</div>
+  <div class="disclaimer">⚠ Test EA on demo account minimum 4 weeks before live trading. Not financial advice.</div>
 </div>
 
 <script>
@@ -431,10 +405,7 @@ const ASSETS={
 
 let curAsset='xauusd',autoOn=false,autoTimer=null,signalLog=[];
 
-setInterval(()=>{
-  const n=new Date();
-  document.getElementById('clock').textContent=n.toUTCString().split(' ')[4]+' UTC';
-},1000);
+setInterval(()=>{document.getElementById('clock').textContent=new Date().toUTCString().split(' ')[4]+' UTC';},1000);
 
 function toggleAuto(){
   autoOn=!autoOn;
@@ -442,13 +413,12 @@ function toggleAuto(){
   if(autoOn){b.textContent='⟳ AUTO ON';b.classList.add('on');autoTimer=setInterval(refreshNow,30000);}
   else{b.textContent='⟳ AUTO OFF';b.classList.remove('on');clearInterval(autoTimer);}
 }
-function refreshNow(){const b=document.querySelector('#tab-scalper .asset-btn.on');load(curAsset,b);}
+function refreshNow(){load(curAsset,document.querySelector('#tab-scalper .asset-btn.on'));}
 
 function showTab(n,el){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('tab-'+n).classList.add('on');
+  el.classList.add('on');document.getElementById('tab-'+n).classList.add('on');
   if(n==='overview')loadOverview();
   if(n==='sessions')renderSess();
   if(n==='log')renderLog();
@@ -457,107 +427,125 @@ function showTab(n,el){
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function td(ep,params={}){
   const qs=new URLSearchParams({endpoint:ep,...params}).toString();
-  return fetch(`/api/twelvedata?${qs}`).then(r=>r.json());
+  return fetch('/api/twelvedata?'+qs).then(r=>r.json());
 }
 function fmt(n,d=2){
-  if(n===null||n===undefined||isNaN(n))return '—';
+  if(n===null||n===undefined||isNaN(n))return'—';
   return parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
 }
 
-// Session detection
-function getSession(){
-  const h=new Date().getUTCHours(),m=new Date().getUTCMinutes(),t=h*60+m;
-  const inLondon=t>=8*60&&t<16*60;
-  const inNY=t>=13*60&&t<21*60;
-  const overlap=t>=13*60&&t<16*60;
-  if(overlap)return{name:'LONDON+NY OVERLAP',quality:'BEST',multiplier:1.0,color:'#f59e0b'};
-  if(inLondon)return{name:'LONDON',quality:'HIGH',multiplier:.95,color:'#22c55e'};
-  if(inNY)return{name:'NEW YORK',quality:'HIGH',multiplier:.95,color:'#3b82f6'};
-  return{name:'ASIAN',quality:'LOW',multiplier:.75,color:'#f87171'};
+function getSess(){
+  const t=new Date().getUTCHours()*60+new Date().getUTCMinutes();
+  if(t>=13*60&&t<16*60)return{name:'LONDON+NY OVERLAP',q:'BEST',mult:1.0,col:'#f59e0b'};
+  if(t>=8*60&&t<16*60)return{name:'LONDON',q:'HIGH',mult:.95,col:'#22c55e'};
+  if(t>=13*60&&t<21*60)return{name:'NEW YORK',q:'HIGH',mult:.95,col:'#3b82f6'};
+  return{name:'ASIAN',q:'LOW',mult:.8,col:'#f87171'};
 }
 
-// Individual TF signal
-function calcTFSig(rsi,macdH,macdL,macdS,ema8,ema21,change){
-  let score=0;
-  if(ema8!==null&&ema21!==null){
-    const gap=(ema8-ema21);
-    if(gap>0)score+=2; else score-=2;
-  }
+// Individual signal for one timeframe
+function tfSig(rsi,macdH,macdL,macdS,ema8,ema21,change){
+  let s=0;
+  if(ema8!==null&&ema21!==null){if(ema8>ema21)s+=2;else s-=2;}
   if(rsi!==null){
-    if(rsi<35)score+=3;else if(rsi<45)score+=2;else if(rsi<48)score+=1;
-    else if(rsi>65)score-=3;else if(rsi>55)score-=2;else if(rsi>52)score-=1;
+    if(rsi<35)s+=3;else if(rsi<45)s+=2;else if(rsi<50)s+=1;
+    else if(rsi>65)s-=3;else if(rsi>55)s-=2;else if(rsi>50)s-=1;
   }
   if(macdH!==null&&macdL!==null&&macdS!==null){
-    if(macdH>0&&macdL>macdS)score+=2;else if(macdH>0)score+=1;
-    else if(macdH<0&&macdL<macdS)score-=2;else score-=1;
+    if(macdH>0&&macdL>macdS)s+=2;else if(macdH>0)s+=1;
+    else if(macdH<0&&macdL<macdS)s-=2;else s-=1;
   }
-  if(change>1.5)score+=1;else if(change<-1.5)score-=1;
+  if(change>1)s+=1;else if(change<-1)s-=1;
   let sig,conf;
-  if(score>=5){sig='BUY';conf=Math.min(85,60+score*3);}
-  else if(score>=2){sig='BUY';conf=Math.min(72,50+score*4);}
-  else if(score<=-5){sig='SELL';conf=Math.min(85,60+Math.abs(score)*3);}
-  else if(score<=-2){sig='SELL';conf=Math.min(72,50+Math.abs(score)*4);}
-  else{sig='HOLD';conf:40;conf=40;}
-  return{sig,conf,score};
+  if(s>=4){sig='BUY';conf=Math.min(85,55+s*4);}
+  else if(s>=1){sig='BUY';conf=Math.min(70,45+s*5);}
+  else if(s<=-4){sig='SELL';conf=Math.min(85,55+Math.abs(s)*4);}
+  else if(s<=-1){sig='SELL';conf=Math.min(70,45+Math.abs(s)*5);}
+  else{sig='HOLD';conf=40;}
+  return{sig,conf,score:s};
 }
 
-// 6-Layer confluence engine
-function calcConfluence(d5,d15,d1h,volAboveAvg,bbPosition,sess){
+// 5-layer confluence — adjusted thresholds
+function calcConf(d5,d15,d1h,sess){
   const layers=[];
 
-  // Layer 1: EMA agreement 5min + 15min
-  const ema5Bull=d5.ema8>d5.ema21,ema15Bull=d15.ema8>d15.ema21;
-  if(ema5Bull===ema15Bull){
-    layers.push({name:'EMA 5M+15M',pass:true,bull:ema5Bull,note:`Both EMA crossovers ${ema5Bull?'bullish':'bearish'}`});
-  } else {
-    layers.push({name:'EMA 5M+15M',pass:false,bull:null,note:'EMA timeframes disagree'});
-  }
+  // Layer 1: EMA 5min — relaxed
+  const ema5bull=d5.ema8!==null&&d5.ema21!==null&&d5.ema8>d5.ema21;
+  const ema5pass=d5.ema8!==null&&d5.ema21!==null;
+  layers.push({
+    name:'EMA CROSS 5MIN',
+    pass:ema5pass,
+    bull:ema5bull,
+    note:ema5pass?(ema5bull?`EMA 8 (${fmt(d5.ema8)}) above EMA 21 (${fmt(d5.ema21)}) — bullish`:`EMA 8 (${fmt(d5.ema8)}) below EMA 21 (${fmt(d5.ema21)}) — bearish`):'Data unavailable'
+  });
 
-  // Layer 2: RSI agreement 5min + 15min (both must not be opposite)
-  const rsi5Bull=d5.rsi<50,rsi15Bull=d15.rsi<50;
-  const rsiAgree=rsi5Bull===rsi15Bull;
-  const rsiExtreme=d5.rsi<40||d5.rsi>60;
-  layers.push({name:'RSI 5M+15M',pass:rsiAgree&&rsiExtreme,bull:rsi5Bull,note:rsiAgree?(rsiExtreme?`RSI extreme zone (${fmt(d5.rsi,1)})` :'RSI not extreme enough'):'RSI timeframes conflict'});
+  // Layer 2: EMA 15min
+  const ema15bull=d15.ema8!==null&&d15.ema21!==null&&d15.ema8>d15.ema21;
+  const ema15pass=d15.ema8!==null&&d15.ema21!==null;
+  layers.push({
+    name:'EMA CROSS 15MIN',
+    pass:ema15pass,
+    bull:ema15bull,
+    note:ema15pass?(ema15bull?`EMA 8 above EMA 21 — bullish`:`EMA 8 below EMA 21 — bearish`):'Data unavailable'
+  });
 
-  // Layer 3: Volume confirmation
-  layers.push({name:'VOLUME',pass:volAboveAvg,bull:volAboveAvg,note:volAboveAvg?'Volume above 20-period avg — move confirmed':'Volume below average — potential false move'});
+  // Layer 3: RSI agreement — relaxed to 45/55
+  const rsi5bull=d5.rsi!==null&&d5.rsi<50;
+  const rsi15bull=d15.rsi!==null&&d15.rsi<50;
+  const rsiPass=d5.rsi!==null&&d15.rsi!==null&&(rsi5bull===rsi15bull);
+  layers.push({
+    name:'RSI AGREEMENT',
+    pass:rsiPass,
+    bull:rsi5bull,
+    note:rsiPass?`RSI 5min:${d5.rsi!==null?fmt(d5.rsi,1):'—'} · 15min:${d15.rsi!==null?fmt(d15.rsi,1):'—'} — ${rsi5bull?'both below 50, bullish':'both above 50, bearish'}`:`RSI conflict: 5min ${d5.rsi!==null?fmt(d5.rsi,1):'—'} vs 15min ${d15.rsi!==null?fmt(d15.rsi,1):'—'}`
+  });
 
-  // Layer 4: MACD agreement
-  const macd5Bull=d5.macdH>0&&d5.macdL>d5.macdS;
-  const macd15Bull=d15.macdH>0&&d15.macdL>d15.macdS;
-  const macdAgree=macd5Bull===macd15Bull;
-  layers.push({name:'MACD 5M+15M',pass:macdAgree,bull:macd5Bull,note:macdAgree?`MACD ${macd5Bull?'bullish':'bearish'} on both TFs`:'MACD timeframes conflict'});
+  // Layer 4: MACD 5min
+  const macd5bull=d5.macdH!==null&&d5.macdH>0&&d5.macdL>d5.macdS;
+  const macd5pass=d5.macdH!==null;
+  layers.push({
+    name:'MACD MOMENTUM',
+    pass:macd5pass,
+    bull:macd5bull,
+    note:macd5pass?(macd5bull?'MACD bullish crossover confirmed ✓':d5.macdH>0?'MACD positive but weak':'MACD bearish — downward momentum'):'MACD data unavailable'
+  });
 
-  // Layer 5: 1-hour trend alignment
-  const trend1hBull=d1h.ema8>d1h.ema21;
-  const ema5BullFinal=d5.ema8>d5.ema21;
-  const trendAligns=trend1hBull===ema5BullFinal;
-  layers.push({name:'1H TREND',pass:trendAligns,bull:trend1hBull,note:trendAligns?`1H trend ${trend1hBull?'↑ UP':'↓ DOWN'} matches scalp direction`:'Scalping AGAINST 1H trend — lower accuracy'});
+  // Layer 5: 1H trend alignment
+  const trend1hBull=d1h.ema8!==null&&d1h.ema21!==null&&d1h.ema8>d1h.ema21;
+  const trendPass=d1h.ema8!==null&&d1h.ema21!==null;
+  layers.push({
+    name:'1H TREND FILTER',
+    pass:trendPass,
+    bull:trend1hBull,
+    note:trendPass?(trend1hBull?`1H uptrend confirmed — scalp BUYs have higher probability`:`1H downtrend — scalp SELLs have higher probability`):'1H data unavailable'
+  });
 
-  // Layer 6: Session quality
-  const sessGood=sess.quality!=='LOW';
-  layers.push({name:'SESSION',pass:sessGood,bull:sessGood,note:sessGood?`${sess.name} — optimal trading window`:`${sess.name} — low volume, wide spreads`});
-
-  // Count pass/fail
+  // Count score
   const passing=layers.filter(l=>l.pass);
-  const bullLayers=layers.filter(l=>l.pass&&l.bull!==null);
-  const bullCount=bullLayers.filter(l=>l.bull).length;
-  const bearCount=bullLayers.filter(l=>!l.bull).length;
+  const bullCount=passing.filter(l=>l.bull).length;
+  const bearCount=passing.filter(l=>!l.bull).length;
   const score=passing.length;
   const direction=bullCount>bearCount?'BUY':bearCount>bullCount?'SELL':'NEUTRAL';
 
-  // Apply session multiplier
-  const rawConf=Math.round((score/6)*100);
-  const adjConf=Math.round(rawConf*sess.multiplier);
+  // Session bonus — not a hard filter, just affects confidence
+  const sessBonus=sess.q==='BEST'?10:sess.q==='HIGH'?5:0;
+  const baseConf=Math.round((score/5)*85);
+  const adjConf=Math.min(92,baseConf+sessBonus);
 
-  // Verdict — strict threshold
-  let verdict,cls,tradeable;
-  if(score>=5&&direction==='BUY'){verdict='STRONG BUY';cls='STRONG_BUY';tradeable=true;}
-  else if(score>=5&&direction==='SELL'){verdict='STRONG SELL';cls='STRONG_SELL';tradeable=true;}
-  else if(score>=4&&direction!=='NEUTRAL'&&sessGood){verdict='LOW CONF '+direction;cls='LOW_CONF';tradeable=false;}
-  else{verdict='WAIT';cls='WAIT';tradeable=false;}
+  // Verdict — 4/5 is now tradeable
+  let verdict,cls,tradeable,posSize;
+  if(score>=5&&direction!=='NEUTRAL'){
+    verdict=direction==='BUY'?'STRONG BUY':'STRONG SELL';
+    cls=direction==='BUY'?'STRONG_BUY':'STRONG_SELL';
+    tradeable=true;posSize='FULL (100%)';
+  } else if(score>=4&&direction!=='NEUTRAL'){
+    verdict=direction==='BUY'?'NORMAL BUY':'NORMAL SELL';
+    cls=direction==='BUY'?'NORMAL_BUY':'NORMAL_SELL';
+    tradeable=true;posSize='REDUCED (75%)';
+  } else {
+    verdict='WAIT';cls='WAIT';tradeable=false;posSize='NO TRADE';
+  }
 
-  return{layers,score,direction,adjConf,verdict,cls,tradeable};
+  return{layers,score,direction,adjConf,verdict,cls,tradeable,posSize,sessBonus};
 }
 
 async function load(key,el){
@@ -565,42 +553,30 @@ async function load(key,el){
   if(el)el.classList.add('on');
   curAsset=key;
   const a=ASSETS[key];
-  document.getElementById('scalper-body').innerHTML=`<div class="price-card"><div style="font-size:22px">${a.icon}</div><div><div class="pc-name">${a.name}</div><div class="pc-sub">${a.td} <span class="live-tag">LIVE</span></div></div><div style="margin-left:auto"><div class="pc-num loading">Fetching 6 layers…</div></div></div>`;
+  document.getElementById('scalper-body').innerHTML=`<div class="price-card"><div style="font-size:22px">${a.icon}</div><div><div class="pc-name">${a.name}</div><div class="pc-sub">${a.td} <span class="live-tag">LIVE</span></div></div><div style="margin-left:auto"><div class="pc-num loading">Fetching live data…</div></div></div>`;
 
   try{
-    const sess=getSession();
+    const sess=getSess();
     const now=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
 
-    // Fetch all data sequentially
     const pr=await td('price',{symbol:a.td});await sleep(200);
     const qr=await td('quote',{symbol:a.td});await sleep(200);
     const price=parseFloat(pr.price)||0;
     const change=parseFloat(qr.percent_change)||0;
     const changeAbs=parseFloat(qr.change)||0;
 
-    // 5min
     const r5=await td('rsi',{symbol:a.td,interval:'5min',time_period:'14',outputsize:'1'});await sleep(200);
     const m5=await td('macd',{symbol:a.td,interval:'5min',outputsize:'1'});await sleep(200);
     const e8_5=await td('ema',{symbol:a.td,interval:'5min',time_period:'8',outputsize:'1'});await sleep(200);
     const e21_5=await td('ema',{symbol:a.td,interval:'5min',time_period:'21',outputsize:'1'});await sleep(200);
-
-    // 15min
     const r15=await td('rsi',{symbol:a.td,interval:'15min',time_period:'14',outputsize:'1'});await sleep(200);
     const m15=await td('macd',{symbol:a.td,interval:'15min',outputsize:'1'});await sleep(200);
     const e8_15=await td('ema',{symbol:a.td,interval:'15min',time_period:'8',outputsize:'1'});await sleep(200);
     const e21_15=await td('ema',{symbol:a.td,interval:'15min',time_period:'21',outputsize:'1'});await sleep(200);
-
-    // 1hour
     const e8_1h=await td('ema',{symbol:a.td,interval:'1h',time_period:'8',outputsize:'1'});await sleep(200);
     const e21_1h=await td('ema',{symbol:a.td,interval:'1h',time_period:'21',outputsize:'1'});await sleep(200);
-
-    // Volume
-    const vol=await td('time_series',{symbol:a.td,interval:'5min',outputsize:'21'});await sleep(200);
-
-    // Bollinger
     const bb=await td('bbands',{symbol:a.td,interval:'5min',time_period:'20',outputsize:'1'});
 
-    // Parse
     const d5={
       rsi:r5.values?parseFloat(r5.values[0].rsi):null,
       macdH:m5.values?parseFloat(m5.values[0].macd_hist):null,
@@ -621,59 +597,36 @@ async function load(key,el){
       ema8:e8_1h.values?parseFloat(e8_1h.values[0].ema):null,
       ema21:e21_1h.values?parseFloat(e21_1h.values[0].ema):null,
     };
-
-    // Volume analysis
-    let volAboveAvg=false;
-    if(vol.values&&vol.values.length>1){
-      const vols=vol.values.slice(1).map(v=>parseFloat(v.volume)||0);
-      const avgVol=vols.reduce((a,b)=>a+b,0)/vols.length;
-      const curVol=parseFloat(vol.values[0].volume)||0;
-      volAboveAvg=curVol>avgVol*0.8;
-    }
-
-    // Bollinger position
     const bbU=bb.values?parseFloat(bb.values[0].upper_band):null;
     const bbM=bb.values?parseFloat(bb.values[0].middle_band):null;
     const bbL=bb.values?parseFloat(bb.values[0].lower_band):null;
-    let bbPos='middle';
-    if(bbL&&price<=(bbL*1.002))bbPos='lower';
-    else if(bbU&&price>=(bbU*0.998))bbPos='upper';
 
-    // Individual TF signals
-    const sig5=calcTFSig(d5.rsi,d5.macdH,d5.macdL,d5.macdS,d5.ema8,d5.ema21,change);
-    const sig15=calcTFSig(d15.rsi,d15.macdH,d15.macdL,d15.macdS,d15.ema8,d15.ema21,change);
-    const sig1h=calcTFSig(null,null,null,null,d1h.ema8,d1h.ema21,change);
+    const sig5=tfSig(d5.rsi,d5.macdH,d5.macdL,d5.macdS,d5.ema8,d5.ema21,change);
+    const sig15=tfSig(d15.rsi,d15.macdH,d15.macdL,d15.macdS,d15.ema8,d15.ema21,change);
+    const cf=calcConf(d5,d15,d1h,sess);
 
-    // 6-layer confluence
-    const cf=calcConfluence(d5,d15,d1h,volAboveAvg,bbPos,sess);
-
-    // Levels
     const stopPrice=cf.verdict.includes('SELL')?price+(a.sp*a.pip):price-(a.sp*a.pip);
     const targetPrice=cf.verdict.includes('SELL')?price-(a.tp*a.pip):price+(a.tp*a.pip);
     const rr=(a.tp/a.sp).toFixed(1);
 
-    // Score colors
-    const scoreColors=['#f87171','#f87171','#fb923c','#f59e0b','#a3e635','#4ade80','#22c55e'];
-    const scoreCls=['c0','c1','c2','c3','c4','c5','c6'];
-    const scoreColor=scoreColors[cf.score]||'#f87171';
-    const scoreCl=scoreCls[cf.score]||'c0';
+    // Score color
+    const scoreCol=cf.score>=5?'#22c55e':cf.score>=4?'#4ade80':cf.score>=3?'#f59e0b':'#f87171';
+    const scoreConf=cf.score>=5?'HIGH CONFIDENCE':cf.score>=4?'GOOD — TRADEABLE':cf.score>=3?'WEAK — DO NOT TRADE':'LOW — WAIT';
 
-    // Confluence label
-    const cfLabel=cf.score>=5?'HIGH CONFIDENCE':cf.score>=4?'MODERATE':cf.score>=3?'LOW':'VERY LOW';
-    const cfColor=cf.score>=5?'#22c55e':cf.score>=4?'#f59e0b':'#f87171';
+    // Verdict emoji and badges
+    const vEmoji={'STRONG BUY':'📈','STRONG SELL':'📉','NORMAL BUY':'📈','NORMAL SELL':'📉','WAIT':'⏸'}[cf.verdict]||'⏸';
+    const vBadge={'STRONG BUY':'badge-strong','STRONG SELL':'badge-strong-sell','NORMAL BUY':'badge-normal','NORMAL SELL':'badge-normal-sell','WAIT':'badge-wait'}[cf.verdict]||'badge-wait';
 
-    // Verdicts
-    const verdictEmoji={'STRONG BUY':'📈','STRONG SELL':'📉','WAIT':'⏸'}[cf.verdict]||'⚠';
-    const verdictBadge={'STRONG BUY':'badge-buy','STRONG SELL':'badge-sell','WAIT':'badge-wait'}[cf.verdict]||'badge-low';
-    const verdictExplain=cf.verdict==='STRONG BUY'?
-      `All ${cf.score} of 6 layers are aligned bullish. Session: ${sess.name} (${sess.quality} quality). Volume ${volAboveAvg?'confirmed':'low but acceptable'}. 1-hour trend is ${d1h.ema8>d1h.ema21?'upward — scalping with the trend':'this is counter-trend — use tighter stop'}. Enter long at market price. Set stop ${a.sp} pips below. Target ${a.tp} pips above. Move stop to breakeven at +${Math.round(a.sp/2)} pips.`:
+    const vExplain=cf.verdict==='STRONG BUY'?
+      `All 5 layers confirmed bullish. This is the highest confidence scalp BUY setup. Session: ${sess.name} (${sess.q}). Enter long at market. Stop ${a.sp} pips below entry. Target ${a.tp} pips above. Move stop to breakeven at +${Math.round(a.sp)}  pips. Position size: ${cf.posSize}.`:
       cf.verdict==='STRONG SELL'?
-      `All ${cf.score} of 6 layers are aligned bearish. Session: ${sess.name} (${sess.quality} quality). Volume ${volAboveAvg?'confirmed':'low'}. Enter short at market price. Set stop ${a.sp} pips above. Target ${a.tp} pips below. Move stop to breakeven at +${Math.round(a.sp/2)} pips.`:
-      cf.verdict.includes('LOW CONF')?
-      `${cf.score} of 6 layers passing — not enough for a high-confidence entry. ${6-cf.score} filter(s) failed. Wait for more layers to align. Do not force a trade on a 4/6 setup when 5/6 or 6/6 setups happen regularly.`:
-      `Only ${cf.score} of 6 layers are aligned. Multiple filters failing. ${cf.layers.filter(l=>!l.pass).map(l=>l.name).join(', ')} not passing. This is not a tradeable setup. Wait for conditions to improve.`;
+      `All 5 layers confirmed bearish. This is the highest confidence scalp SELL setup. Session: ${sess.name} (${sess.q}). Enter short at market. Stop ${a.sp} pips above entry. Target ${a.tp} pips below. Position size: ${cf.posSize}.`:
+      cf.verdict==='NORMAL BUY'?
+      `4 of 5 layers confirmed bullish. Good scalp BUY setup — tradeable with reduced position size. One layer is failing: ${cf.layers.find(l=>!l.pass||(!l.bull&&l.pass))?cf.layers.filter(l=>l.pass&&!l.bull).map(l=>l.name).join(', ')||'check layer breakdown':'minor divergence'}. Confirm EMA crossover on MT4 before entering. Position size: ${cf.posSize}.`:
+      cf.verdict==='NORMAL SELL'?
+      `4 of 5 layers confirmed bearish. Good scalp SELL setup. Enter with reduced position size. Confirm on MT4 before entering. Position size: ${cf.posSize}.`:
+      `Only ${cf.score} of 5 layers aligned. ${5-cf.score} filter(s) failing — not enough for a tradeable signal. Failed layers: ${cf.layers.filter(l=>!l.pass).map(l=>l.name).join(', ')||'conditions unclear'}. Wait for more layers to align. Check again in 5 minutes.`;
 
-    // Log entry
     signalLog.unshift({time:now,asset:key.toUpperCase(),verdict:cf.verdict,score:cf.score,price,sess:sess.name,tradeable:cf.tradeable});
     if(signalLog.length>100)signalLog.pop();
 
@@ -688,113 +641,88 @@ async function load(key,el){
         </div>
       </div>
 
-      <!-- CONFLUENCE METER -->
-      <div class="confluence-box">
-        <div class="conf-title">🎯 6-LAYER CONFLUENCE SCORE — Higher = More Accurate Signal</div>
-        <div class="conf-score-row">
-          <div class="conf-num ${scoreCl}">${cf.score}/6</div>
-          <div class="conf-bar-wrap">
-            <div class="conf-label" style="color:${cfColor}">${cfLabel} — ${cf.verdict}</div>
-            <div class="conf-bar"><div class="conf-fill" style="width:${cf.score/6*100}%;background:${scoreColor}"></div></div>
-            <div class="conf-desc">${cf.score>=5?'✅ Trade signal is valid — 5 or more layers confirmed. Enter with full position size.':cf.score>=4?'⚠ 4/6 layers passing — not enough. Reduce position size or wait for 5th layer.':'❌ '+cf.score+'/6 layers — do not trade. Wait for more layers to align.'}</div>
+      <div class="cf-box">
+        <div class="cf-title">🎯 5-LAYER CONFLUENCE SCORE</div>
+        <div class="cf-row">
+          <div class="cf-num" style="color:${scoreCol}">${cf.score}/5</div>
+          <div class="cf-bar-wrap">
+            <div class="cf-label" style="color:${scoreCol}">${scoreConf}</div>
+            <div class="cf-bar"><div class="cf-fill" style="width:${cf.score/5*100}%;background:${scoreCol}"></div></div>
+            <div class="cf-desc">${cf.score>=5?'✅ All 5 layers pass — trade with FULL position size.':cf.score>=4?'✅ 4/5 layers pass — trade with 75% position size. Solid setup.':cf.score>=3?'⚠ Only 3/5 layers pass — below threshold. Do not trade. Wait.':'❌ '+cf.score+'/5 layers — conditions unfavorable. Stay out.'}</div>
           </div>
         </div>
-        <div class="conf-dots">
-          ${cf.layers.map(l=>`<div class="conf-dot ${l.pass?'cd-pass':'cd-fail'}">${l.pass?'✓':'✗'} ${l.name}</div>`).join('')}
+        <div class="cf-layers">
+          ${cf.layers.map(l=>`<div class="${l.pass?(l.bull?'cl-pass':'cl-fail'):'cl-fail'}">${l.pass?(l.bull?'✓':'✗'):'✗'} ${l.name}</div>`).join('')}
+          <div class="cl-bonus">★ SESSION: ${sess.name} (+${cf.sessBonus}% conf)</div>
         </div>
       </div>
 
-      <!-- MAIN SIGNAL -->
-      <div class="main-signal ${cf.cls}">
+      <div class="main-sig ${cf.cls}">
         <div class="ms-top">
-          <div style="font-size:28px">${verdictEmoji}</div>
+          <div style="font-size:28px">${vEmoji}</div>
           <div>
             <div class="ms-word">${cf.verdict}</div>
-            <div class="ms-sub">${cf.adjConf>0?cf.adjConf+'% adjusted confidence · ':''} ${sess.name} · ${cf.score}/6 layers</div>
+            <div class="ms-sub">${cf.adjConf}% confidence · ${cf.score}/5 layers · ${sess.name}</div>
           </div>
-          <div class="ms-badge ${verdictBadge}" style="margin-left:auto">${cf.tradeable?'✅ ENTER NOW':'🚫 WAIT'}</div>
+          <div class="ms-badge ${vBadge}">${cf.tradeable?'✅ TRADE':'🚫 WAIT'} · ${cf.posSize}</div>
         </div>
-        <div class="ms-explain">${verdictExplain}</div>
+        <div class="ms-txt">${vExplain}</div>
         ${cf.tradeable?`<div class="levels">
-          <div class="level-box"><div class="lbl-e">ENTRY</div><div class="level-val">$${fmt(price)}</div><div class="level-note">Market price</div></div>
-          <div class="level-box"><div class="lbl-s">STOP LOSS</div><div class="level-val">$${fmt(stopPrice)}</div><div class="level-note">${a.sp} pips · mandatory</div></div>
-          <div class="level-box"><div class="lbl-t">TARGET</div><div class="level-val">$${fmt(targetPrice)}</div><div class="level-note">${a.tp} pips</div></div>
-          <div class="level-box"><div class="lbl-rr">R:R RATIO</div><div class="level-val">1:${rr}</div><div class="level-note">${parseFloat(rr)>=2?'✅ Good':'⚠ Tight'}</div></div>
+          <div class="lvl lvl-e"><div class="lvl-lbl">ENTRY</div><div class="lvl-val">$${fmt(price)}</div><div class="lvl-note">Market now</div></div>
+          <div class="lvl lvl-s"><div class="lvl-lbl">STOP LOSS</div><div class="lvl-val">$${fmt(stopPrice)}</div><div class="lvl-note">${a.sp} pips</div></div>
+          <div class="lvl lvl-t"><div class="lvl-lbl">TARGET</div><div class="lvl-val">$${fmt(targetPrice)}</div><div class="lvl-note">${a.tp} pips</div></div>
+          <div class="lvl lvl-rr"><div class="lvl-lbl">RISK:REWARD</div><div class="lvl-val">1:${rr}</div><div class="lvl-note">${parseFloat(rr)>=2?'✅ Good':'⚠ Tight'}</div></div>
         </div>`:''}
       </div>
 
-      <!-- LAYER BREAKDOWN -->
-      <div class="slbl">🔬 Layer-by-Layer Filter Breakdown</div>
-      <div class="filter-grid">
-        ${cf.layers.map(l=>`<div class="filter-card">
-          <div class="fc-title">${l.name}</div>
-          <div class="fc-val ${l.pass?'pass':'fail'}">${l.pass?'PASS ✓':'FAIL ✗'}</div>
-          <div class="fc-status ${l.pass?'pass':'fail'}">${l.pass?(l.bull?'BULLISH':'BEARISH'):'NOT MET'}</div>
-          <div class="fc-note">${l.note}</div>
+      <div class="slbl">🔬 Layer Breakdown — Why Each Passed or Failed</div>
+      <div class="layer-grid">
+        ${cf.layers.map(l=>`<div class="layer-card ${l.pass?(l.bull?'pass':'fail'):'fail'}">
+          <div class="lc-label">${l.name}</div>
+          <div class="lc-status">${l.pass?(l.bull?'PASS — BULLISH ✓':'PASS — BEARISH'):'FAIL ✗'}</div>
+          <div class="lc-note">${l.note}</div>
         </div>`).join('')}
       </div>
 
-      <!-- TF SIGNALS -->
       <div class="slbl">⏱ Individual Timeframe Signals</div>
       <div class="tf-row">
         <div class="tf-card tf-${sig5.sig.toLowerCase()}">
-          <div class="tc-label">5 MINUTE</div>
+          <div class="tc-lbl">5 MINUTE</div>
           <div class="tc-sig">${sig5.sig}</div>
-          <div class="tc-conf">${sig5.conf}% · Score ${sig5.score>0?'+':''}${sig5.score}</div>
+          <div class="tc-conf">${sig5.conf}% · ${sig5.score>0?'+':''}${sig5.score}</div>
         </div>
         <div class="tf-card tf-${sig15.sig.toLowerCase()}">
-          <div class="tc-label">15 MINUTE</div>
+          <div class="tc-lbl">15 MINUTE</div>
           <div class="tc-sig">${sig15.sig}</div>
-          <div class="tc-conf">${sig15.conf}% · Score ${sig15.score>0?'+':''}${sig15.score}</div>
+          <div class="tc-conf">${sig15.conf}% · ${sig15.score>0?'+':''}${sig15.score}</div>
         </div>
-        <div class="tf-card tf-${sig1h.sig.toLowerCase()}">
-          <div class="tc-label">1 HOUR TREND</div>
-          <div class="tc-sig">${sig1h.sig}</div>
-          <div class="tc-conf">Trend direction</div>
+        <div class="tf-card" style="border-color:${d1h.ema8>d1h.ema21?'#166534':'#7f1d1d'}">
+          <div class="tc-lbl">1 HOUR TREND</div>
+          <div class="tc-sig" style="color:${d1h.ema8>d1h.ema21?'#22c55e':'#f87171'}">${d1h.ema8&&d1h.ema21?(d1h.ema8>d1h.ema21?'UP ↑':'DOWN ↓'):'—'}</div>
+          <div class="tc-conf">Trend bias</div>
         </div>
-        <div class="tf-card" style="border-color:${sess.color};background:${sess.name.includes('OVERLAP')?'#1a120020':sess.name==='ASIAN'?'#1a080820':'#052e1620'}">
-          <div class="tc-label">SESSION</div>
-          <div class="tc-sig" style="color:${sess.color}">${sess.quality}</div>
-          <div class="tc-conf" style="color:${sess.color}">${sess.name}</div>
+        <div class="tf-card" style="border-color:${sess.col}">
+          <div class="tc-lbl">SESSION</div>
+          <div class="tc-sig" style="color:${sess.col}">${sess.q}</div>
+          <div class="tc-conf" style="color:${sess.col}">${sess.name.split(' ')[0]}</div>
         </div>
       </div>
 
-      <!-- INDICATORS -->
       <div class="slbl">📊 Live Indicators</div>
       <div class="ind-grid">
-        <div class="ind"><div class="ind-name">RSI 5MIN</div><div class="ind-val ${d5.rsi<45?'bull':d5.rsi>55?'bear':'neu'}">${d5.rsi!==null?fmt(d5.rsi,1):'—'}</div><div class="ind-sig ${d5.rsi<45?'bull':d5.rsi>55?'bear':'neu'}">${d5.rsi<35?'Oversold':d5.rsi<45?'Bullish zone':d5.rsi>65?'Overbought':d5.rsi>55?'Bearish zone':'Neutral'}</div><div class="ind-note">5-min momentum</div></div>
-        <div class="ind"><div class="ind-name">RSI 15MIN</div><div class="ind-val ${d15.rsi<45?'bull':d15.rsi>55?'bear':'neu'}">${d15.rsi!==null?fmt(d15.rsi,1):'—'}</div><div class="ind-sig ${d15.rsi<45?'bull':d15.rsi>55?'bear':'neu'}">${d15.rsi<35?'Oversold':d15.rsi<45?'Bullish':d15.rsi>65?'Overbought':d15.rsi>55?'Bearish':'Neutral'}</div><div class="ind-note">15-min momentum</div></div>
-        <div class="ind"><div class="ind-name">EMA 5MIN</div><div class="ind-val ${d5.ema8>d5.ema21?'bull':'bear'}">${d5.ema8!==null?fmt(d5.ema8):'—'}</div><div class="ind-sig ${d5.ema8>d5.ema21?'bull':'bear'}">${d5.ema8&&d5.ema21?(d5.ema8>d5.ema21?'8 Above 21 ✓':'8 Below 21'):'—'}</div><div class="ind-note">5-min cross</div></div>
-        <div class="ind"><div class="ind-name">EMA 15MIN</div><div class="ind-val ${d15.ema8>d15.ema21?'bull':'bear'}">${d15.ema8!==null?fmt(d15.ema8):'—'}</div><div class="ind-sig ${d15.ema8>d15.ema21?'bull':'bear'}">${d15.ema8&&d15.ema21?(d15.ema8>d15.ema21?'8 Above 21 ✓':'8 Below 21'):'—'}</div><div class="ind-note">15-min cross</div></div>
-        <div class="ind"><div class="ind-name">MACD 5MIN</div><div class="ind-val ${d5.macdH>0?'bull':'bear'}">${d5.macdH!==null?(d5.macdH>0?'+':'')+fmt(d5.macdH,4):'—'}</div><div class="ind-sig ${d5.macdH>0?'bull':'bear'}">${d5.macdH>0&&d5.macdL>d5.macdS?'Bullish ✓':d5.macdH>0?'Positive':d5.macdH<0&&d5.macdL<d5.macdS?'Bearish':'Negative'}</div><div class="ind-note">5-min momentum</div></div>
-        <div class="ind"><div class="ind-name">VOLUME</div><div class="ind-val ${volAboveAvg?'bull':'bear'}">${volAboveAvg?'HIGH':'LOW'}</div><div class="ind-sig ${volAboveAvg?'bull':'bear'}">${volAboveAvg?'Above Avg ✓':'Below Avg'}</div><div class="ind-note">vs 20-period avg</div></div>
+        <div class="ind"><div class="ind-name">RSI 5MIN</div><div class="ind-val ${d5.rsi<45?'bull':d5.rsi>55?'bear':'neu'}">${d5.rsi!==null?fmt(d5.rsi,1):'—'}</div><div class="ind-sig ${d5.rsi<45?'bull':d5.rsi>55?'bear':'neu'}">${d5.rsi<35?'Oversold':d5.rsi<45?'Bullish':d5.rsi>65?'Overbought':d5.rsi>55?'Bearish':'Neutral'}</div><div class="ind-note">&lt;45 bull · &gt;55 bear</div></div>
+        <div class="ind"><div class="ind-name">RSI 15MIN</div><div class="ind-val ${d15.rsi<45?'bull':d15.rsi>55?'bear':'neu'}">${d15.rsi!==null?fmt(d15.rsi,1):'—'}</div><div class="ind-sig ${d15.rsi<45?'bull':d15.rsi>55?'bear':'neu'}">${d15.rsi<35?'Oversold':d15.rsi<45?'Bullish':d15.rsi>65?'Overbought':d15.rsi>55?'Bearish':'Neutral'}</div><div class="ind-note">&lt;45 bull · &gt;55 bear</div></div>
+        <div class="ind"><div class="ind-name">EMA 5MIN</div><div class="ind-val ${d5.ema8>d5.ema21?'bull':'bear'}">${fmt(d5.ema8)}</div><div class="ind-sig ${d5.ema8>d5.ema21?'bull':'bear'}">${d5.ema8&&d5.ema21?(d5.ema8>d5.ema21?'8 > 21 ✓':'8 < 21'):'—'}</div><div class="ind-note">EMA 8 vs 21</div></div>
+        <div class="ind"><div class="ind-name">EMA 15MIN</div><div class="ind-val ${d15.ema8>d15.ema21?'bull':'bear'}">${fmt(d15.ema8)}</div><div class="ind-sig ${d15.ema8>d15.ema21?'bull':'bear'}">${d15.ema8&&d15.ema21?(d15.ema8>d15.ema21?'8 > 21 ✓':'8 < 21'):'—'}</div><div class="ind-note">EMA 8 vs 21</div></div>
+        <div class="ind"><div class="ind-name">MACD 5MIN</div><div class="ind-val ${d5.macdH>0?'bull':'bear'}">${d5.macdH!==null?(d5.macdH>0?'+':'')+fmt(d5.macdH,4):'—'}</div><div class="ind-sig ${d5.macdH>0?'bull':'bear'}">${d5.macdH>0&&d5.macdL>d5.macdS?'Bull Cross ✓':d5.macdH>0?'Positive':d5.macdH<0&&d5.macdL<d5.macdS?'Bear Cross':'Negative'}</div><div class="ind-note">Momentum</div></div>
+        <div class="ind"><div class="ind-name">BOLLINGER</div><div class="ind-val ${bbL&&price<=bbL*1.003?'bull':bbU&&price>=bbU*0.997?'bear':'neu'}">${bbL&&price<=bbL*1.003?'LOWER':bbU&&price>=bbU*0.997?'UPPER':'MID'}</div><div class="ind-sig ${bbL&&price<=bbL*1.003?'bull':bbU&&price>=bbU*0.997?'bear':'neu'}">${bbL&&price<=bbL*1.003?'Bounce Zone ⚡':bbU&&price>=bbU*0.997?'Reversal Zone ⚡':'Inside Bands'}</div><div class="ind-note">Band position</div></div>
       </div>
 
-      <!-- BOLLINGER -->
-      <div class="bb-grid">
-        <div class="bb-card">
-          <div class="bbc-title">📊 BOLLINGER BANDS (5MIN)</div>
-          <div class="bb-row"><div class="bb-lbl">Upper Band</div><div class="bb-val" style="color:#f87171">$${bbU!==null?fmt(bbU):'—'}</div></div>
-          <div class="bb-row"><div class="bb-lbl">Middle (20MA)</div><div class="bb-val" style="color:#f59e0b">$${bbM!==null?fmt(bbM):'—'}</div></div>
-          <div class="bb-row"><div class="bb-lbl">Lower Band</div><div class="bb-val" style="color:#22c55e">$${bbL!==null?fmt(bbL):'—'}</div></div>
-          <div class="bb-row"><div class="bb-lbl">Price Position</div><div class="bb-val" style="color:#e0e0ec">${bbPos==='lower'?'AT LOWER ⚡':bbPos==='upper'?'AT UPPER ⚡':'INSIDE BANDS'}</div></div>
-          <div class="bb-msg">${bbPos==='lower'?'⚡ Price at lower band — high probability bounce. Strong BUY confirmation.':bbPos==='upper'?'⚡ Price at upper band — reversal risk. SELL confirmation.':'Price inside bands. Wait for price to reach band extremes for highest probability entry.'}</div>
-        </div>
-        <div class="bb-card">
-          <div class="bbc-title">🕐 1-HOUR TREND FILTER</div>
-          <div class="bb-row"><div class="bb-lbl">EMA 8 (1H)</div><div class="bb-val" style="color:#e0e0ec">$${d1h.ema8!==null?fmt(d1h.ema8):'—'}</div></div>
-          <div class="bb-row"><div class="bb-lbl">EMA 21 (1H)</div><div class="bb-val" style="color:#e0e0ec">$${d1h.ema21!==null?fmt(d1h.ema21):'—'}</div></div>
-          <div class="bb-row"><div class="bb-lbl">1H Direction</div><div class="bb-val" style="color:${d1h.ema8>d1h.ema21?'#22c55e':'#f87171'}">${d1h.ema8&&d1h.ema21?(d1h.ema8>d1h.ema21?'↑ UPTREND':'↓ DOWNTREND'):'—'}</div></div>
-          <div class="bb-row"><div class="bb-lbl">Session</div><div class="bb-val" style="color:${sess.color}">${sess.name}</div></div>
-          <div class="bb-msg">${d1h.ema8&&d1h.ema21?`Trading ${d1h.ema8>d1h.ema21?'WITH':'AGAINST'} the 1-hour trend. ${d1h.ema8>d1h.ema21?'Scalp BUYs are higher probability. Avoid SELL scalps unless 6/6 confluence.':'Scalp SELLs are higher probability. Avoid BUY scalps unless 6/6 confluence.'}`:' Loading 1H data…'}</div>
-        </div>
-      </div>
-
-      <div class="disclaimer">⚠ Signals are for informational purposes only. Not financial advice. Always confirm on MT4 before entering. Only trade STRONG BUY or STRONG SELL with 5/6 or 6/6 confluence. Use stop loss on every trade without exception.</div>
+      <div class="disclaimer">⚠ Signals are for informational purposes only. Not financial advice. 4/5 and 5/5 signals are tradeable — always confirm on MT4 and use stop loss on every trade without exception. Only trade during London or New York session for best results.</div>
     `;
 
   }catch(e){
-    document.getElementById('scalper-body').innerHTML=`<div style="background:#1a0808;border:1px solid #7f1d1d;border-radius:8px;padding:14px;color:#f87171;font-family:monospace;font-size:11px;line-height:1.7">Error: ${e.message}<br><br>Ensure TWELVE_DATA_API_KEY is set in Vercel Environment Variables.</div>`;
+    document.getElementById('scalper-body').innerHTML=`<div style="background:#1a0808;border:1px solid #7f1d1d;border-radius:8px;padding:14px;color:#f87171;font-family:monospace;font-size:11px;line-height:1.7">Error loading ${ASSETS[key].name}: ${e.message}<br><br>Make sure TWELVE_DATA_API_KEY is set in Vercel → Environment Variables.</div>`;
   }
 }
 
@@ -819,34 +747,37 @@ async function loadOverview(){
       const e211h=e21_1h.values?parseFloat(e21_1h.values[0].ema):null;
       const sig5=rsi5<45?'BUY':rsi5>55?'SELL':'HOLD';
       const sig15=rsi15<45?'BUY':rsi15>55?'SELL':'HOLD';
-      const trend1h=e81h&&e211h?(e81h>e211h?'BUY':'SELL'):'HOLD';
-      const sess=getSession();
+      const trend=e81h&&e211h?(e81h>e211h?'BUY':'SELL'):'HOLD';
+      const sess=getSess();
+      let score=0;
+      if(sig5===sig15&&sig5!=='HOLD')score+=2;
+      if(sig5===trend&&sig5!=='HOLD')score+=1;
+      if(sig15===trend&&sig15!=='HOLD')score+=1;
+      if(sess.q!=='LOW')score+=1;
+      const maxScore=5;
       let verdict,vCls;
-      if(sig5===sig15&&sig5!=='HOLD'&&sig5===trend1h&&sess.quality!=='LOW'){
-        verdict='✅ '+sig5+' ALIGNED';vCls='conf-strong-'+sig5.toLowerCase();
-      } else if(sig5==='HOLD'&&sig15==='HOLD'){
-        verdict='⏸ WAIT';vCls='conf-wait';
-      } else {
-        verdict='⚠ CONFLICT';vCls='conf-conflict';
-      }
-      rows.push(`<div class="ov-row" onclick="goSignal('${key}')">
+      if(score>=4&&sig5===sig15&&sig5!=='HOLD'){verdict=`✅ ${sig5==='BUY'?'STRONG BUY':'STRONG SELL'}`;vCls=sig5==='BUY'?'v-strong-buy':'v-strong-sell';}
+      else if(score>=3&&sig5===sig15&&sig5!=='HOLD'){verdict=`▶ ${sig5==='BUY'?'NORMAL BUY':'NORMAL SELL'}`;vCls=sig5==='BUY'?'v-normal-buy':'v-normal-sell';}
+      else if(sig5===sig15&&sig5==='HOLD'){verdict='⏸ WAIT';vCls='v-wait';}
+      else{verdict='⚠ CONFLICT';vCls='v-wait';}
+      rows.push(`<div class="ov-row" onclick="goSig('${key}')">
         <div class="ov-icon">${a.icon}</div>
         <div class="ov-sym">${a.td}<br><span style="font-size:7px;color:#44445a">${a.type}</span></div>
         <div class="ov-price" style="color:#e0e0ec">$${price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
         <div class="ov-chg" style="color:${chg>0?'#22c55e':'#f87171'}">${chg>0?'+':''}${chg.toFixed(2)}%</div>
-        <div class="ov-5m ${sig5==='BUY'?'sig-buy':sig5==='SELL'?'sig-sell':'sig-hold'}">${sig5}</div>
-        <div class="ov-15m ${sig15==='BUY'?'sig-buy':sig15==='SELL'?'sig-sell':'sig-hold'}">${sig15}</div>
-        <div class="ov-1h ${trend1h==='BUY'?'sig-buy':trend1h==='SELL'?'sig-sell':'sig-hold'}">${trend1h}</div>
-        <div class="ov-conf ${vCls}">${verdict}</div>
+        <div class="ov-tf ${sig5==='BUY'?'sig-buy':sig5==='SELL'?'sig-sell':'sig-hold'}">${sig5}</div>
+        <div class="ov-tf ${sig15==='BUY'?'sig-buy':sig15==='SELL'?'sig-sell':'sig-hold'}">${sig15}</div>
+        <div class="ov-score" style="color:${score>=4?'#22c55e':score>=3?'#f59e0b':'#f87171'}">${score}/5</div>
+        <div class="ov-verdict ${vCls}">${verdict}</div>
       </div>`);
     }catch(e){
-      rows.push(`<div class="ov-row"><div class="ov-icon">${a.icon}</div><div class="ov-sym">${a.td}</div><div class="ov-price" style="color:#44445a">—</div><div class="ov-chg">—</div><div class="ov-5m sig-hold">—</div><div class="ov-15m sig-hold">—</div><div class="ov-1h sig-hold">—</div><div class="ov-conf conf-wait">ERROR</div></div>`);
+      rows.push(`<div class="ov-row"><div class="ov-icon">${a.icon}</div><div class="ov-sym">${a.td}</div><div class="ov-price" style="color:#44445a">—</div><div class="ov-chg">—</div><div class="ov-tf sig-hold">—</div><div class="ov-tf sig-hold">—</div><div class="ov-score">—</div><div class="ov-verdict v-wait">ERROR</div></div>`);
     }
   }
   document.getElementById('ovRows').innerHTML=rows.join('');
 }
 
-function goSignal(key){
+function goSig(key){
   showTab('scalper',document.querySelector('.tab'));
   document.querySelectorAll('.tab')[0].classList.add('on');
   const btn=[...document.querySelectorAll('#tab-scalper .asset-btn')].find(b=>b.getAttribute('onclick')?.includes(`'${key}'`));
@@ -854,54 +785,43 @@ function goSignal(key){
 }
 
 function renderSess(){
-  const h=new Date().getUTCHours(),m=new Date().getUTCMinutes(),t=h*60+m;
-  const sessions=[
-    {name:'SYDNEY',open:22*60,close:7*60,wrap:true,col:'#a855f7',tip:'AUD/USD'},
-    {name:'TOKYO',open:0,close:9*60,wrap:false,col:'#f59e0b',tip:'USD/JPY'},
-    {name:'LONDON',open:8*60,close:16*60,wrap:false,col:'#22c55e',tip:'XAUUSD · EUR/USD · GBP/USD'},
-    {name:'NEW YORK',open:13*60,close:21*60,wrap:false,col:'#3b82f6',tip:'XAUUSD · Stocks'},
-  ];
-  document.getElementById('sessCards').innerHTML=sessions.map(s=>{
+  const t=new Date().getUTCHours()*60+new Date().getUTCMinutes();
+  [{name:'SYDNEY',open:22*60,close:7*60,wrap:true,col:'#a855f7'},{name:'TOKYO',open:0,close:9*60,wrap:false,col:'#f59e0b'},{name:'LONDON',open:8*60,close:16*60,wrap:false,col:'#22c55e'},{name:'NEW YORK',open:13*60,close:21*60,wrap:false,col:'#3b82f6'}].forEach((s,i)=>{
     const on=s.wrap?(t>=s.open||t<s.close):(t>=s.open&&t<s.close);
     const overlap=t>=13*60&&t<16*60;
     const st=s.name==='LONDON'&&overlap?'overlap':on?'open':'closed';
-    return `<div class="sess-card">
+    document.getElementById('sessCards').children[i].innerHTML=`
       <div class="sess-name">${s.name}</div>
       <div class="sess-dot" style="color:${st==='closed'?'#44445a':st==='overlap'?'#f59e0b':s.col}">${st==='overlap'?'⭐ OVERLAP':st==='open'?'● OPEN':'○ CLOSED'}</div>
       <div class="sess-time">${Math.floor(s.open/60).toString().padStart(2,'0')}:00–${Math.floor((s.wrap?s.close+24*60:s.close)/60%24).toString().padStart(2,'0')}:00 UTC</div>
-      <div class="sess-tip" style="color:${st==='closed'?'#44445a':st==='overlap'?'#f59e0b':s.col}">${st==='overlap'?'🔥 BEST':st==='open'?'ACTIVE':'AVOID'}</div>
-    </div>`;
-  }).join('');
+      <div class="sess-tip" style="color:${st==='closed'?'#44445a':st==='overlap'?'#f59e0b':s.col}">${st==='overlap'?'🔥 BEST':st==='open'?'ACTIVE':'AVOID'}</div>`;
+  });
 }
 
 function renderLog(){
   const tradeable=signalLog.filter(s=>s.tradeable).length;
-  const filtered=signalLog.filter(s=>!s.tradeable).length;
+  const waited=signalLog.filter(s=>!s.tradeable).length;
   document.getElementById('lc').textContent=signalLog.length;
   document.getElementById('la').textContent=tradeable;
-  document.getElementById('lx').textContent=filtered;
+  document.getElementById('lw').textContent=waited;
   document.getElementById('lr').textContent=signalLog.length?Math.round(tradeable/signalLog.length*100)+'%':'—';
-  if(!signalLog.length){
-    document.getElementById('logList').innerHTML=`<div style="padding:20px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">No signals yet</div>`;return;
-  }
+  if(!signalLog.length){document.getElementById('logList').innerHTML=`<div style="padding:20px;text-align:center;font-family:monospace;font-size:10px;color:#44445a">No signals yet</div>`;return;}
   document.getElementById('logList').innerHTML=signalLog.map(s=>`
-    <div class="log-item">
+    <div class="log-row">
       <div class="log-time">${s.time}</div>
       <div class="log-asset">${s.asset}</div>
-      <div class="log-verdict ${s.verdict.includes('BUY')?'sig-buy':s.verdict.includes('SELL')?'sig-sell':'sig-hold'}">${s.verdict}</div>
-      <div class="log-conf" style="color:${s.score>=5?'#22c55e':s.score>=4?'#f59e0b':'#f87171'}">${s.score}/6</div>
+      <div class="log-verdict ${s.verdict.includes('STRONG BUY')||s.verdict.includes('NORMAL BUY')?'sig-buy':s.verdict.includes('STRONG SELL')||s.verdict.includes('NORMAL SELL')?'sig-sell':'sig-hold'}">${s.verdict}</div>
+      <div class="log-score" style="color:${s.score>=4?'#22c55e':s.score>=3?'#f59e0b':'#f87171'}">${s.score}/5</div>
       <div class="log-price">$${s.price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
-      <div class="log-sess" style="color:#44445a">${s.sess.split(' ')[0]}</div>
+      <div class="log-sess">${s.sess.split('+')[0].trim().split(' ')[0]}</div>
     </div>`).join('');
 }
 
 function exportLog(){
-  const csv='Time,Asset,Verdict,Confluence,Price,Session,Tradeable\n'+
-    signalLog.map(s=>`${s.time},${s.asset},${s.verdict},${s.score}/6,$${s.price},${s.sess},${s.tradeable}`).join('\n');
-  const blob=new Blob([csv],{type:'text/csv'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download='tradewise_pro_signals.csv';a.click();
+  const csv='Time,Asset,Verdict,Score,Price,Session,Tradeable\n'+signalLog.map(s=>`${s.time},${s.asset},${s.verdict},${s.score}/5,$${s.price},${s.sess},${s.tradeable}`).join('\n');
+  const b=new Blob([csv],{type:'text/csv'});
+  const u=URL.createObjectURL(b);
+  const a=document.createElement('a');a.href=u;a.download='tradewise_signals.csv';a.click();
 }
 function clearLog(){signalLog=[];renderLog();}
 
@@ -915,16 +835,16 @@ function calcRisk(){
   const lots=risk/(sp*pv);
   const rr=tp/sp;
   const profit=lots*tp*pv;
-  const rrC=rr>=2?'g':rr>=1.5?'a':'r';
   document.getElementById('rGrid').innerHTML=`
     <div style="text-align:center"><div class="rv g">$${risk.toFixed(0)}</div><div class="rl">MAX RISK</div></div>
-    <div style="text-align:center"><div class="rv ${rrC}">${rr.toFixed(1)}:1</div><div class="rl">RISK:REWARD</div></div>
+    <div style="text-align:center"><div class="rv ${rr>=2?'g':rr>=1.5?'a':'r'}">${rr.toFixed(1)}:1</div><div class="rl">RISK:REWARD</div></div>
     <div style="text-align:center"><div class="rv g">$${profit.toFixed(0)}</div><div class="rl">TARGET PROFIT</div></div>`;
-  document.getElementById('rNote').innerHTML=`<b style="color:#e0e0ec">Lot Size: ${lots.toFixed(2)} lots</b><br>${rr>=2?'✅ Good R:R.':rr>=1.5?'⚠ Acceptable.':'❌ Poor R:R — widen target.'}<br><br>MT4: <b style="color:#c9a84c">${lots.toFixed(2)} lots</b> · SL <b style="color:#f87171">${sp} pips</b> · TP <b style="color:#22c55e">${tp} pips</b>`;
+  document.getElementById('rNote').innerHTML=`<b style="color:#e0e0ec">Lot Size: ${lots.toFixed(2)} lots</b><br>${rr>=2?'✅ Good R:R — 2:1 or better.':rr>=1.5?'⚠ Acceptable but aim for 2:1.':'❌ Poor — widen target.'}<br><br>MT4: <b style="color:#c9a84c">${lots.toFixed(2)} lots</b> · SL <b style="color:#f87171">${sp} pips</b> · TP <b style="color:#22c55e">${tp} pips</b>`;
   document.getElementById('rRes').className='r-result show';
 }
 
 // Init
+document.getElementById('sessCards').innerHTML='<div class="sess-card"></div><div class="sess-card"></div><div class="sess-card"></div><div class="sess-card"></div>';
 renderSess();
 setInterval(renderSess,60000);
 load('xauusd',document.querySelector('#tab-scalper .asset-btn'));
